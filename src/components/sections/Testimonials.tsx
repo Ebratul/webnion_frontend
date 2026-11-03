@@ -1,0 +1,52 @@
+import { Star } from 'lucide-react';
+import Image from 'next/image';
+import type { Locale } from '@/i18n/config';
+import type { Dictionary } from '@/i18n';
+import { formatScore } from '@/lib/format';
+import type { Testimonial } from '@/lib/types';
+import { SectionHeading } from '../ui/SectionHeading';
+import { TestimonialGrid } from './TestimonialGrid';
+
+interface TestimonialsProps {
+  locale: Locale;
+  t: Dictionary['testimonials'];
+  a11y: Dictionary['a11y'];
+  testimonials: Testimonial[];
+}
+
+export const Testimonials = ({ locale, t, a11y, testimonials }: TestimonialsProps) => {
+  const avatars = testimonials.filter((item) => item.avatar).slice(0, 5);
+
+  return (
+    <section aria-labelledby="testimonials-title" className="pb-20 pt-20 lg:pb-28 lg:pt-24">
+      <div className="container-page">
+        <SectionHeading id="testimonials-title" eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
+
+        <div className="reveal mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          <div aria-hidden className="flex items-center">
+            {avatars.map((item) => (
+              <Image key={item.id} src={item.avatar!} alt="" width={36} height={36} sizes="36px" className="-ml-2 size-9 rounded-full border-2 border-bg bg-white object-cover first:ml-0" />
+            ))}
+            <span className="-ml-2 grid size-9 place-items-center rounded-full border-2 border-bg bg-primary text-[0.625rem] font-semibold text-white">{t.happyCount}</span>
+          </div>
+          {t.ratings.map((rating) => (
+            <p key={rating.label} className="flex items-center gap-2 text-sm">
+              <span className="font-medium">{rating.label}</span>
+              <span aria-hidden className="flex text-amber-400">
+                {Array.from({ length: 5 }, (_, index) => (
+                  <Star key={index} className="size-3.5 fill-current" />
+                ))}
+              </span>
+              <span className="sr-only">{a11y.rated}</span>
+              <span className="font-semibold tabular-nums">{formatScore(rating.score, locale)}</span>
+            </p>
+          ))}
+        </div>
+
+        <div className="mt-10">
+          <TestimonialGrid testimonials={testimonials} t={t} a11y={a11y} />
+        </div>
+      </div>
+    </section>
+  );
+};
