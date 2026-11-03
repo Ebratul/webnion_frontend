@@ -1,0 +1,289 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Dark is the default: it matches the brand hero and is what renders before the theme script runs. */
+:root {
+  color-scheme: dark;
+  --bg: #050507;
+  --surface: #0e0e13;
+  --surface-2: #16161d;
+  --fg: #f6f6f9;
+  --muted: #a3a3b2;
+  --line: rgb(255 255 255 / 0.1);
+  --primary: #7c3aed;
+  --primary-hover: #8b4cf5;
+  --accent: #a78bfa;
+  --tint: rgb(124 58 237 / 0.14);
+  --shadow: 0 24px 60px -24px rgb(0 0 0 / 0.8);
+  --font: var(--font-poppins), var(--font-hind), system-ui, sans-serif;
+  --heading-tracking: -0.025em;
+  --body-leading: 1.65;
+  --heading-leading: 1.14;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #f7f6fb;
+  --surface-2: #efedf8;
+  --fg: #0e0e14;
+  --muted: #5a5a6c;
+  --line: rgb(16 16 40 / 0.1);
+  --primary-hover: #6d28d9;
+  --accent: #6d28d9;
+  --tint: rgb(124 58 237 / 0.08);
+  --shadow: 0 24px 60px -28px rgb(50 30 110 / 0.28);
+}
+
+/* Bengali conjuncts break under negative tracking and need more vertical room than Latin. */
+:root:lang(bn) {
+  --font: var(--font-hind), var(--font-poppins), system-ui, sans-serif;
+  --heading-tracking: 0;
+  --body-leading: 1.8;
+  --heading-leading: 1.28;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent: var(--accent);
+  --color-tint: var(--tint);
+  --color-ink: #050507;
+  --color-whatsapp: #25d366;
+  --font-sans: var(--font);
+  --shadow-soft: var(--shadow);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font);
+    line-height: var(--body-leading);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: var(--heading-tracking);
+    line-height: var(--heading-leading);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  button,
+  a,
+  summary {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Native select menus keep readable colours in both themes. */
+  select option {
+    background: var(--surface);
+    color: var(--fg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 48rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility section-y {
+  padding-block: 5rem;
+
+  @media (min-width: 64rem) {
+    padding-block: 7.5rem;
+  }
+}
+
+/* The brand band stays dark in both themes, so it pins the dark tokens for everything inside it. */
+@utility band-dark {
+  color-scheme: dark;
+  --bg: #050507;
+  --surface: #0f0f15;
+  --surface-2: #17171f;
+  --fg: #f6f6f9;
+  --muted: #a3a3b2;
+  --line: rgb(255 255 255 / 0.1);
+  --primary-hover: #8b4cf5;
+  --accent: #a78bfa;
+  --tint: rgb(124 58 237 / 0.14);
+  background: #050507;
+  color: var(--fg);
+}
+
+/* Hero planet: an oversized circle whose lit rim forms the horizon. */
+.hero-sky {
+  background: var(--bg);
+}
+
+.planet {
+  position: absolute;
+  left: 50%;
+  top: clamp(3.5rem, 7vh, 5rem);
+  width: max(135vw, 72rem);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #000 90%, #020617 97%, #06122e 100%);
+  box-shadow:
+    inset 0 3px 2px -1px rgb(191 219 254 / 0.85),
+    inset 0 18px 34px -10px rgb(59 130 246 / 0.75),
+    inset 0 60px 90px -30px rgb(37 99 235 / 0.4),
+    0 -2px 26px rgb(96 165 250 / 0.6),
+    0 -10px 90px rgb(37 99 235 / 0.42);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 82% 14%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 66% 8%, #c7d2fe 50%, transparent 51%),
+    radial-gradient(1px 1px at 28% 9%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 92% 34%, #c7d2fe 50%, transparent 51%),
+    radial-gradient(1px 1px at 5% 42%, #fff 50%, transparent 51%);
+}
+
+[data-theme='light'] .hero-sky {
+  background: linear-gradient(180deg, #efe9ff 0%, #f6f3ff 34%, #ffffff 100%);
+}
+
+[data-theme='light'] .planet {
+  background: radial-gradient(closest-side, #fff 88%, #faf8ff 96%, #f1ebff 100%);
+  box-shadow:
+    inset 0 2px 2px -1px rgb(255 255 255 / 0.9),
+    inset 0 18px 34px -12px rgb(124 58 237 / 0.34),
+    0 -2px 22px rgb(124 58 237 / 0.45),
+    0 -14px 90px rgb(124 58 237 / 0.26);
+}
+
+[data-theme='light'] .stars {
+  display: none;
+}
+
+/* Infinite project mosaic. Each track holds its images twice, so -50% lands on an identical frame. */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 70s linear infinite;
+}
+
+.marquee-track[data-direction='reverse'] {
+  animation-direction: reverse;
+}
+
+[data-paused='true'] .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.fade-edges {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scroll reveal runs on the compositor; browsers without view timelines simply show the content. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 26%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+}
+
+.process-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .process-line {
+      animation: draw-line linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 45%;
+    }
+  }
+}
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
