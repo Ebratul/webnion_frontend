@@ -71,6 +71,8 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 - **Eyebrow chip:** tinted pill with a dot, above section headings.
 - **Highlighted pricing plan:** light grey card with large corners, raised, icon and badge, white inner panel, blue gradient pill button.
 - **Pricing buttons:** `plan-btn` lifts the button, passes a light across it and slides in an arrow on hover and keyboard focus.
+- **Fan of client sites:** on hover a screen straightens, lifts and catches a passing light, and the others dim. The screen moves inside a still card, so the pointer cannot slip off a moving edge.
+- **Footer:** soft top glow, faint name behind the content, short lines under headings and links, and contact details in cards.
 - **Chat demo:** `ChatDemo` follows the client's reference. Answers are scripted in the dictionaries and nothing leaves the browser, apart from the browser's own speech service if a visitor uses the mic.
 
 ## Motion

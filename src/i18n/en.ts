@@ -434,6 +434,9 @@ export const en = {
     italyAddress: 'Via Benedetto Bordoni, 24, 00176 Roma RM, Italy',
     bangladesh: 'Bangladesh',
     bangladeshAddress: 'Uttara 10, Road 5, Dhaka, Bangladesh',
+    location: 'Location',
+    callUs: 'Call Us',
+    email: 'Email',
     rights: 'Webnion™. All rights reserved.',
     serviceLinks: [
       { slug: 'custom-website-design', label: 'Custom Website Design' },

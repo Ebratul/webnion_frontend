@@ -582,7 +582,145 @@
   --u: clamp(5px, 1vw, 14.4px);
   width: calc(var(--u) * 88);
   height: calc(var(--u) * 26);
-  mask-image: linear-gradient(#000 35%, transparent 98%);
+}
+
+/* The stage reaches above the fan, because a mask also cuts off a card lifted past its edge. */
+.fan-stage {
+  --headroom: calc(var(--u) * 3);
+  position: absolute;
+  inset: calc(var(--headroom) * -1) 0 0;
+  mask-image: linear-gradient(#000 calc(var(--headroom) + var(--u) * 9.1), transparent 98%);
+}
+
+/* The card holds still and its screen moves, so the pointer never slips off a moving edge. */
+.fan-card {
+  position: absolute;
+  left: 50%;
+  top: var(--headroom);
+}
+
+.fan-screen {
+  position: relative;
+  opacity: var(--opacity);
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.35s ease,
+    box-shadow 0.4s ease,
+    filter 0.35s ease;
+}
+
+.fan-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 0.3) 50%, transparent 65%);
+  transform: translateX(-110%);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .fan-card:hover {
+    z-index: 10 !important;
+  }
+
+  .fan-card:hover .fan-screen {
+    opacity: 1;
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.28),
+      0 28px 60px -18px rgb(0 0 0 / 0.55),
+      0 0 52px -12px rgb(251 146 60 / 0.5);
+  }
+
+  .fan:has(.fan-card:hover) .fan-card:not(:hover) .fan-screen {
+    opacity: calc(var(--opacity) * 0.55);
+    filter: saturate(0.75);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .fan-card:hover .fan-screen {
+    transform: translateY(calc(var(--u) * -1.8)) rotate(calc(var(--rotate) * -1)) scale(1.05);
+  }
+
+  .fan-card:hover .fan-screen::after {
+    transform: translateX(110%);
+    transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+
+/* Footer: a soft glow from the top, a thin light along its edge, and the name faintly behind the content. */
+.site-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-image:
+    radial-gradient(55% 60% at 12% 0%, rgb(251 146 60 / 0.09), transparent 70%),
+    radial-gradient(50% 70% at 92% 100%, rgb(124 58 237 / 0.1), transparent 70%);
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
+  opacity: 0.45;
+}
+
+.footer-mark {
+  position: absolute;
+  inset: auto 0 -0.42em;
+  z-index: -1;
+  font-size: clamp(5rem, 18vw, 19rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-align: center;
+  white-space: nowrap;
+  color: transparent;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fg) 5%, transparent), transparent 62%);
+  background-clip: text;
+  user-select: none;
+  pointer-events: none;
+}
+
+.footer-heading {
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.footer-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  transition: width 0.3s ease;
+}
+
+.footer-column:hover .footer-heading::after {
+  width: 3rem;
+}
+
+/* A short line grows in front of the link, which pushes the text along. */
+.footer-link::before {
+  content: '';
+  width: 0;
+  height: 1px;
+  margin-right: 0;
+  background: currentColor;
+  transition:
+    width 0.25s ease,
+    margin-right 0.25s ease;
+}
+
+.footer-link:hover::before,
+.footer-link:focus-visible::before {
+  width: 0.75rem;
+  margin-right: 0.5rem;
 }
 
 /* Infinite project mosaic. Each track holds its images twice, so -50% lands on an identical frame. */

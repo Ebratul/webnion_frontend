@@ -64,23 +64,28 @@ export const FinalInquiry = ({ locale, t, closeLabel, services, plans }: FinalIn
         </div>
 
         <div data-line-item aria-hidden className="fan relative left-1/2 mt-12 -translate-x-1/2 lg:mt-16">
-          {FAN.map((card) => (
-            <div
-              key={card.image}
-              className="absolute left-1/2 top-0 overflow-hidden rounded-t-[1.75rem] bg-white shadow-soft"
-              style={
-                {
-                  width: `calc(var(--u) * ${card.width})`,
-                  marginLeft: `calc(var(--u) * ${card.width / -2})`,
-                  transform: `translate(calc(var(--u) * ${card.x}), calc(var(--u) * ${card.y})) rotate(${card.rotate}deg)`,
-                  opacity: card.opacity,
-                  zIndex: card.z,
-                } as CSSProperties
-              }
-            >
-              <Image src={`/images/fan/${card.image}.webp`} alt="" width={660} height={880} sizes="(min-width: 1024px) 320px, 30vw" className="w-full" />
-            </div>
-          ))}
+          <div className="fan-stage">
+            {FAN.map((card) => (
+              <div
+                key={card.image}
+                className="fan-card"
+                style={
+                  {
+                    width: `calc(var(--u) * ${card.width})`,
+                    marginLeft: `calc(var(--u) * ${card.width / -2})`,
+                    transform: `translate(calc(var(--u) * ${card.x}), calc(var(--u) * ${card.y})) rotate(${card.rotate}deg)`,
+                    zIndex: card.z,
+                    '--rotate': `${card.rotate}deg`,
+                    '--opacity': card.opacity,
+                  } as CSSProperties
+                }
+              >
+                <div className="fan-screen overflow-hidden rounded-t-[1.75rem] bg-white shadow-soft">
+                  <Image src={`/images/fan/${card.image}.webp`} alt="" width={660} height={880} sizes="(min-width: 1024px) 320px, 30vw" className="w-full" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </LineReveal>
 
