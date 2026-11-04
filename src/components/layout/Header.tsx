@@ -49,7 +49,7 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
     { href: sectionHref(locale, SECTION_IDS.pricing), label: nav.pricing },
     { href: `/${locale}/case-studies`, label: nav.caseStudies },
     { href: `/${locale}/contact`, label: nav.contact },
-    { href: sectionHref(locale, SECTION_IDS.team), label: nav.team },
+    { href: `/${locale}/team`, label: nav.team },
   ];
 
   return (

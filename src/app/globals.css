@@ -399,6 +399,76 @@
     linear-gradient(180deg, #11142a 0%, #17132a 50%, #2a1328 100%);
 }
 
+/* Team page, following the live site's measurements. */
+.team-page {
+  background: radial-gradient(circle at 8% 12%, rgb(124 58 237 / 0.055), transparent 24%);
+}
+
+.team-kicker::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+
+.team-card {
+  transition:
+    transform 0.38s ease,
+    box-shadow 0.38s ease,
+    border-color 0.38s ease;
+}
+
+.team-photo img {
+  transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.team-photo::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 28%;
+  pointer-events: none;
+  background: linear-gradient(to top, rgb(13 10 18 / 0.11), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.team-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 22px;
+  width: 36px;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.35s ease;
+}
+
+@media (hover: hover) {
+  .team-card:hover {
+    border-color: rgb(124 58 237 / 0.22);
+    box-shadow: 0 22px 55px rgb(29 20 43 / 0.11);
+  }
+
+  .team-card:hover .team-photo::after {
+    opacity: 1;
+  }
+
+  .team-card:hover .team-info::before {
+    width: 64px;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .team-card:hover {
+    transform: translateY(-8px);
+  }
+
+  .team-card:hover .team-photo img {
+    transform: scale(1.045);
+  }
+}
+
 /* Older messages fade out under the header as the conversation scrolls. */
 .chat-fade {
   mask-image: linear-gradient(transparent, #000 0.75rem);

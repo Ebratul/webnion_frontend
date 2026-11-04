@@ -17,6 +17,7 @@ npm run typecheck
 src/app/[locale]        Root layout (fonts, <html lang>, theme script), page, error and 404 pages
 src/app/[locale]/services/[slug], project/[slug], case-studies/[slug]   Detail pages, fetched by slug from the API
 src/app/[locale]/contact  Contact page, with the longer project form
+src/app/[locale]/team     Team page, with a card for each member from the homepage data
 src/app/[locale]/service, project, products, case-studies   Listing pages. Filters and paging live in the address, so results can be shared
 src/app/admin           Admin panel with its own root layout. Screens are built from lib/admin/resources.ts
 src/app/api/admin       Login, logout and a proxy that adds the token from an httpOnly cookie to API calls

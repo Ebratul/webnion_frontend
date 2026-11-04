@@ -141,6 +141,14 @@ export const en = {
     published: 'Published',
     back: 'Back To Projects',
   },
+  teamPage: {
+    titleLines: ['Meet Our Team'],
+    subtitle: 'Meet the people behind Webnion who combine technology, creativity and strategy to build meaningful digital solutions.',
+    crumb: 'Team',
+    metaTitle: 'Our Team | Webnion',
+    kicker: 'Our People',
+    empty: 'The team could not be loaded. Please try again shortly.',
+  },
   servicePage: {
     titleLines: ['Services Designed to Grow', 'Your Business'],
     subtitle: 'We provide end-to-end digital solutions, from strategy, design, and development to optimization, helping your business build trust, attract more customers, and achieve long-term growth online.',
