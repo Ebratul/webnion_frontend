@@ -3,21 +3,25 @@ import type { Dictionary } from '@/i18n';
 import { SECTION_IDS } from '@/lib/site';
 import type { DeliveryStory } from '@/lib/types';
 import { PrimaryLink } from '../ui/Button';
+import { LineReveal } from '../ui/LineReveal';
+import { LineText } from '../ui/LineText';
 
 export const DeliveryStories = ({ t, stories }: { t: Dictionary['delivery']; stories: DeliveryStory[] }) => (
   <section aria-labelledby="delivery-title" className="pb-20 lg:pb-28">
     <div className="container-page">
-      <div className="reveal flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+      <LineReveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
         <h2 id="delivery-title" className="max-w-2xl text-4xl font-bold uppercase sm:text-5xl">
-          {t.title}
+          <LineText text={t.title} />
         </h2>
         <div className="max-w-sm">
-          <p className="text-sm text-muted">{t.subtitle}</p>
-          <PrimaryLink href={`#${SECTION_IDS.contact}`} className="mt-4">
-            {t.cta}
-          </PrimaryLink>
+          <p className="text-sm text-muted">
+            <LineText text={t.subtitle} />
+          </p>
+          <div data-line-item className="mt-4">
+            <PrimaryLink href={`#${SECTION_IDS.contact}`}>{t.cta}</PrimaryLink>
+          </div>
         </div>
-      </div>
+      </LineReveal>
 
       <ul className="no-scrollbar -mx-5 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
         {stories.map((story) => (

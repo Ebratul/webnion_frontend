@@ -1,7 +1,5 @@
 import { notFound } from 'next/navigation';
-import { Footer } from '@/components/layout/Footer';
-import { Header } from '@/components/layout/Header';
-import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
+import { PageShell } from '@/components/layout/PageShell';
 import { ClientTrust } from '@/components/sections/ClientTrust';
 import { DeliveryStories } from '@/components/sections/DeliveryStories';
 import { Faqs } from '@/components/sections/Faqs';
@@ -44,20 +42,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-primary focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white"
-      >
-        {t.a11y.skipToContent}
-      </a>
-      <Header locale={locale} nav={t.nav} a11y={t.a11y} />
-      <main id="main">
+      <PageShell locale={locale}>
         <Hero t={t.hero} />
-        <ClientTrust t={t.trust} a11y={t.a11y} projects={data.projects} clients={data.clients} />
+        <ClientTrust locale={locale} t={t.trust} a11y={t.a11y} projects={data.projects} clients={data.clients} />
         <Problems t={t.problems} />
-        <Services t={t.services} services={data.services} />
+        <Services locale={locale} t={t.services} services={data.services} />
         <Outcomes t={t.outcomes} />
-        <FeaturedProjects t={t.projects} a11y={t.a11y} projects={data.projects} />
+        <FeaturedProjects locale={locale} t={t.projects} a11y={t.a11y} projects={data.projects} caseStudies={data.caseStudies} />
         <Testimonials locale={locale} t={t.testimonials} a11y={t.a11y} testimonials={data.testimonials} />
         <DeliveryStories t={t.delivery} stories={data.deliveryStories} />
         <Process t={t.process} />
@@ -65,10 +56,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Team t={t.team} members={data.team} />
         <Technologies t={t.technologies} />
         <Faqs t={t.faq} faqs={data.faqs} founder={data.team[0]} />
-        <FinalInquiry locale={locale} t={t.inquiry} services={data.services} plans={data.pricingPlans} projects={data.projects} />
-      </main>
-      <Footer locale={locale} t={t.footer} nav={t.nav} label={t.a11y.footerNav} />
-      <WhatsAppButton label={t.a11y.whatsapp} />
+        <FinalInquiry locale={locale} t={t.inquiry} closeLabel={t.a11y.close} services={data.services} plans={data.pricingPlans} />
+      </PageShell>
     </>
   );
 }

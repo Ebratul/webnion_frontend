@@ -1,3 +1,5 @@
+import type { Locale } from '@/i18n/config';
+
 export interface Service {
   id: string;
   slug: string;
@@ -6,13 +8,72 @@ export interface Service {
   image: string;
 }
 
+export interface ServiceDetail extends Service {
+  content: ContentBlock[];
+  contentLocale: Locale;
+  faqs: { question: string; answer: string }[];
+  faqsLocale: Locale;
+}
+
 export interface Project {
   id: string;
+  slug: string;
   name: string;
   category: string;
   image: string;
+  isFeatured: boolean;
+}
+
+export type ContentBlock =
+  | { type: 'heading'; text: string }
+  | { type: 'paragraph'; text: string }
+  | { type: 'list'; items: string[] }
+  | { type: 'image'; src: string };
+
+export interface ProjectDetail extends Project {
+  client: string | null;
+  budget: string | null;
+  location: string | null;
+  sector: string | null;
+  completedAt: string | null;
+  content: ContentBlock[];
+  contentLocale: Locale;
+}
+
+export interface CaseStudy {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  image: string;
+  publishedAt: string | null;
+  excerpt: string;
+}
+
+export interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  summary: string;
+  image: string;
+  type: string;
+  category: string;
+  pricing: string;
+  price: number | null;
+  currency: string;
   url: string | null;
   isFeatured: boolean;
+}
+
+export interface ProductSearchResult {
+  products: Product[];
+  typeCounts: Record<string, number>;
+  categoryCounts: Record<string, number>;
+}
+
+export interface CaseStudyDetail extends CaseStudy {
+  content: ContentBlock[];
+  contentLocale: Locale;
 }
 
 export interface Testimonial {
@@ -67,6 +128,7 @@ export interface ClientLogo {
 export interface HomeData {
   services: Service[];
   projects: Project[];
+  caseStudies: CaseStudy[];
   testimonials: Testimonial[];
   deliveryStories: DeliveryStory[];
   pricingPlans: PricingPlan[];

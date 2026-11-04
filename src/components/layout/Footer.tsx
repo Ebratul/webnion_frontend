@@ -1,7 +1,8 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
+import Link from 'next/link';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { CONTACT, SECTION_IDS } from '@/lib/site';
+import { CONTACT, SECTION_IDS, sectionHref } from '@/lib/site';
 import { FacebookIcon, InstagramIcon } from '../ui/BrandIcons';
 import { Logo } from './Logo';
 
@@ -22,7 +23,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
   ];
 
   return (
-    <footer className="border-t border-line">
+    <footer className="bg-surface">
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1.1fr_1.5fr]">
         <div>
           <Logo locale={locale} />
@@ -35,7 +36,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={name}
-                  className="grid size-10 place-items-center rounded-full bg-tint text-accent transition-colors duration-200 hover:bg-primary hover:text-white"
+                  className="grid size-10 place-items-center rounded-xl bg-tint text-accent transition-colors duration-200 hover:bg-primary hover:text-white"
                 >
                   <Icon className="size-4" />
                 </a>
@@ -47,9 +48,11 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
         <nav aria-label={label}>
           <h2 className={headingClass}>{t.quickLinks}</h2>
           <ul className="mt-4 space-y-2.5">
-            <li><a href={`#${SECTION_IDS.portfolio}`} className={linkClass}>{nav.portfolio}</a></li>
-            <li><a href={`#${SECTION_IDS.pricing}`} className={linkClass}>{nav.pricing}</a></li>
-            <li><a href={`#${SECTION_IDS.team}`} className={linkClass}>{nav.team}</a></li>
+            <li><Link href={`/${locale}/project`} className={linkClass}>{nav.portfolio}</Link></li>
+            <li><Link href={`/${locale}/products`} className={linkClass}>{nav.products}</Link></li>
+            <li><Link href={sectionHref(locale, SECTION_IDS.pricing)} className={linkClass}>{nav.pricing}</Link></li>
+            <li><Link href={`/${locale}/case-studies`} className={linkClass}>{nav.caseStudies}</Link></li>
+            <li><Link href={sectionHref(locale, SECTION_IDS.team)} className={linkClass}>{nav.team}</Link></li>
             <li><a href={CONTACT.privacy} target="_blank" rel="noopener noreferrer" className={linkClass}>{t.privacy}</a></li>
           </ul>
         </nav>
@@ -58,7 +61,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
           <h2 className={headingClass}>{t.services}</h2>
           <ul className="mt-4 space-y-2.5">
             {t.serviceLinks.map((service) => (
-              <li key={service}><a href={`#${SECTION_IDS.services}`} className={linkClass}>{service}</a></li>
+              <li key={service.slug}><Link href={`/${locale}/services/${service.slug}`} className={linkClass}>{service.label}</Link></li>
             ))}
           </ul>
         </div>
@@ -88,8 +91,8 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
           </address>
         </div>
       </div>
-      <div className="border-t border-line">
-        <p className="container-page py-6 text-center text-xs text-muted">
+      <div className="container-page">
+        <p className="border-t border-line py-6 text-center text-xs text-muted">
           © {new Intl.NumberFormat(locale === 'bn' ? 'bn-BD' : 'en-US', { useGrouping: false }).format(2026)} {t.rights}
         </p>
       </div>

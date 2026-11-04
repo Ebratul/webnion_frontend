@@ -142,6 +142,20 @@
   }
 }
 
+/* Logos are made for a white background, so this band stays light in both themes. */
+@utility band-light {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --fg: #0e0e14;
+  --muted: #5a5a6c;
+  --line: rgb(16 16 40 / 0.1);
+  --accent: #6d28d9;
+  --shadow: 0 18px 40px -24px rgb(50 30 110 / 0.28);
+  background: #ffffff;
+  color: var(--fg);
+}
+
 /* The brand band stays dark in both themes, so it pins the dark tokens for everything inside it. */
 @utility band-dark {
   color-scheme: dark;
@@ -158,39 +172,62 @@
   color: var(--fg);
 }
 
-/* Hero planet: an oversized circle whose lit rim forms the horizon. */
+/* Hero planet: a circle about as wide as the screen, whose lit rim forms the horizon. */
 .hero-sky {
-  background: var(--bg);
+  background: #010101;
 }
 
 .planet {
   position: absolute;
   left: 50%;
-  top: clamp(3.5rem, 7vh, 5rem);
-  width: max(135vw, 72rem);
+  top: clamp(2rem, 6.2vh, 3.5rem);
+  width: max(96vw, 46rem);
   aspect-ratio: 1;
   translate: -50% 0;
   border-radius: 50%;
-  background: radial-gradient(closest-side, #000 90%, #020617 97%, #06122e 100%);
+  background: radial-gradient(closest-side, #030b1c 70%, #051228 88%, #06183a 100%);
   box-shadow:
-    inset 0 3px 2px -1px rgb(191 219 254 / 0.85),
-    inset 0 18px 34px -10px rgb(59 130 246 / 0.75),
-    inset 0 60px 90px -30px rgb(37 99 235 / 0.4),
-    0 -2px 26px rgb(96 165 250 / 0.6),
-    0 -10px 90px rgb(37 99 235 / 0.42);
+    inset 0 0 2px 0.5px #a9d3fb,
+    inset 0 0 14px 9px #1c7ce2,
+    inset 0 0 44px 22px #0f55b0,
+    inset 0 0 110px 44px #05366d,
+    inset 0 0 220px 80px rgb(4 30 70 / 0.7),
+    0 0 8px 1px rgb(96 165 250 / 0.55),
+    0 0 46px 6px rgb(30 100 220 / 0.26);
 }
 
 .stars {
   position: absolute;
   inset: 0;
-  opacity: 0.5;
   background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E"),
     radial-gradient(1px 1px at 12% 22%, #fff 50%, transparent 51%),
     radial-gradient(1px 1px at 82% 14%, #fff 50%, transparent 51%),
     radial-gradient(1px 1px at 66% 8%, #c7d2fe 50%, transparent 51%),
     radial-gradient(1px 1px at 28% 9%, #fff 50%, transparent 51%),
     radial-gradient(1px 1px at 92% 34%, #c7d2fe 50%, transparent 51%),
-    radial-gradient(1px 1px at 5% 42%, #fff 50%, transparent 51%);
+    radial-gradient(1px 1px at 5% 42%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 96% 62%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 3% 74%, #c7d2fe 50%, transparent 51%);
+}
+
+/* The rim fades toward the bottom of the hero, so it reads as light falling from above. */
+.hero-sky::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  z-index: -1;
+  height: 48%;
+  background: linear-gradient(transparent, rgb(1 1 1 / 0.82));
+}
+
+/* Noise sits above the planet, so the sphere has some texture instead of a flat fill. */
+.planet-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
 
 [data-theme='light'] .hero-sky {
@@ -200,14 +237,157 @@
 [data-theme='light'] .planet {
   background: radial-gradient(closest-side, #fff 88%, #faf8ff 96%, #f1ebff 100%);
   box-shadow:
-    inset 0 2px 2px -1px rgb(255 255 255 / 0.9),
-    inset 0 18px 34px -12px rgb(124 58 237 / 0.34),
-    0 -2px 22px rgb(124 58 237 / 0.45),
-    0 -14px 90px rgb(124 58 237 / 0.26);
+    inset 0 0 2px 1px #fff,
+    inset 0 0 26px 6px rgb(124 58 237 / 0.28),
+    0 0 18px 1px rgb(124 58 237 / 0.42),
+    0 0 80px 8px rgb(124 58 237 / 0.22);
 }
 
-[data-theme='light'] .stars {
+[data-theme='light'] .hero-sky::after {
+  background: linear-gradient(transparent, rgb(255 255 255 / 0.82));
+}
+
+[data-theme='light'] .stars,
+[data-theme='light'] .planet-grain {
   display: none;
+}
+
+/* Hero entrance. Each line rises from behind a mask, one after another, set by --delay in Hero.tsx. */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.1em;
+  margin-block: -0.1em;
+}
+
+/* Bengali vowel signs reach further above and below the line than Latin letters. */
+:lang(bn) .hero-line {
+  padding-block: 0.24em;
+  margin-block: -0.24em;
+}
+
+.hero-line > span {
+  display: block;
+}
+
+@media (min-width: 40rem) {
+  .hero-subline {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-line > span {
+    animation: hero-line-rise 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--delay);
+  }
+
+  .hero-fade {
+    animation: hero-fade-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--delay);
+  }
+
+  .planet-rise {
+    animation: hero-planet-rise 1800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Below this width the paragraph wraps freely, so it fades in as one block rather than line by line. */
+  @media (min-width: 40rem) {
+    .hero-subline {
+      animation: hero-fade-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: var(--delay);
+    }
+
+    .hero-subtitle {
+      animation: none;
+    }
+  }
+}
+
+@keyframes hero-line-rise {
+  from {
+    opacity: 0;
+    transform: translateY(105%);
+  }
+}
+
+@keyframes hero-fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes hero-planet-rise {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem) scale(0.985);
+  }
+}
+
+/* Section text rises line by line. LineReveal sets data-reveal and each element's --line index. */
+.line-word {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal='ready'] .line-word,
+  [data-reveal='ready'] [data-line-item] {
+    opacity: 0;
+  }
+
+  [data-reveal='in'] .line-word {
+    animation: line-word-in 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--line, 0) * 140ms);
+  }
+
+  [data-reveal='in'] [data-line-item] {
+    animation: hero-fade-rise 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--line, 0) * 140ms);
+  }
+}
+
+@keyframes line-word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.7em);
+  }
+}
+
+/* Customer Problems: a soft sky behind the panel. */
+.problems-sky {
+  background:
+    radial-gradient(60% 40% at 20% 8%, rgb(255 255 255 / 0.75), transparent 70%),
+    radial-gradient(45% 30% at 80% 14%, rgb(255 255 255 / 0.6), transparent 70%),
+    linear-gradient(180deg, #e6eefb 0%, #f1eefa 48%, #fde8ef 100%);
+}
+
+[data-theme='dark'] .problems-sky,
+:root:not([data-theme]) .problems-sky {
+  background:
+    radial-gradient(60% 40% at 20% 8%, rgb(124 58 237 / 0.16), transparent 70%),
+    linear-gradient(180deg, #11142a 0%, #17132a 50%, #2a1328 100%);
+}
+
+.problems-accent {
+  font-family: var(--font-poppins-italic), var(--font-poppins), sans-serif;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Bengali has no italic forms, so the accent line stands out through colour instead. */
+:lang(bn) .problems-accent {
+  font-family: inherit;
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* Fan of phone screens in the final section. It fades out at the bottom, into the footer. */
+.fan {
+  --u: clamp(5px, 1vw, 14.4px);
+  width: calc(var(--u) * 88);
+  height: calc(var(--u) * 26);
+  mask-image: linear-gradient(#000 35%, transparent 98%);
 }
 
 /* Infinite project mosaic. Each track holds its images twice, so -50% lands on an identical frame. */
@@ -282,16 +462,32 @@
   }
 }
 
-/* Cards with text stop on hover so they can be read. */
+/* Rows stop under the mouse so cards can be read, and can be dragged left and right. */
+.marquee-track {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+[data-dragging='true'] .marquee-track {
+  animation-play-state: paused;
+}
+
+[data-dragging='true'],
+[data-dragging='true'] * {
+  cursor: grabbing;
+}
+
 @media (hover: hover) {
-  .marquee-wrap:hover .marquee-track {
+  [data-marquee]:hover .marquee-track {
     animation-play-state: paused;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Paused rather than removed, so rows that do not fit can still be dragged by hand. */
   .marquee-track {
-    animation: none;
+    animation-play-state: paused;
   }
 
   .marquee-pause {
@@ -304,6 +500,7 @@
   }
 
   .marquee-wrap .marquee-track {
+    animation: none;
     width: auto;
     justify-content: center;
   }

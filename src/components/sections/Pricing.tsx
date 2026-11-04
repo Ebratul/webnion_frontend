@@ -14,15 +14,18 @@ interface PricingProps {
   plans: PricingPlan[];
 }
 
-const PlanSummary = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale }) => (
+const PlanName = ({ plan }: { plan: PricingPlan }) => (
   <>
     <h3 className="text-xl font-semibold">{plan.name}</h3>
     <p className="mt-1 min-h-11 text-sm text-muted">{plan.tagline}</p>
-    <p className="mt-4 flex items-baseline gap-2">
-      <span className="text-4xl font-semibold tabular-nums sm:text-5xl">{formatPrice(plan.price, plan.currency, locale)}</span>
-      <span className="text-sm text-muted">{t.starting}</span>
-    </p>
   </>
+);
+
+const PlanPrice = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale }) => (
+  <p className="flex items-baseline gap-2">
+    <span className="text-4xl font-semibold tabular-nums">{formatPrice(plan.price, plan.currency, locale)}</span>
+    <span className="text-xs font-medium uppercase text-muted [&:lang(en)]:tracking-wide">{t.starting}</span>
+  </p>
 );
 
 const PlanFeatures = ({ plan, t }: { plan: PricingPlan; t: Dictionary['pricing'] }) => (
@@ -39,23 +42,23 @@ const PlanFeatures = ({ plan, t }: { plan: PricingPlan; t: Dictionary['pricing']
   </>
 );
 
-const planLinkClass = 'flex min-h-12 items-center justify-center gap-2 rounded-full text-sm font-semibold transition-colors duration-200';
+const buttonClass = 'flex items-center justify-center gap-2 rounded-xl text-sm font-semibold text-white transition-colors duration-200';
 
 export const Pricing = ({ locale, t, plans }: PricingProps) => (
   <section id={SECTION_IDS.pricing} aria-labelledby="pricing-title" className="section-y">
     <div className="container-page">
-      <SectionHeading id="pricing-title" eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
+      <SectionHeading id="pricing-title" title={t.title} />
 
-      {/* Desktop: plans share one table-like card, and the highlighted plan lifts out of it */}
+      {/* Desktop: plans share one table, and the highlighted plan lifts out of it as its own card */}
       <div className="reveal relative mt-12 lg:mt-24">
-        <div aria-hidden className="absolute inset-0 hidden rounded-3xl border border-line bg-bg shadow-soft lg:block" />
+        <div aria-hidden className="absolute inset-0 hidden rounded-2xl border border-line bg-bg shadow-soft lg:block" />
         <ul
           style={{ '--plan-count': plans.length } as CSSProperties}
           className="relative grid gap-6 lg:grid-cols-[repeat(var(--plan-count),minmax(0,1fr))] lg:gap-0"
         >
           {plans.map((plan) =>
             plan.isFeatured ? (
-              <li key={plan.id} className="relative z-10 flex flex-col rounded-[2rem] border-2 border-primary bg-surface p-3 shadow-soft lg:-mb-4 lg:-mt-14">
+              <li key={plan.id} className="relative z-10 flex flex-col rounded-[2.25rem] border-4 border-bg bg-surface-2 p-2 shadow-soft ring-1 ring-primary/40 lg:-mb-5 lg:-mt-14">
                 <div className="p-4 sm:p-5">
                   <div className="mb-3 flex items-start justify-between gap-3">
                     <span className="grid size-11 place-items-center rounded-full border border-line bg-bg text-accent">
@@ -63,46 +66,44 @@ export const Pricing = ({ locale, t, plans }: PricingProps) => (
                     </span>
                     {plan.badge && <span className="rounded-full border border-primary/40 bg-tint px-3 py-1 text-xs font-semibold text-accent">{plan.badge}</span>}
                   </div>
-                  <PlanSummary plan={plan} t={t} locale={locale} />
+                  <PlanName plan={plan} />
+                  <div className="mt-4 flex items-end justify-between gap-3">
+                    <PlanPrice plan={plan} t={t} locale={locale} />
+                    <span className="max-w-24 text-right text-xs leading-snug text-muted">{t.projectBased}</span>
+                  </div>
                 </div>
-                <div className="flex flex-1 flex-col rounded-3xl bg-bg p-4 sm:p-5">
+                <div className="flex flex-1 flex-col rounded-[1.75rem] bg-bg p-4 shadow-soft sm:p-5">
                   <PlanFeatures plan={plan} t={t} />
                   <div className="mt-auto pt-6">
-                    <ServiceLink slug={plan.slug} className={`${planLinkClass} bg-gradient-to-b from-primary-hover to-primary text-white hover:from-primary hover:to-primary`}>
+                    <ServiceLink slug={plan.slug} className={`${buttonClass} min-h-14 rounded-full bg-gradient-to-b from-primary-hover to-primary hover:from-primary hover:to-primary`}>
                       {t.cta}
-                      <ArrowUpRight aria-hidden className="size-4" />
                     </ServiceLink>
                   </div>
                 </div>
               </li>
             ) : (
-              <li key={plan.id} className="rounded-3xl border border-line bg-bg p-6 sm:p-8 lg:rounded-none lg:border-0 lg:bg-transparent">
-                <PlanSummary plan={plan} t={t} locale={locale} />
-                <ServiceLink slug={plan.slug} className={`${planLinkClass} mt-5 bg-tint text-accent hover:bg-primary hover:text-white`}>
+              <li key={plan.id} className="flex flex-col rounded-2xl border border-line bg-bg p-6 lg:rounded-none lg:border-0 lg:bg-transparent lg:[&:not(:first-child)]:border-l">
+                <PlanName plan={plan} />
+                <div className="mt-4">
+                  <PlanPrice plan={plan} t={t} locale={locale} />
+                </div>
+                <ServiceLink slug={plan.slug} className={`${buttonClass} mt-4 min-h-10 bg-primary hover:bg-primary-hover`}>
                   {t.cta}
-                  <ArrowUpRight aria-hidden className="size-4" />
                 </ServiceLink>
-                <div className="mt-7">
+                <div className="mt-7 flex-1">
                   <PlanFeatures plan={plan} t={t} />
                 </div>
+                <ServiceLink slug={plan.slug} className="mt-8 inline-flex items-center gap-1.5 self-start text-xs font-medium text-muted transition-colors duration-200 hover:text-accent">
+                  <ArrowUpRight aria-hidden className="size-3.5" />
+                  {t.askPlan}
+                </ServiceLink>
               </li>
             ),
           )}
         </ul>
       </div>
 
-      <p className="reveal mx-auto mt-10 max-w-2xl text-center text-xs leading-relaxed text-muted">{t.note}</p>
-
-      <div className="reveal mt-6 flex flex-col items-center justify-between gap-4 rounded-2xl border border-line bg-surface p-6 text-center md:flex-row md:text-left">
-        <p className="font-medium">{t.customTitle}</p>
-        <a
-          href={`#${SECTION_IDS.contact}`}
-          className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-accent transition-transform duration-200 hover:translate-x-0.5"
-        >
-          {t.customCta}
-          <ArrowUpRight aria-hidden className="size-4" />
-        </a>
-      </div>
+      <p className="reveal mx-auto mt-12 max-w-2xl text-center text-xs leading-relaxed text-muted">{t.note}</p>
     </div>
   </section>
 );

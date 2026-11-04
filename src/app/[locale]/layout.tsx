@@ -1,26 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import { Hind_Siliguri, Poppins } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { ThemeScript } from '@/components/layout/ThemeScript';
 import { LOCALES, isLocale } from '@/i18n/config';
 import { getDictionary } from '@/i18n';
+import { fontClasses } from '@/lib/fonts';
 import { SITE_URL } from '@/lib/site';
 import '../globals.css';
-
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-poppins',
-  display: 'swap',
-});
-
-const hindSiliguri = Hind_Siliguri({
-  subsets: ['bengali', 'latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-hind',
-  display: 'swap',
-});
 
 export const viewport: Viewport = { themeColor: '#050507' };
 
@@ -55,7 +41,7 @@ export default async function RootLayout({ children, params }: { children: React
   if (!isLocale(locale)) notFound();
 
   return (
-    <html lang={locale} className={`${poppins.variable} ${hindSiliguri.variable}`} suppressHydrationWarning>
+    <html lang={locale} className={fontClasses} suppressHydrationWarning>
       <body>
         <ThemeScript />
         {children}

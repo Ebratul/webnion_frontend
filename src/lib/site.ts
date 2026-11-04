@@ -12,6 +12,9 @@ export const CONTACT = {
   privacy: 'https://webnion.net/p/privacy-policy',
 };
 
+// Section links carry the locale path so they also work from project and case study pages
+export const sectionHref = (locale: string, id: string) => `/${locale}#${id}`;
+
 export const SECTION_IDS = {
   services: 'services',
   portfolio: 'portfolio',

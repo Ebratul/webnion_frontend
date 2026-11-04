@@ -1,89 +1,90 @@
-import { Phone } from 'lucide-react';
+import { Send } from 'lucide-react';
 import Image from 'next/image';
-import { Suspense } from 'react';
+import type { CSSProperties } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
 import { CONTACT, SECTION_IDS } from '@/lib/site';
-import type { PricingPlan, Project, Service } from '@/lib/types';
+import type { PricingPlan, Service } from '@/lib/types';
 import { WhatsAppIcon } from '../ui/BrandIcons';
-import { InquiryForm } from './InquiryForm';
+import { LineReveal } from '../ui/LineReveal';
+import { LineText } from '../ui/LineText';
+import { InquiryButton, InquiryDialog } from './InquiryDialog';
 
 interface FinalInquiryProps {
   locale: Locale;
   t: Dictionary['inquiry'];
+  closeLabel: string;
   services: Service[];
   plans: PricingPlan[];
-  projects: Project[];
 }
 
-// Rotation and depth for the fan of project mockups, outermost to centre to outermost.
+// Live mobile screens of client sites. Sizes are in --u, about 1% of the screen width, so the fan scales as one piece.
 const FAN = [
-  { rotate: '-14deg', x: '-112%', y: '15%', scale: 0.82, z: 1 },
-  { rotate: '-7deg', x: '-58%', y: '5%', scale: 0.92, z: 2 },
-  { rotate: '0deg', x: '0%', y: '0%', scale: 1, z: 3 },
-  { rotate: '7deg', x: '58%', y: '5%', scale: 0.92, z: 2 },
-  { rotate: '14deg', x: '112%', y: '15%', scale: 0.82, z: 1 },
+  { image: 'tasin', width: 14, x: -34, y: 11, rotate: -4, opacity: 0.6, z: 1 },
+  { image: 'saltfoodmart', width: 18, x: -19, y: 5, rotate: -7, opacity: 0.92, z: 2 },
+  { image: 'sabazarshop', width: 22, x: 0, y: 0, rotate: 0, opacity: 1, z: 3 },
+  { image: 'neqvix', width: 18, x: 19, y: 5, rotate: 7, opacity: 0.92, z: 2 },
+  { image: 'gigaloy', width: 14, x: 34, y: 11, rotate: 4, opacity: 0.6, z: 1 },
 ];
 
-const contactButton = 'flex min-h-14 items-center gap-3 rounded-2xl border border-white/10 bg-ink px-5 py-2 text-left text-white transition-colors duration-200 hover:border-accent';
+const badgeClass =
+  'flex min-h-12 items-center gap-2.5 rounded-xl border border-white/15 bg-ink px-4 py-1.5 text-left text-white transition-colors duration-200 hover:border-accent';
 
-export const FinalInquiry = ({ locale, t, services, plans, projects }: FinalInquiryProps) => {
-  const options = [
-    ...services.map((service) => ({ slug: service.slug, label: service.title })),
-    ...plans.map((plan) => ({ slug: plan.slug, label: plan.name })),
-  ];
-  const fanProjects = projects.slice(0, FAN.length);
+export const inquiryOptions = (services: Service[], plans: PricingPlan[]) => [
+  ...services.map((service) => ({ slug: service.slug, label: service.title })),
+  ...plans.map((plan) => ({ slug: plan.slug, label: plan.name })),
+];
 
+export const FinalInquiry = ({ locale, t, closeLabel, services, plans }: FinalInquiryProps) => {
   return (
-    <section id={SECTION_IDS.contact} aria-labelledby="inquiry-title" className="overflow-hidden bg-surface pt-20 lg:pt-28">
-      <div className="container-page text-center">
-        <h2 id="inquiry-title" className="reveal mx-auto max-w-3xl text-4xl font-semibold lg:text-5xl">
-          {t.title}
+    <section id={SECTION_IDS.contact} aria-labelledby="inquiry-title" className="overflow-hidden bg-surface pt-20 lg:pt-24">
+      <LineReveal className="container-page text-center">
+        <h2 id="inquiry-title" className="mx-auto max-w-3xl text-3xl font-semibold sm:text-4xl lg:text-5xl">
+          <LineText text={t.title} />
         </h2>
-        <p className="reveal mx-auto mt-4 max-w-2xl text-muted">{t.subtitle}</p>
+        <p className="mx-auto mt-4 max-w-xl text-sm text-fg/80 sm:text-base">
+          <LineText text={t.subtitle} />
+        </p>
 
-        <div className="reveal mt-7 flex flex-wrap justify-center gap-3">
-          <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={contactButton}>
+        <div data-line-item className="mt-7 flex flex-wrap justify-center gap-3">
+          <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={badgeClass}>
             <WhatsAppIcon className="size-6 text-whatsapp" />
             <span>
-              <span className="block text-[0.6875rem] leading-tight text-white/70">{t.whatsappSmall}</span>
+              <span className="block text-[0.625rem] leading-tight text-white/75">{t.whatsappSmall}</span>
               <span className="block text-sm font-semibold leading-tight">{t.whatsappBig}</span>
             </span>
           </a>
-          <a href={`tel:${CONTACT.phoneBd}`} className={contactButton}>
-            <Phone aria-hidden className="size-6 text-accent" />
+          <InquiryButton className={badgeClass}>
+            <Send aria-hidden className="size-6 text-accent" />
             <span>
-              <span className="block text-[0.6875rem] leading-tight text-white/70">{t.callSmall}</span>
-              <span dir="ltr" className="block text-sm font-semibold leading-tight">{CONTACT.phoneBdLabel}</span>
+              <span className="block text-[0.625rem] leading-tight text-white/75">{t.inquirySmall}</span>
+              <span className="block text-sm font-semibold leading-tight">{t.inquiryBig}</span>
             </span>
-          </a>
+          </InquiryButton>
         </div>
 
-        {fanProjects.length === FAN.length && (
-          <div aria-hidden className="relative mx-auto mt-14 hidden h-72 max-w-5xl md:block">
-            {fanProjects.map((project, index) => {
-              const fan = FAN[index]!;
-              return (
-                <div
-                  key={project.id}
-                  className="absolute left-1/2 top-0 w-64 -translate-x-1/2 overflow-hidden rounded-2xl border border-line bg-white shadow-soft"
-                  style={{ transform: `translateX(-50%) translate(${fan.x}, ${fan.y}) rotate(${fan.rotate}) scale(${fan.scale})`, zIndex: fan.z }}
-                >
-                  <Image src={project.image} alt="" width={768} height={768} sizes="256px" className="aspect-square w-full object-cover" />
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        <div className="relative z-10 mx-auto mt-10 max-w-3xl rounded-t-3xl border border-b-0 border-line bg-bg p-6 text-left shadow-soft sm:p-10 md:-mt-24">
-          <h3 className="text-2xl font-semibold">{t.formTitle}</h3>
-          <p className="mb-7 mt-2 text-sm text-muted">{t.formSubtitle}</p>
-          <Suspense>
-            <InquiryForm locale={locale} t={t} options={options} />
-          </Suspense>
+        <div data-line-item aria-hidden className="fan relative left-1/2 mt-12 -translate-x-1/2 lg:mt-16">
+          {FAN.map((card) => (
+            <div
+              key={card.image}
+              className="absolute left-1/2 top-0 overflow-hidden rounded-t-[1.75rem] bg-white shadow-soft"
+              style={
+                {
+                  width: `calc(var(--u) * ${card.width})`,
+                  marginLeft: `calc(var(--u) * ${card.width / -2})`,
+                  transform: `translate(calc(var(--u) * ${card.x}), calc(var(--u) * ${card.y})) rotate(${card.rotate}deg)`,
+                  opacity: card.opacity,
+                  zIndex: card.z,
+                } as CSSProperties
+              }
+            >
+              <Image src={`/images/fan/${card.image}.webp`} alt="" width={660} height={880} sizes="(min-width: 1024px) 320px, 30vw" className="w-full" />
+            </div>
+          ))}
         </div>
-      </div>
+      </LineReveal>
+
+      <InquiryDialog locale={locale} t={t} closeLabel={closeLabel} options={inquiryOptions(services, plans)} />
     </section>
   );
 };
