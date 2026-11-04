@@ -39,7 +39,7 @@ export const FinalInquiry = ({ locale, t, closeLabel, services, plans }: FinalIn
   return (
     <section id={SECTION_IDS.contact} aria-labelledby="inquiry-title" className="overflow-hidden bg-[#faf2e6] pt-20 lg:pt-24 dark:bg-surface">
       <LineReveal className="container-page text-center">
-        <h2 id="inquiry-title" className="mx-auto max-w-3xl text-3xl font-semibold sm:text-4xl lg:text-5xl">
+        <h2 id="inquiry-title" className="mx-auto max-w-3xl text-3xl font-medium sm:text-4xl lg:text-[2.75rem]">
           <LineText text={t.title} />
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-sm text-fg/80 sm:text-base">

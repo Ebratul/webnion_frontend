@@ -9,7 +9,7 @@ import { ServiceCard } from '../ui/ServiceCard';
 export const Services = ({ locale, t, services }: { locale: Locale; t: Dictionary['services']; services: Service[] }) => (
   <section id={SECTION_IDS.services} aria-labelledby="services-title" className="action-violet pb-20 lg:pb-28">
     <div className="container-page">
-      <SectionHeading id="services-title" eyebrow={t.eyebrow} title={t.title} />
+      <SectionHeading id="services-title" title={t.title} />
 
       <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (

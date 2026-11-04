@@ -21,7 +21,7 @@ export const FeaturedProjects = ({ locale, t, a11y, projects, caseStudies }: Fea
   return (
     <section id={SECTION_IDS.portfolio} aria-labelledby="projects-title" className="action-violet pt-20 lg:pt-28">
       <div className="container-page">
-        <SectionHeading id="projects-title" eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
+        <SectionHeading id="projects-title" title={t.title} subtitle={t.subtitle} />
       </div>
 
       <div className="band-dark action-violet mt-10 bg-[#131620]! pb-14 pt-10 lg:mt-12 lg:pb-20 lg:pt-12">

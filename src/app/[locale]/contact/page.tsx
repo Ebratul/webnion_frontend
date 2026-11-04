@@ -118,7 +118,7 @@ export default async function ContactPage({ params }: PageProps) {
         <ul className={`${wrap} reveal mt-[51px] grid divide-y divide-line rounded-[22px] md:grid-cols-3 md:divide-x md:divide-y-0 ${lightCard} shadow-[0_18px_50px_rgb(20_13_38/0.05)]`}>
           <QuickFact Icon={Clock} label={t.responseLabel}>{t.responseValue}</QuickFact>
           <QuickFact Icon={Mail} label={t.emailLabel}>
-            <a href={`mailto:${CONTACT.supportEmail}`} className="transition-colors duration-200 hover:text-accent">{CONTACT.supportEmail}</a>
+            <a href={`mailto:${CONTACT.email}`} className="transition-colors duration-200 hover:text-accent">{CONTACT.email}</a>
           </QuickFact>
           <QuickFact Icon={Phone} label={t.callLabel}>
             <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="transition-colors duration-200 hover:text-accent">{CONTACT.phoneLocal}</a>
@@ -133,7 +133,7 @@ export default async function ContactPage({ params }: PageProps) {
             <ul className="mt-6 [&>li:last-child]:pb-0">
               <InfoRow Icon={MapPin} label={t.locationLabel}>{t.locationValue}</InfoRow>
               <InfoRow Icon={Mail} label={t.emailRowLabel}>
-                <a href={`mailto:${CONTACT.supportEmail}`} className="underline-offset-2 hover:underline">{CONTACT.supportEmail}</a>
+                <a href={`mailto:${CONTACT.email}`} className="underline-offset-2 hover:underline">{CONTACT.email}</a>
               </InfoRow>
               <InfoRow Icon={Phone} label={t.callRowLabel}>
                 <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="underline-offset-2 hover:underline">{CONTACT.phoneLocal}</a>
@@ -152,7 +152,7 @@ export default async function ContactPage({ params }: PageProps) {
         <section aria-labelledby="contact-faq-title" className="px-5 pb-20 lg:pb-[120px] lg:pt-[120px]">
           <LineReveal className="text-center">
             <p data-line-item className="text-[15px] font-medium uppercase text-accent [&:lang(en)]:tracking-[0.15em]">{t.faqEyebrow}</p>
-            <h2 id="contact-faq-title" className="mt-2 text-3xl font-semibold sm:text-[2.75rem] [&:lang(en)]:tracking-[-0.03em]">
+            <h2 id="contact-faq-title" className="mt-2 text-3xl font-medium sm:text-[2.75rem] [&:lang(en)]:tracking-[-0.03em]">
               <LineText text={t.faqTitle} />
             </h2>
           </LineReveal>

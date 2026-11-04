@@ -7,7 +7,7 @@ import { SectionHeading } from '../ui/SectionHeading';
 export const Team = ({ t, members }: { t: Dictionary['team']; members: TeamMember[] }) => (
   <section id={SECTION_IDS.team} aria-labelledby="team-title" className="section-y bg-surface">
     <div className="container-page">
-      <SectionHeading id="team-title" eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
+      <SectionHeading id="team-title" title={t.title} subtitle={t.subtitle} />
 
       <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 lg:grid-cols-6">
         {members.map((member) => (

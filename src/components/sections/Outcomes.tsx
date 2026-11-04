@@ -14,7 +14,7 @@ export const Outcomes = ({ t }: { t: Dictionary['outcomes'] }) => (
       <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:gap-12">
         <div className="flex flex-col justify-between gap-10">
           <LineReveal>
-            <h2 id="outcomes-title" className="text-4xl font-medium leading-[1.12] lg:text-[3.25rem] [&:lang(en)]:tracking-[-0.025em]">
+            <h2 id="outcomes-title" className="text-3xl font-medium sm:text-4xl lg:text-[2.75rem]">
               <LineText text={t.title} />
             </h2>
             <div data-line-item className="mt-7">

@@ -194,11 +194,10 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
                   className="aspect-square w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
               </div>
-              <div className="flex flex-1 items-center justify-between gap-3 p-3">
-                <div className="min-w-0">
-                  <p className="inline-block rounded-full border border-line bg-surface-2 px-2.5 py-0.5 text-[0.6875rem] text-muted">{project.category}</p>
-                  <h3 translate="no" className="mt-2 truncate text-sm font-medium">{project.name}</h3>
-                </div>
+              <div className="flex flex-1 flex-col gap-2 p-3">
+                <p className="max-w-full self-start truncate rounded-full border border-line bg-surface-2 px-2.5 py-0.5 text-[0.6875rem] text-muted">{project.category}</p>
+                <div className="flex items-center justify-between gap-3">
+                <h3 translate="no" className="min-w-0 truncate text-sm font-medium">{project.name}</h3>
                 {/* The link stretches over the whole card, so clicking the image or the name opens the project too */}
                 <Link
                   href={`/${locale}/project/${project.slug}`}
@@ -208,6 +207,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
                 >
                   <ArrowUpRight aria-hidden className="size-4" />
                 </Link>
+                </div>
               </div>
             </article>
           </li>

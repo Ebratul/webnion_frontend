@@ -81,7 +81,6 @@ export const en = {
     chatLabel: 'Common problems and how Webnion solves them',
   },
   services: {
-    eyebrow: 'Our Services',
     title: 'Websites, Software, And Automation For Better Sales.',
     cta: "Let's Discuss This Service",
     seeAll: 'See All Services',
@@ -95,7 +94,6 @@ export const en = {
     items: ['Get More Customers', 'Build Customer Trust', 'Manage Work Smarter', 'Track & Improve Sales'],
   },
   projects: {
-    eyebrow: 'Featured Projects',
     title: 'A Look At Some Of Our Recent Websites',
     subtitle: 'Explore some of the websites we have designed and developed to help businesses grow online.',
     viewProject: 'View project',
@@ -277,7 +275,6 @@ export const en = {
     askProduct: 'Ask About This Product',
   },
   testimonials: {
-    eyebrow: 'Client Testimonials',
     title: 'Loved By Clients. Proven By Results.',
     subtitle: 'We take pride in delivering real business value, clean design, and reliable digital solutions for our clients.',
     resultChip: 'Client Result',
@@ -324,7 +321,6 @@ export const en = {
     askPlan: 'Ask About This Plan',
   },
   team: {
-    eyebrow: 'Team & Expertise',
     title: 'The People Behind Webnion',
     subtitle:
       'A focused team of developers, designers, and digital specialists working together to create reliable products and measurable business results.',

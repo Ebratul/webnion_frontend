@@ -13,7 +13,7 @@ interface TestimonialGridProps {
 }
 
 const Identity = ({ item }: { item: Testimonial }) => (
-  <div className="absolute inset-x-0 bottom-0 flex items-center gap-2.5 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-3 pt-10 text-left text-white">
+  <div className="absolute inset-x-0 bottom-0 flex items-center gap-2.5 bg-gradient-to-t from-black via-black/85 to-transparent p-3 pt-10 text-left text-white">
     {item.avatar && (
       <Image src={item.avatar} alt="" width={36} height={36} sizes="36px" className="size-9 shrink-0 rounded-full bg-white object-cover" />
     )}

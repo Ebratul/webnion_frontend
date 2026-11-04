@@ -10,7 +10,7 @@ export const DeliveryStories = ({ t, stories }: { t: Dictionary['delivery']; sto
   <section aria-labelledby="delivery-title" className="py-20 lg:py-28">
     <div className="container-page">
       <LineReveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-        <h2 id="delivery-title" className="max-w-2xl text-4xl font-bold uppercase sm:text-5xl">
+        <h2 id="delivery-title" className="max-w-2xl text-3xl font-semibold uppercase sm:text-4xl lg:text-[2.75rem]">
           <LineText text={t.title} />
         </h2>
         <div className="max-w-sm">

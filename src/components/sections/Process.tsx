@@ -8,9 +8,9 @@ const STEP_ICONS = [CalendarCheck, PencilRuler, Rocket];
 
 // Node and text positions are percentages of the 1200 x 440 line artwork at desktop width.
 const DESKTOP_LAYOUT = [
-  { node: { left: '16.5%', top: '59.5%' }, text: { left: '4%', top: '4%' }, number: { left: '30%', top: '-3%' } },
-  { node: { left: '49%', top: '9%' }, text: { left: '37%', top: '53%' }, number: { left: '65%', top: '59%' } },
-  { node: { left: '87%', top: '20%' }, text: { left: '70%', top: '64%' }, number: { left: '94%', top: '55%' } },
+  { node: { left: '16.5%', top: '59.5%' }, text: { left: '4%', top: '4%' } },
+  { node: { left: '49%', top: '9%' }, text: { left: '37%', top: '53%' } },
+  { node: { left: '87%', top: '20%' }, text: { left: '70%', top: '64%' } },
 ];
 
 export const Process = ({ t }: { t: Dictionary['process'] }) => (
@@ -43,12 +43,12 @@ export const Process = ({ t }: { t: Dictionary['process'] }) => (
                 <span aria-hidden className="absolute grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-line bg-bg text-accent shadow-soft" style={layout.node}>
                   <Icon className="size-6" />
                 </span>
-                <span aria-hidden className="absolute select-none text-8xl font-bold text-fg/[0.07]" style={layout.number}>
-                  {index + 1}
-                </span>
                 <div className="absolute w-[27%]" style={layout.text}>
-                  <h3 className="text-lg font-semibold">{step.title}</h3>
-                  <p className="mt-2 text-sm text-muted">{step.description}</p>
+                  <span aria-hidden className="absolute -top-7 right-2 select-none text-7xl font-semibold leading-none text-fg/[0.08]">
+                    {index + 1}
+                  </span>
+                  <h3 className="relative text-lg font-medium">{step.title}</h3>
+                  <p className="relative mt-2 text-sm text-muted">{step.description}</p>
                 </div>
               </li>
             );

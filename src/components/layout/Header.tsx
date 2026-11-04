@@ -58,7 +58,7 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
         overHero ? 'border-transparent bg-transparent' : 'border-line bg-bg dark:border-transparent dark:bg-black'
       }`}
     >
-      <div className="flex h-[4.5rem] items-center justify-between gap-2 px-5 sm:gap-4 xl:h-20 xl:px-[15px] min-[100rem]:px-[30px]">
+      <div className="flex h-[4.5rem] items-center justify-between gap-2 px-5 sm:gap-4 xl:h-20 xl:px-6 min-[100rem]:px-[30px]">
         <Logo locale={locale} />
 
         <nav aria-label={a11y.primaryNav} className="hidden xl:block">

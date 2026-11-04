@@ -20,7 +20,7 @@ export const Testimonials = ({ locale, t, a11y, testimonials }: TestimonialsProp
   return (
     <section aria-labelledby="testimonials-title" className="action-indigo pt-20 lg:pt-24">
       <div className="container-page">
-        <SectionHeading id="testimonials-title" eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
+        <SectionHeading id="testimonials-title" title={t.title} subtitle={t.subtitle} />
       </div>
 
       <div className="mt-10 bg-[#f7f7fe] py-10 lg:py-14 dark:bg-surface">

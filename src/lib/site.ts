@@ -2,7 +2,6 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://webnion.com
 
 export const CONTACT = {
   email: 'hello@webnion.com',
-  supportEmail: 'support@webnion.com',
   phoneLocal: '01774029768',
   phoneBd: '+8801774029768',
   phoneBdLabel: '+880 1774-029768',

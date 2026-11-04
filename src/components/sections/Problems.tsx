@@ -61,7 +61,7 @@ export const Problems = ({ t }: { t: Dictionary['problems'] }) => (
               </span>
             </div>
 
-            <ol tabIndex={0} aria-label={t.chatLabel} className="no-scrollbar max-h-[20rem] space-y-3 overflow-y-auto overscroll-contain rounded-xl py-1">
+            <ol tabIndex={0} aria-label={t.chatLabel} className="chat-fade no-scrollbar max-h-[20rem] space-y-3 overflow-y-auto overscroll-contain rounded-xl pb-10 pt-1">
               {t.pairs.map((pair) => (
                 <li key={pair.problem} className="space-y-3">
                   <div className="flex items-end justify-end gap-2">

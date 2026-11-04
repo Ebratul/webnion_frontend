@@ -23,7 +23,7 @@ export const SectionHeading = ({ eyebrow, title, subtitle, id }: SectionHeadingP
         <Eyebrow>{eyebrow}</Eyebrow>
       </div>
     )}
-    <h2 id={id} className="mt-5 text-3xl font-semibold sm:text-4xl lg:text-[2.75rem]">
+    <h2 id={id} className="text-3xl font-medium sm:text-4xl lg:text-[2.75rem] [&:not(:first-child)]:mt-5">
       <LineText text={title} />
     </h2>
     {subtitle && (

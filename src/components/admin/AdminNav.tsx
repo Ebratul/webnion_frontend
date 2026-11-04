@@ -28,7 +28,7 @@ export const AdminNav = ({ user, newInquiries }: { user: AdminUser; newInquiries
     <aside className="border-b border-line bg-surface lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-64 lg:flex-col lg:border-b-0 lg:border-r">
       <div className="flex items-center justify-between px-5 py-4 lg:py-6">
         <Link href="/admin" aria-label="Webnion Admin" className="flex items-center gap-2.5">
-          <Image src="/images/brand/logo-white.png" alt="" width={273} height={42} priority className="h-[1.125rem] w-auto" />
+          <Image src="/images/brand/logo-white.png" alt="" width={229} height={42} priority className="h-[1.125rem] w-auto" />
           <span className="rounded-full border border-line px-2 py-0.5 text-[0.625rem] font-medium uppercase text-muted">Admin</span>
         </Link>
       </div>

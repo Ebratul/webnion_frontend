@@ -4,7 +4,7 @@ import type { Locale } from '@/i18n/config';
 
 export const Logo = ({ locale, className = '' }: { locale: Locale; className?: string }) => (
   <Link href={`/${locale}`} aria-label="Webnion" className={`inline-flex min-h-6 shrink-0 items-center ${className}`}>
-    <Image src="/images/brand/logo-white.png" alt="" width={273} height={42} priority className="hidden h-[1.125rem] w-auto min-[380px]:h-[26px] dark:block" />
-    <Image src="/images/brand/logo-dark.png" alt="" width={273} height={42} priority className="h-[1.125rem] w-auto min-[380px]:h-[26px] dark:hidden" />
+    <Image src="/images/brand/logo-white.png" alt="" width={229} height={42} priority className="hidden h-[1.125rem] w-auto min-[380px]:h-[26px] dark:block" />
+    <Image src="/images/brand/logo-dark.png" alt="" width={229} height={42} priority className="h-[1.125rem] w-auto min-[380px]:h-[26px] dark:hidden" />
   </Link>
 );
