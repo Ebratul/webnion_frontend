@@ -27,3 +27,12 @@ npm run dev                  # http://localhost:3000
 - Services, projects, products, case studies, testimonials, pricing, FAQs, team and logos: stored in the database and managed in the admin panel at `/admin`
 - Contact details and social links: `src/lib/site.ts`
 - Colours and design rules: `DESIGN.md` and `src/app/globals.css`
+
+## Deploying on Vercel
+
+```bash
+vercel deploy --prod
+```
+
+Set `API_URL`, `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_URL` in the project. The API must be running during the build, and
+its `CORS_ORIGINS` must include this site's address or the inquiry form will fail. Changing a `NEXT_PUBLIC_` value needs a redeploy.
