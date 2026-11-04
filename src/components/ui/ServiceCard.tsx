@@ -16,7 +16,7 @@ export const ServiceCard = ({ locale, service, cta, heading: Heading }: ServiceC
   const href = `/${locale}/services/${service.slug}`;
 
   return (
-    <article className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-2.5 shadow-soft">
+    <article className="action-violet group flex h-full flex-col rounded-2xl border border-line bg-surface p-2.5 shadow-soft">
       <Link href={href} tabIndex={-1} aria-hidden className="block overflow-hidden rounded-xl bg-tint">
         <Image
           src={service.image}

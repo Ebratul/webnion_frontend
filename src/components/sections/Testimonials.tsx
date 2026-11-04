@@ -18,7 +18,7 @@ export const Testimonials = ({ locale, t, a11y, testimonials }: TestimonialsProp
   const avatars = testimonials.filter((item) => item.avatar).slice(0, 5);
 
   return (
-    <section aria-labelledby="testimonials-title" className="pt-20 lg:pt-24">
+    <section aria-labelledby="testimonials-title" className="action-indigo pt-20 lg:pt-24">
       <div className="container-page">
         <SectionHeading id="testimonials-title" eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
       </div>

@@ -4,8 +4,8 @@ The source of truth for how the Webnion website looks. Read this before changing
 
 ## Direction
 
-Clean, simple and premium. Black space, one confident violet, generous whitespace and real work on show. Reference
-screenshots supply layout only: colour and type always stay Webnion's.
+Clean, simple and premium, with generous whitespace and real work on show. The client wants each homepage section in the
+colours of its reference image, and the site opens in dark mode. Fonts stay Poppins and Hind Siliguri.
 
 ## Homepage hero
 
@@ -14,7 +14,9 @@ Follows the client's reference: charcoal `#1E1E1E` with a faint warm glow in two
 
 ## Light mode section colours
 
-Sampled from the client's references. Every primary action stays Webnion violet, whatever colour the reference template used.
+Sampled from the client's references. Buttons are orange unless a section's image shows another colour, set with an `action-*`
+class in `globals.css`: Problems, Services and Featured Projects violet, Testimonials indigo, Outcomes navy, Process terracotta,
+Pricing blue, FAQs coral. Each is the closest colour to its image that keeps white button text readable.
 
 | Section | Background |
 | --- | --- |
@@ -42,9 +44,9 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 | `fg` | `#F6F6F9` | `#0E0E14` | Text |
 | `muted` | `#A3A3B2` | `#5A5A6C` | Secondary text |
 | `line` | white 10% | ink 10% | Hairlines |
-| `primary` | `#7C3AED` | `#7C3AED` | Primary actions (white text only) |
-| `accent` | `#A78BFA` | `#6D28D9` | Violet text and icons |
-| `tint` | violet 14% | violet 8% | Chips and selected states |
+| `primary` | `#CF4A14` | `#CF4A14` | Primary actions (white text only) |
+| `accent` | `#FB923C` | `#B53C0B` | Coloured text and icons |
+| `tint` | orange 16% | orange 8% | Chips and selected states |
 
 - Never use `primary` as text on dark surfaces: use `accent`, which keeps its contrast in both themes.
 - Green `#25D366` is for WhatsApp only. Amber is for review stars only.
@@ -64,10 +66,10 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 
 ## Components
 
-- **Primary button:** violet pill with the black arrow circle, Webnion's signature. Use one per view.
+- **Primary button:** pill in the section's action colour with the black arrow circle. Use one per view.
 - **Secondary button:** outlined pill.
 - **Eyebrow chip:** tinted pill with a dot, above section headings.
-- **Highlighted pricing plan:** violet border, raised, icon and badge, inner panel, gradient button.
+- **Highlighted pricing plan:** coloured ring, raised, icon and badge, inner panel, gradient button.
 
 ## Motion
 

@@ -14,7 +14,7 @@ const DESKTOP_LAYOUT = [
 ];
 
 export const Process = ({ t }: { t: Dictionary['process'] }) => (
-  <section aria-labelledby="process-title" className="section-y dark:bg-surface">
+  <section aria-labelledby="process-title" className="action-terracotta section-y dark:bg-surface">
     <div className="container-page">
       <SectionHeading id="process-title" eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
       <div className="reveal mt-7 flex justify-center">

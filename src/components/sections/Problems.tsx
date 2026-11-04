@@ -8,7 +8,7 @@ import { LineText } from '../ui/LineText';
 const bubbleClass = 'max-w-[78%] rounded-2xl border border-line bg-bg px-3.5 py-2.5 text-[0.8125rem] leading-relaxed shadow-sm';
 
 export const Problems = ({ t }: { t: Dictionary['problems'] }) => (
-  <section aria-labelledby="problems-title" className="pb-20 lg:pb-28">
+  <section aria-labelledby="problems-title" className="action-violet pb-20 lg:pb-28">
     <div className="container-page">
       <div className="reveal problems-sky grid items-center gap-10 overflow-hidden rounded-[2rem] p-6 sm:p-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10 lg:p-14">
         <LineReveal>

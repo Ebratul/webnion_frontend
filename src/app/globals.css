@@ -11,10 +11,11 @@
   --fg: #f6f6f9;
   --muted: #a3a3b2;
   --line: rgb(255 255 255 / 0.1);
-  --primary: #7c3aed;
-  --primary-hover: #8b4cf5;
-  --accent: #a78bfa;
-  --tint: rgb(124 58 237 / 0.14);
+  /* Orange from the client's references, darkened just enough for white button text to stay readable */
+  --primary: #cf4a14;
+  --primary-hover: #b53f10;
+  --accent: #fb923c;
+  --tint: rgb(207 74 20 / 0.16);
   --shadow: 0 24px 60px -24px rgb(0 0 0 / 0.8);
   --font: var(--font-poppins), var(--font-hind), system-ui, sans-serif;
   --heading-tracking: -0.025em;
@@ -30,9 +31,8 @@
   --fg: #0e0e14;
   --muted: #5a5a6c;
   --line: rgb(16 16 40 / 0.1);
-  --primary-hover: #6d28d9;
-  --accent: #6d28d9;
-  --tint: rgb(124 58 237 / 0.08);
+  --accent: #b53c0b;
+  --tint: rgb(207 74 20 / 0.08);
   --shadow: 0 24px 60px -28px rgb(50 30 110 / 0.28);
 }
 
@@ -150,7 +150,7 @@
   --fg: #0e0e14;
   --muted: #5a5a6c;
   --line: rgb(16 16 40 / 0.1);
-  --accent: #6d28d9;
+  --accent: #b53c0b;
   --shadow: 0 18px 40px -24px rgb(50 30 110 / 0.28);
   background: #ffffff;
   color: var(--fg);
@@ -165,11 +165,87 @@
   --fg: #f6f6f9;
   --muted: #a3a3b2;
   --line: rgb(255 255 255 / 0.1);
-  --primary-hover: #8b4cf5;
-  --accent: #a78bfa;
-  --tint: rgb(124 58 237 / 0.14);
+  --accent: #fb923c;
+  --tint: rgb(207 74 20 / 0.16);
   background: #050507;
   color: var(--fg);
+}
+
+/* Homepage sections use the action colour from the client's image of that section; everything else stays orange.
+   Colours are the closest to each image that keep white button text readable. */
+.action-violet {
+  --primary: #7c3aed;
+  --primary-hover: #6d28d9;
+  --accent: #6d28d9;
+  --tint: rgb(124 58 237 / 0.08);
+}
+
+.action-indigo {
+  --primary: #5f45ff;
+  --primary-hover: #4a32e0;
+  --accent: #4f36e8;
+  --tint: rgb(95 69 255 / 0.08);
+}
+
+.action-navy {
+  --primary: #153a5d;
+  --primary-hover: #0f2c47;
+  --accent: #153a5d;
+  --tint: rgb(21 58 93 / 0.08);
+}
+
+.action-terracotta {
+  --primary: #b15c2d;
+  --primary-hover: #97491f;
+  --accent: #97491f;
+  --tint: rgb(177 92 45 / 0.08);
+}
+
+.action-blue {
+  --primary: #0073e6;
+  --primary-hover: #005fc0;
+  --accent: #0062c4;
+  --tint: rgb(0 115 230 / 0.08);
+}
+
+.action-coral {
+  --primary: #d9381e;
+  --primary-hover: #bd2f18;
+  --accent: #b9301a;
+  --tint: rgb(217 56 30 / 0.08);
+}
+
+[data-theme='dark'] .action-violet,
+.band-dark.action-violet {
+  --accent: #a78bfa;
+  --tint: rgb(124 58 237 / 0.16);
+}
+
+[data-theme='dark'] .action-indigo {
+  --accent: #a9a0ff;
+  --tint: rgb(95 69 255 / 0.18);
+}
+
+[data-theme='dark'] .action-navy {
+  --primary: #1f5280;
+  --primary-hover: #2a659c;
+  --accent: #8dbbe6;
+  --tint: rgb(141 187 230 / 0.14);
+}
+
+[data-theme='dark'] .action-terracotta {
+  --accent: #e3a782;
+  --tint: rgb(177 92 45 / 0.2);
+}
+
+[data-theme='dark'] .action-blue {
+  --accent: #6cb2ff;
+  --tint: rgb(0 115 230 / 0.18);
+}
+
+[data-theme='dark'] .action-coral {
+  --accent: #ff8a75;
+  --tint: rgb(217 56 30 / 0.18);
 }
 
 /* Hero: charcoal with a faint warm glow in two corners, measured from the client's reference. */

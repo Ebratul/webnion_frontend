@@ -34,7 +34,7 @@ const PlanFeatures = ({ plan, t }: { plan: PricingPlan; t: Dictionary['pricing']
     <ul className="mt-4 space-y-3">
       {plan.features.map((feature) => (
         <li key={feature} className="flex items-start gap-2.5 text-sm">
-          <Check aria-hidden className="mt-1 size-4 shrink-0 text-accent" strokeWidth={2.5} />
+          <Check aria-hidden className="mt-1 size-4 shrink-0 text-emerald-600 dark:text-emerald-400" strokeWidth={2.5} />
           {feature}
         </li>
       ))}
@@ -45,7 +45,7 @@ const PlanFeatures = ({ plan, t }: { plan: PricingPlan; t: Dictionary['pricing']
 const buttonClass = 'flex items-center justify-center gap-2 rounded-xl text-sm font-semibold text-white transition-colors duration-200';
 
 export const Pricing = ({ locale, t, plans }: PricingProps) => (
-  <section id={SECTION_IDS.pricing} aria-labelledby="pricing-title" className="section-y">
+  <section id={SECTION_IDS.pricing} aria-labelledby="pricing-title" className="action-blue section-y">
     <div className="container-page">
       <SectionHeading id="pricing-title" title={t.title} />
 

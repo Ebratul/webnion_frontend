@@ -13,7 +13,7 @@ interface FaqsProps {
 }
 
 export const Faqs = ({ t, faqs, founder }: FaqsProps) => (
-  <section aria-labelledby="faq-title" className="section-y relative isolate overflow-hidden bg-[#f6f6f6] dark:bg-surface">
+  <section aria-labelledby="faq-title" className="action-coral section-y relative isolate overflow-hidden bg-[#f6f6f6] dark:bg-surface">
     <div aria-hidden className="absolute -right-24 top-10 -z-10 size-96 rounded-full bg-[#ffd9d0]/60 blur-3xl dark:bg-primary/10" />
     <div aria-hidden className="absolute -left-24 top-1/4 -z-10 size-80 rounded-full bg-[#ffd9d0]/60 blur-3xl dark:bg-primary/10" />
 

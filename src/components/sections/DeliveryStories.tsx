@@ -1,8 +1,8 @@
+import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import type { Dictionary } from '@/i18n';
 import { SECTION_IDS } from '@/lib/site';
 import type { DeliveryStory } from '@/lib/types';
-import { PrimaryLink } from '../ui/Button';
 import { LineReveal } from '../ui/LineReveal';
 import { LineText } from '../ui/LineText';
 
@@ -18,7 +18,12 @@ export const DeliveryStories = ({ t, stories }: { t: Dictionary['delivery']; sto
             <LineText text={t.subtitle} />
           </p>
           <div data-line-item className="mt-4">
-            <PrimaryLink href={`#${SECTION_IDS.contact}`}>{t.cta}</PrimaryLink>
+            <a href={`#${SECTION_IDS.contact}`} className="group inline-flex min-h-11 items-center gap-3 rounded-[3px] bg-primary py-1.5 pl-4 pr-1.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-primary-hover">
+              {t.cta}
+              <span className="grid size-8 place-items-center rounded-[2px] border border-white/80">
+                <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+              </span>
+            </a>
           </div>
         </div>
       </LineReveal>

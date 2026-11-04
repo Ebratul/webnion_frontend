@@ -65,7 +65,7 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
           <ul className="flex items-center gap-4 min-[1400px]:gap-6 min-[100rem]:gap-[30px]">
             {links.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} aria-current={pathname === link.href ? 'page' : undefined} className="text-sm font-medium text-fg/90 min-[1400px]:text-base transition-colors duration-200 hover:text-accent aria-[current=page]:text-accent dark:aria-[current=page]:text-[#8b5cf6]">
+                <Link href={link.href} aria-current={pathname === link.href ? 'page' : undefined} className="text-sm font-medium text-fg/90 min-[1400px]:text-base transition-colors duration-200 hover:text-accent aria-[current=page]:text-accent">
                   {link.label}
                 </Link>
               </li>
