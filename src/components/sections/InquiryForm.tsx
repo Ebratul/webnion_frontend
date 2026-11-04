@@ -2,13 +2,11 @@
 
 import { CheckCircle2, Loader2 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { useRef, useState, type FormEvent } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { toAsciiDigits } from '@/lib/format';
+import { InquiryHoneypot, useInquirySubmit, type InquiryField } from './useInquirySubmit';
 
-type FieldName = 'name' | 'email' | 'phone' | 'message';
-type FieldErrors = Partial<Record<FieldName, string>>;
+type FieldName = InquiryField;
 
 interface ServiceOption {
   slug: string;
@@ -21,83 +19,12 @@ interface InquiryFormProps {
   options: ServiceOption[];
 }
 
-const FIELD_ORDER: FieldName[] = ['name', 'email', 'phone', 'message'];
-const PHONE_PATTERN = /^\+?[0-9][0-9\s()-]{6,18}$/;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 const inputClass =
   'w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm text-fg outline-none transition-colors duration-200 placeholder:text-muted hover:border-accent/60 focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30 aria-invalid:border-red-500';
 
 export const InquiryForm = ({ locale, t, options }: InquiryFormProps) => {
   const preselected = useSearchParams().get('service');
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [formError, setFormError] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
-  const form = useRef<HTMLFormElement>(null);
-
-  const validate = (values: Record<string, string>) => {
-    const found: FieldErrors = {};
-    if ((values.name ?? '').length < 2) found.name = t.errors.name;
-    if (!EMAIL_PATTERN.test(values.email ?? '')) found.email = t.errors.email;
-    if (!PHONE_PATTERN.test(values.phone ?? '')) found.phone = t.errors.phone;
-    if ((values.message ?? '').length < 10) found.message = t.errors.message;
-    return found;
-  };
-
-  const showErrors = (found: FieldErrors) => {
-    setErrors(found);
-    const first = FIELD_ORDER.find((field) => found[field]);
-    if (first) form.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
-  };
-
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setFormError('');
-
-    const entries = [...new FormData(event.currentTarget).entries()].map(([key, value]) => [key, String(value).trim()]);
-    const values: Record<string, string> = Object.fromEntries(entries);
-    // Bangla keyboards produce Bengali digits, which the API's phone format does not accept
-    values.phone = toAsciiDigits(values.phone ?? '');
-
-    const found = validate(values);
-    if (Object.keys(found).length > 0) {
-      showErrors(found);
-      return;
-    }
-
-    setErrors({});
-    setStatus('submitting');
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/inquiries`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, locale }),
-      });
-
-      if (response.ok) {
-        setStatus('success');
-        return;
-      }
-
-      setStatus('idle');
-      if (response.status === 429) {
-        setFormError(t.errors.rateLimited);
-        return;
-      }
-
-      const body: { errors?: { path: string }[] } = await response.json().catch(() => ({}));
-      const fromServer: FieldErrors = {};
-      for (const { path } of body.errors ?? []) {
-        if ((FIELD_ORDER as string[]).includes(path)) fromServer[path as FieldName] = t.errors[path as FieldName];
-      }
-      if (Object.keys(fromServer).length > 0) showErrors(fromServer);
-      else setFormError(t.errors.generic);
-    } catch {
-      setStatus('idle');
-      setFormError(t.errors.generic);
-    }
-  };
+  const { form, errors, formError, status, onSubmit, reset } = useInquirySubmit(locale, t.errors, ['name', 'email', 'phone', 'message']);
 
   if (status === 'success') {
     return (
@@ -107,7 +34,7 @@ export const InquiryForm = ({ locale, t, options }: InquiryFormProps) => {
         <p className="mt-2 text-muted">{t.successText}</p>
         <button
           type="button"
-          onClick={() => setStatus('idle')}
+          onClick={reset}
           className="mt-6 min-h-12 rounded-full border border-line px-6 text-sm font-semibold transition-colors duration-200 hover:border-accent hover:text-accent"
         >
           {t.sendAnother}
@@ -166,11 +93,7 @@ export const InquiryForm = ({ locale, t, options }: InquiryFormProps) => {
         {fieldError('message')}
       </div>
 
-      {/* Honeypot: off-screen for people and screen readers, tempting for bots */}
-      <div aria-hidden className="absolute -left-[9999px] size-px overflow-hidden">
-        <label htmlFor="website">{t.fields.honeypot}</label>
-        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
-      </div>
+      <InquiryHoneypot label={t.fields.honeypot} />
 
       <div className="sm:col-span-2">
         <div aria-live="polite">{formError && <p className="mb-3 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm">{formError}</p>}</div>

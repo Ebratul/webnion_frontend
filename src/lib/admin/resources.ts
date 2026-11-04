@@ -452,7 +452,8 @@ export const RESOURCES: Resource[] = [
     sortable: false,
     canCreate: false,
     canDelete: false,
-    rowTitle: (row) => text(row.name),
+    // The contact form only requires an email, so a name may be missing
+    rowTitle: (row) => text(row.name) || text(row.email),
     rowSubtitle: (row) => [text(row.email), text(row.phone)].filter(Boolean).join(' · '),
     rowBadge: (row) => text(row.status),
     sections: [
@@ -464,6 +465,9 @@ export const RESOURCES: Resource[] = [
           { name: 'phone', label: 'Phone', type: 'readonly' },
           { name: 'company', label: 'Company', type: 'readonly' },
           { name: 'service', label: 'Service', type: 'readonly' },
+          { name: 'budget', label: 'Estimated budget', type: 'readonly' },
+          { name: 'country', label: 'Country', type: 'readonly' },
+          { name: 'existingWebsite', label: 'Existing website', type: 'readonly' },
           { name: 'message', label: 'Message', type: 'readonly' },
         ],
       },

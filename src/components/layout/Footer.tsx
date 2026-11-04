@@ -53,6 +53,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
             <li><Link href={sectionHref(locale, SECTION_IDS.pricing)} className={linkClass}>{nav.pricing}</Link></li>
             <li><Link href={`/${locale}/case-studies`} className={linkClass}>{nav.caseStudies}</Link></li>
             <li><Link href={sectionHref(locale, SECTION_IDS.team)} className={linkClass}>{nav.team}</Link></li>
+            <li><Link href={`/${locale}/contact`} className={linkClass}>{nav.contact}</Link></li>
             <li><a href={CONTACT.privacy} target="_blank" rel="noopener noreferrer" className={linkClass}>{t.privacy}</a></li>
           </ul>
         </nav>
