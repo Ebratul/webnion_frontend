@@ -15,7 +15,11 @@ npm run typecheck
 
 ```
 src/app/[locale]        Root layout (fonts, <html lang>, theme script), page, error and 404 pages
-src/proxy.ts            Redirects / to /en or /bn using the cookie, then Accept-Language
+src/app/[locale]/services/[slug], project/[slug], case-studies/[slug]   Detail pages, fetched by slug from the API
+src/app/[locale]/service, project, products, case-studies   Listing pages. Filters and paging live in the address, so results can be shared
+src/app/admin           Admin panel with its own root layout. Screens are built from lib/admin/resources.ts
+src/app/api/admin       Login, logout and a proxy that adds the token from an httpOnly cookie to API calls
+src/proxy.ts            Redirects / to /en or /bn using the cookie, then Accept-Language. Gates /admin
 src/i18n                Dictionaries. bn.ts is typed against en.ts, so missing keys fail typecheck
 src/components/layout   Header, Footer, ThemeToggle, LanguageSwitch, WhatsAppButton
 src/components/sections One file per homepage section, plus client parts (carousel, tabs, form)
@@ -26,12 +30,15 @@ src/lib                 API client, types, formatters and contact details
 ## Conventions
 
 - Components are server components unless they need state. Interactive pieces are small separate client files.
+- Admin screens are English only, so their copy lives in `lib/admin/resources.ts` and the admin components, not the dictionaries.
+- Admin images are upload-only: `next/image` rejects unknown hosts, so a pasted link would break the public page.
 - Static copy comes from dictionaries. List content comes from `GET /home` in `lib/api.ts`, with ISR every 60 seconds.
+- Links to homepage sections use `sectionHref`, so they also work from detail pages. Pages use `PageShell` for the header and footer.
 - `lib/api.ts` throws at runtime so Next.js keeps the last good page when the API is down; it returns empty data only
   during a build.
 - The theme is set on `<html data-theme>` by an inline script before paint. Changing locale remounts `<html>`, so
   `ThemeToggle` restores it in a layout effect.
-- Next.js does not scroll on query-and-hash navigation, so links that preselect a service use `ServiceLink`.
+- The inquiry form lives in a dialog (`InquiryDialog`). Links that preselect a service use `ServiceLink`, which opens it.
 
 ## Git
 

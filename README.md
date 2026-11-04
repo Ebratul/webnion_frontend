@@ -24,6 +24,6 @@ npm run dev                  # http://localhost:3000
 ## Editing Content
 
 - Section headings and marketing copy: `src/i18n/en.ts` and `src/i18n/bn.ts`
-- Services, projects, testimonials, pricing, FAQs, team and logos: stored in the database and managed through the backend API
+- Services, projects, products, case studies, testimonials, pricing, FAQs, team and logos: stored in the database and managed in the admin panel at `/admin`
 - Contact details and social links: `src/lib/site.ts`
 - Colours and design rules: `DESIGN.md` and `src/app/globals.css`
