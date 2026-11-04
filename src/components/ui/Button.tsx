@@ -5,22 +5,48 @@ import type { ComponentProps, ReactNode } from 'react';
 type LinkHref = ComponentProps<typeof Link>['href'];
 
 const base =
-  'inline-flex min-h-12 items-center justify-center gap-3 rounded-full text-sm font-semibold transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98]';
+  'inline-flex items-center justify-center gap-3 rounded-full font-semibold transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98]';
 
-export const PrimaryLink = ({ href, children, className = '' }: { href: LinkHref; children: ReactNode; className?: string }) => (
+// md and lg are the header and hero sizes, measured from the live site
+const PRIMARY_SIZES = {
+  sm: { link: 'min-h-12 pl-6 pr-1.5 text-sm', circle: 'size-9' },
+  md: { link: 'min-h-12 pl-6 pr-[5px] text-sm min-[1400px]:text-base', circle: 'size-[38px]' },
+  lg: { link: 'min-h-14 pl-[30px] pr-[5px] text-base', circle: 'size-[46px]' },
+};
+
+const SECONDARY_SIZES = {
+  sm: 'min-h-12 px-6 text-sm',
+  lg: 'min-h-14 px-[30px] text-base',
+};
+
+interface PrimaryLinkProps {
+  href: LinkHref;
+  children: ReactNode;
+  className?: string;
+  size?: keyof typeof PRIMARY_SIZES;
+}
+
+export const PrimaryLink = ({ href, children, className = '', size = 'sm' }: PrimaryLinkProps) => (
   <Link
     href={href}
-    className={`group ${base} border border-primary bg-primary py-1.5 pl-6 pr-1.5 text-white hover:border-primary-hover hover:bg-primary-hover ${className}`}
+    className={`group ${base} ${PRIMARY_SIZES[size].link} bg-primary text-white hover:bg-primary-hover ${className}`}
   >
     {children}
-    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-ink text-white">
-      <ArrowUpRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px" />
+    <span className={`grid shrink-0 place-items-center rounded-full bg-ink text-white ${PRIMARY_SIZES[size].circle}`}>
+      <ArrowUpRight aria-hidden strokeWidth={2.5} className="size-[18px] transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px" />
     </span>
   </Link>
 );
 
-export const SecondaryLink = ({ href, children, className = '' }: { href: LinkHref; children: ReactNode; className?: string }) => (
-  <Link href={href} className={`${base} border border-line bg-bg/40 px-6 text-fg hover:border-accent hover:text-accent ${className}`}>
+interface SecondaryLinkProps {
+  href: LinkHref;
+  children: ReactNode;
+  className?: string;
+  size?: keyof typeof SECONDARY_SIZES;
+}
+
+export const SecondaryLink = ({ href, children, className = '', size = 'sm' }: SecondaryLinkProps) => (
+  <Link href={href} className={`${base} ${SECONDARY_SIZES[size]} border border-line bg-bg/40 text-fg hover:border-accent hover:text-accent ${className}`}>
     {children}
   </Link>
 );

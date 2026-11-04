@@ -35,7 +35,7 @@ export const Problems = ({ t }: { t: Dictionary['problems'] }) => (
         </LineReveal>
 
         <div className="relative xl:pt-10">
-          <div aria-hidden className="absolute -left-24 top-0 z-10 hidden w-48 rounded-2xl border border-line bg-bg p-3 shadow-soft xl:block">
+          <div aria-hidden className="absolute -left-28 top-0 z-10 hidden w-44 rounded-2xl border border-line bg-bg p-3 shadow-soft xl:block">
             <p className="px-1 text-xs font-semibold">{t.panelTitle}</p>
             <ul className="mt-2.5 space-y-1.5">
               {t.panelItems.map((item) => (

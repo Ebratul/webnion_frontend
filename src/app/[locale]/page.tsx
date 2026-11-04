@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { PageShell } from '@/components/layout/PageShell';
-import { ClientTrust } from '@/components/sections/ClientTrust';
 import { DeliveryStories } from '@/components/sections/DeliveryStories';
 import { Faqs } from '@/components/sections/Faqs';
 import { FeaturedProjects } from '@/components/sections/FeaturedProjects';
@@ -8,6 +7,7 @@ import { FinalInquiry } from '@/components/sections/FinalInquiry';
 import { Hero } from '@/components/sections/Hero';
 import { Outcomes } from '@/components/sections/Outcomes';
 import { Pricing } from '@/components/sections/Pricing';
+import { ProjectMosaic } from '@/components/sections/ProjectMosaic';
 import { Problems } from '@/components/sections/Problems';
 import { Process } from '@/components/sections/Process';
 import { Services } from '@/components/sections/Services';
@@ -43,8 +43,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
       <PageShell locale={locale}>
-        <Hero t={t.hero} />
-        <ClientTrust locale={locale} t={t.trust} a11y={t.a11y} projects={data.projects} clients={data.clients} />
+        <Hero t={t.hero} trust={t.trust} clients={data.clients} />
+        {data.projects.length > 0 && (
+          <section aria-label={t.trust.projectsLabel}>
+            <ProjectMosaic locale={locale} projects={data.projects} pauseLabel={t.a11y.pauseMotion} playLabel={t.a11y.playMotion} />
+          </section>
+        )}
         <Problems t={t.problems} />
         <Services locale={locale} t={t.services} services={data.services} />
         <Outcomes t={t.outcomes} />

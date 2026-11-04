@@ -7,6 +7,12 @@ The source of truth for how the Webnion website looks. Read this before changing
 Clean, simple and premium. Black space, one confident violet, generous whitespace and real work on show. Reference
 screenshots supply layout only: colour and type always stay Webnion's.
 
+## Homepage hero
+
+Follows the client's reference: charcoal `#1E1E1E` with a faint warm glow in two corners (light mode uses `#FAFAFA`), one primary
+button, a two-line subtitle, and a row of flat-colour client logos at the bottom of the first screen. The header sits on the hero's
+background until the page scrolls. Logos in this row need a transparent background, because they are drawn in one colour.
+
 ## Colour
 
 Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwind (`bg-surface`, `text-muted`, and so on).

@@ -7,6 +7,12 @@ export const WhatsAppIcon = ({ className }: IconProps) => (
   </svg>
 );
 
+export const CloudUploadIcon = ({ className }: IconProps) => (
+  <svg aria-hidden viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M19.35 10.04A7.49 7.49 0 0 0 12 4a7.48 7.48 0 0 0-6.65 4.04A6 6 0 0 0 6 20h13a5 5 0 0 0 .35-9.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+  </svg>
+);
+
 export const FacebookIcon = ({ className }: IconProps) => (
   <svg aria-hidden viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M13.5 22v-8.5h2.85l.43-3.32H13.5V8.06c0-.96.27-1.61 1.65-1.61h1.75V3.48A23.4 23.4 0 0 0 14.35 3.35c-2.53 0-4.26 1.54-4.26 4.38v2.45H7.23v3.32h2.86V22h3.41z" />
