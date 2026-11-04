@@ -48,7 +48,6 @@ export const bn: Dictionary = {
   },
   trust: {
     label: 'যেসব ব্যবসা আমাদের ওপর আস্থা রাখে',
-    projectsLabel: 'ক্লায়েন্টদের সাম্প্রতিক প্রজেক্ট',
   },
   problems: {
     titleLead: 'আপনার ওয়েবসাইট কি',

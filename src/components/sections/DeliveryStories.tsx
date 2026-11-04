@@ -7,7 +7,7 @@ import { LineReveal } from '../ui/LineReveal';
 import { LineText } from '../ui/LineText';
 
 export const DeliveryStories = ({ t, stories }: { t: Dictionary['delivery']; stories: DeliveryStory[] }) => (
-  <section aria-labelledby="delivery-title" className="pb-20 lg:pb-28">
+  <section aria-labelledby="delivery-title" className="py-20 lg:py-28">
     <div className="container-page">
       <LineReveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
         <h2 id="delivery-title" className="max-w-2xl text-4xl font-bold uppercase sm:text-5xl">
@@ -23,7 +23,7 @@ export const DeliveryStories = ({ t, stories }: { t: Dictionary['delivery']; sto
         </div>
       </LineReveal>
 
-      <ul className="no-scrollbar -mx-5 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
+      <ul tabIndex={0} aria-label={t.title} className="no-scrollbar -mx-5 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
         {stories.map((story) => (
           <li key={story.id} className="reveal w-[72%] shrink-0 snap-center sm:w-[42%] md:w-auto">
             <div className="overflow-hidden rounded-2xl bg-surface-2">

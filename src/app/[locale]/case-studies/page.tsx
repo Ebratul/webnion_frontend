@@ -118,7 +118,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
                         <Link href={href} className="transition-colors duration-200 hover:text-accent">{study.title}</Link>
                       </h2>
                       <p className="mt-3 line-clamp-4 flex-1 text-sm text-muted">{study.excerpt}</p>
-                      <Link href={href} aria-label={`${t.readMore}: ${study.title}`} className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold transition-colors duration-200 hover:text-accent">
+                      <Link href={href} aria-label={`${t.readMore}: ${study.title}`} className="mt-4 inline-flex items-center gap-1.5 self-start py-0.5 text-sm font-semibold transition-colors duration-200 hover:text-accent">
                         {t.readMore}
                         <ArrowRight aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                       </Link>

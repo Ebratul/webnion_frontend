@@ -69,7 +69,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
         <Link
           href={sectionHref(locale, SECTION_IDS.portfolio)}
-          className="mt-6 inline-flex items-center gap-2 text-sm text-muted transition-colors duration-200 hover:text-accent"
+          className="mt-6 inline-flex items-center gap-2 py-1 text-sm text-muted transition-colors duration-200 hover:text-accent"
         >
           <ArrowLeft aria-hidden className="size-4" />
           {labels.back}

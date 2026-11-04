@@ -33,7 +33,7 @@ export const Technologies = ({ t }: { t: Dictionary['technologies'] }) => {
   const middle = Math.ceil(t.items.length / 2);
 
   return (
-    <section aria-labelledby="technologies-title" className="band-dark section-y">
+    <section aria-labelledby="technologies-title" className="section-y">
       <div className="container-page">
         <SectionHeading id="technologies-title" title={t.title} />
 

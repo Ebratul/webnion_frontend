@@ -7,7 +7,7 @@ import { Eyebrow } from '../ui/SectionHeading';
 import { OutcomeTabs } from './OutcomeTabs';
 
 export const Outcomes = ({ t }: { t: Dictionary['outcomes'] }) => (
-  <section aria-labelledby="outcomes-title" className="section-y bg-surface">
+  <section aria-labelledby="outcomes-title" className="section-y bg-[#f7eee8] dark:bg-surface">
     <div className="container-page">
       <OutcomeTabs items={t.items}>
         <LineReveal>

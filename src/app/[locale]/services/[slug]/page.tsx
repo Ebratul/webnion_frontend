@@ -95,7 +95,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           {(previous || next) && (
             <nav aria-label={t.moreServices} className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-6">
               {previous ? (
-                <Link href={hrefFor(previous.slug)} aria-label={`${t.previous}: ${previous.title}`} className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 hover:text-accent">
+                <Link href={hrefFor(previous.slug)} aria-label={`${t.previous}: ${previous.title}`} className="inline-flex items-center gap-2 py-1 text-sm font-semibold transition-colors duration-200 hover:text-accent">
                   <ChevronLeft aria-hidden className="size-4" />
                   {t.previous}
                 </Link>
@@ -103,7 +103,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 <span />
               )}
               {next && (
-                <Link href={hrefFor(next.slug)} aria-label={`${t.next}: ${next.title}`} className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 hover:text-accent">
+                <Link href={hrefFor(next.slug)} aria-label={`${t.next}: ${next.title}`} className="inline-flex items-center gap-2 py-1 text-sm font-semibold transition-colors duration-200 hover:text-accent">
                   {t.next}
                   <ChevronRight aria-hidden className="size-4" />
                 </Link>

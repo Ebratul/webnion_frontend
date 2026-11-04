@@ -93,7 +93,7 @@ export const Pricing = ({ locale, t, plans }: PricingProps) => (
                 <div className="mt-7 flex-1">
                   <PlanFeatures plan={plan} t={t} />
                 </div>
-                <ServiceLink slug={plan.slug} className="mt-8 inline-flex items-center gap-1.5 self-start text-xs font-medium text-muted transition-colors duration-200 hover:text-accent">
+                <ServiceLink slug={plan.slug} className="mt-7 inline-flex items-center gap-1.5 self-start py-1 text-xs font-medium text-muted transition-colors duration-200 hover:text-accent">
                   <ArrowUpRight aria-hidden className="size-3.5" />
                   {t.askPlan}
                 </ServiceLink>

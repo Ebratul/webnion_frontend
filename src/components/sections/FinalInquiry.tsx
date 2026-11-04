@@ -37,7 +37,7 @@ export const inquiryOptions = (services: Service[], plans: PricingPlan[]) => [
 
 export const FinalInquiry = ({ locale, t, closeLabel, services, plans }: FinalInquiryProps) => {
   return (
-    <section id={SECTION_IDS.contact} aria-labelledby="inquiry-title" className="overflow-hidden bg-surface pt-20 lg:pt-24">
+    <section id={SECTION_IDS.contact} aria-labelledby="inquiry-title" className="overflow-hidden bg-[#faf2e6] pt-20 lg:pt-24 dark:bg-surface">
       <LineReveal className="container-page text-center">
         <h2 id="inquiry-title" className="mx-auto max-w-3xl text-3xl font-semibold sm:text-4xl lg:text-5xl">
           <LineText text={t.title} />

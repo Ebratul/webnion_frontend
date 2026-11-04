@@ -13,7 +13,7 @@ interface FooterProps {
   label: string;
 }
 
-const linkClass = 'text-sm text-muted transition-colors duration-200 hover:text-accent';
+const linkClass = 'inline-block min-w-6 py-0.5 text-sm text-muted transition-colors duration-200 hover:text-accent';
 const headingClass = 'text-sm font-semibold text-fg';
 
 export const Footer = ({ locale, t, nav, label }: FooterProps) => {
@@ -23,7 +23,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
   ];
 
   return (
-    <footer className="bg-surface">
+    <footer className="bg-[#faf2e6] dark:bg-surface">
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1.1fr_1.5fr]">
         <div>
           <Logo locale={locale} />
@@ -47,7 +47,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
 
         <nav aria-label={label}>
           <h2 className={headingClass}>{t.quickLinks}</h2>
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-4 space-y-1.5">
             <li><Link href={`/${locale}/project`} className={linkClass}>{nav.portfolio}</Link></li>
             <li><Link href={`/${locale}/products`} className={linkClass}>{nav.products}</Link></li>
             <li><Link href={sectionHref(locale, SECTION_IDS.pricing)} className={linkClass}>{nav.pricing}</Link></li>
@@ -60,7 +60,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
 
         <div>
           <h2 className={headingClass}>{t.services}</h2>
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-4 space-y-1.5">
             {t.serviceLinks.map((service) => (
               <li key={service.slug}><Link href={`/${locale}/services/${service.slug}`} className={linkClass}>{service.label}</Link></li>
             ))}

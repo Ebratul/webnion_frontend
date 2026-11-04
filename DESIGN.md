@@ -9,9 +9,26 @@ screenshots supply layout only: colour and type always stay Webnion's.
 
 ## Homepage hero
 
-Follows the client's reference: charcoal `#1E1E1E` with a faint warm glow in two corners (light mode uses `#FAFAFA`), one primary
-button, a two-line subtitle, and a row of flat-colour client logos at the bottom of the first screen. The header sits on the hero's
-background until the page scrolls. Logos in this row need a transparent background, because they are drawn in one colour.
+Follows the client's reference: charcoal `#1E1E1E` with a faint warm glow in two corners in dark mode, and a cream gradient from
+`#FFF3E9` in light mode. One primary button and a two-line subtitle. The header sits on the hero's background until the page scrolls.
+
+## Light mode section colours
+
+Sampled from the client's references. Every primary action stays Webnion violet, whatever colour the reference template used.
+
+| Section | Background |
+| --- | --- |
+| Hero | Cream gradient from `#FFF3E9` |
+| Client Trust | Project mosaic on black, logos on white in flat grey |
+| Customer Problems | Sky to pink |
+| Services, Delivery Stories, Process, Pricing | White |
+| Business Outcomes | Beige `#F7EEE8` |
+| Featured Projects | Title on white, cards on navy `#131620` |
+| Testimonials | Title on white, reviews on lavender `#F7F7FE` |
+| FAQs | Grey `#F6F6F6` with a peach glow |
+| Final Inquiry and footer | Cream `#FAF2E6` |
+
+Client logos in the Client Trust row are drawn in one colour, so they need a transparent background.
 
 ## Colour
 

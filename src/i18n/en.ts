@@ -45,8 +45,7 @@ export const en = {
     primaryCta: 'Start Your Project',
   },
   trust: {
-    label: 'Trusted By Growing Businesses',
-    projectsLabel: 'Recent client projects',
+    label: 'Trusted By Leading Businesses',
   },
   problems: {
     titleLead: 'Is Your Website',

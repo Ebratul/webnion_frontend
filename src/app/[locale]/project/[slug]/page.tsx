@@ -76,14 +76,14 @@ export default async function ProjectPage({ params }: PageProps) {
             <h2 className="border-b border-line px-6 py-5 text-lg font-semibold">{labels.infoTitle}</h2>
             <dl className="space-y-5 p-6">
               {info.map(({ label, value, Icon }) => (
-                <div key={label} className="flex items-center gap-3">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-full bg-primary text-white">
-                    <Icon aria-hidden className="size-4" />
-                  </span>
-                  <div className="min-w-0">
-                    <dt className="text-xs text-muted">{label}</dt>
-                    <dd className="text-sm font-medium">{value}</dd>
-                  </div>
+                <div key={label} className="relative flex min-h-10 flex-col justify-center pl-[3.25rem]">
+                  <dt className="text-xs text-muted">
+                    <span className="absolute left-0 top-0 grid size-10 place-items-center rounded-full bg-primary text-white">
+                      <Icon aria-hidden className="size-4" />
+                    </span>
+                    {label}
+                  </dt>
+                  <dd className="text-sm font-medium">{value}</dd>
                 </div>
               ))}
             </dl>
@@ -91,7 +91,7 @@ export default async function ProjectPage({ params }: PageProps) {
           <SecondaryLink href={sectionHref(locale, SECTION_IDS.contact)} className="mt-4 w-full">{t.nav.cta}</SecondaryLink>
           <Link
             href={`/${locale}/project`}
-            className="mt-4 inline-flex items-center gap-2 text-sm text-muted transition-colors duration-200 hover:text-accent"
+            className="mt-4 inline-flex items-center gap-2 py-1 text-sm text-muted transition-colors duration-200 hover:text-accent"
           >
             <ArrowLeft aria-hidden className="size-4" />
             {labels.back}

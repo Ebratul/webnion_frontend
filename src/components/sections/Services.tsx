@@ -20,7 +20,7 @@ export const Services = ({ locale, t, services }: { locale: Locale; t: Dictionar
       </ul>
 
       <div className="mt-6 text-center">
-        <Link href={`/${locale}/service`} className="text-xs font-semibold underline underline-offset-4 transition-colors duration-200 hover:text-accent">
+        <Link href={`/${locale}/service`} className="inline-block py-1.5 text-xs font-semibold underline underline-offset-4 transition-colors duration-200 hover:text-accent">
           {t.seeAll}
         </Link>
       </div>

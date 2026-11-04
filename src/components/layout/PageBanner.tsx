@@ -26,7 +26,7 @@ export const PageBanner = ({ titleLines, subtitle, homeHref, homeLabel, crumb }:
       <nav style={delay(850)} aria-label={crumb} className="hero-fade mt-6">
         <ol className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs">
           <li>
-            <Link href={homeHref} className="inline-flex items-center gap-1.5 text-white underline-offset-2 hover:underline">
+            <Link href={homeHref} className="inline-flex items-center gap-1.5 py-1 text-white underline-offset-2 hover:underline">
               <House aria-hidden className="size-3.5" />
               {homeLabel}
             </Link>

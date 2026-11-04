@@ -181,10 +181,7 @@
 }
 
 [data-theme='light'] .hero-sky {
-  background:
-    radial-gradient(42% 58% at 100% 0%, rgb(214 104 52 / 0.1), transparent 100%),
-    radial-gradient(34% 46% at 0% 100%, rgb(214 104 52 / 0.08), transparent 100%),
-    #fafafa;
+  background: linear-gradient(180deg, #fff3e9 0%, #fff8f2 55%, #fffefa 100%);
 }
 
 /* The hero fills the first screen, and starts behind the transparent header. */
@@ -196,6 +193,28 @@
 @media (min-width: 80rem) {
   .hero-screen {
     margin-top: calc(-5rem - 1px);
+  }
+}
+
+/* Phones held sideways have little height, so everything up to the button still fits on the first screen. */
+@media (max-height: 31.25rem) and (orientation: landscape) {
+  .hero-screen > div {
+    padding-top: 4.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .hero-screen h1 {
+    margin-top: 0.75rem;
+    font-size: 2rem;
+  }
+
+  .hero-screen .hero-subtitle {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .hero-screen .hero-subtitle + div {
+    margin-top: 0.875rem;
   }
 }
 

@@ -19,7 +19,7 @@ export const PageHero = ({ title, homeHref, homeLabel, crumb, translateTitle = t
       <nav aria-label={crumb} className="mt-6">
         <ol className="inline-flex items-center gap-2 rounded-full border border-line bg-white/5 px-4 py-1.5 text-xs text-muted">
           <li>
-            <Link href={homeHref} className="inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-fg">
+            <Link href={homeHref} className="inline-flex items-center gap-1.5 py-1 transition-colors duration-200 hover:text-fg">
               <House aria-hidden className="size-3.5" />
               {homeLabel}
             </Link>

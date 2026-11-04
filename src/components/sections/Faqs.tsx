@@ -13,9 +13,9 @@ interface FaqsProps {
 }
 
 export const Faqs = ({ t, faqs, founder }: FaqsProps) => (
-  <section aria-labelledby="faq-title" className="section-y relative isolate overflow-hidden bg-surface">
-    <div aria-hidden className="absolute -right-24 top-10 -z-10 size-96 rounded-full bg-primary/10 blur-3xl" />
-    <div aria-hidden className="absolute -left-24 top-1/4 -z-10 size-80 rounded-full bg-primary/10 blur-3xl" />
+  <section aria-labelledby="faq-title" className="section-y relative isolate overflow-hidden bg-[#f6f6f6] dark:bg-surface">
+    <div aria-hidden className="absolute -right-24 top-10 -z-10 size-96 rounded-full bg-[#ffd9d0]/60 blur-3xl dark:bg-primary/10" />
+    <div aria-hidden className="absolute -left-24 top-1/4 -z-10 size-80 rounded-full bg-[#ffd9d0]/60 blur-3xl dark:bg-primary/10" />
 
     <div className="container-page grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
       <LineReveal>
@@ -27,7 +27,7 @@ export const Faqs = ({ t, faqs, founder }: FaqsProps) => (
           <LineText text={t.title} />
         </h2>
 
-        <div data-line-item className="mt-8 rounded-3xl bg-gradient-to-br from-bg via-bg to-surface-2 p-6 shadow-soft sm:p-7">
+        <div data-line-item className="mt-8 rounded-3xl bg-gradient-to-br from-bg via-bg to-[#fff0ec] p-6 dark:to-surface-2 shadow-soft sm:p-7">
           {founder && <Image src={founder.photo} alt="" width={64} height={64} sizes="64px" className="size-16 rounded-full object-cover object-top" />}
           <h3 className="mt-4 text-2xl font-medium">{t.cardTitle}</h3>
           <p className="mt-2 text-sm text-muted">{t.cardText}</p>
@@ -44,7 +44,7 @@ export const Faqs = ({ t, faqs, founder }: FaqsProps) => (
 
       <div className="reveal space-y-3">
         {faqs.map((faq, index) => (
-          <details key={faq.id} name="faq" open={index === 0} className="group rounded-2xl bg-gradient-to-r from-bg via-bg to-surface-2 shadow-sm">
+          <details key={faq.id} name="faq" open={index === 0} className="group rounded-2xl bg-gradient-to-r from-bg via-bg to-[#fff0ec] dark:to-surface-2 shadow-sm">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl p-5 font-medium">
               {faq.question}
               <Plus aria-hidden className="size-5 shrink-0 transition-transform duration-200 group-open:rotate-45" />

@@ -232,7 +232,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
               onClick={() => goToCard(index)}
               aria-label={`${a11y.goToSlide}: ${project.name}`}
               aria-current={index === position}
-              className="grid size-5 place-items-center"
+              className="grid size-6 place-items-center"
             >
               <span className={`size-1.5 rounded-full transition-colors duration-300 ${index === position ? 'bg-primary ring-2 ring-primary/40' : 'bg-white/25'}`} />
             </button>
