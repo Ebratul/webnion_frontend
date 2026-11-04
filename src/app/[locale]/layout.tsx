@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Hind_Siliguri, Poppins } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { ThemeScript } from '@/components/layout/ThemeScript';
 import { LOCALES, isLocale } from '@/i18n/config';
 import { getDictionary } from '@/i18n';
 import { SITE_URL } from '@/lib/site';
@@ -20,9 +21,6 @@ const hindSiliguri = Hind_Siliguri({
   variable: '--font-hind',
   display: 'swap',
 });
-
-// Runs before first paint so a saved light theme never flashes dark.
-const THEME_SCRIPT = `try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t='dark';document.documentElement.dataset.theme=t;document.querySelector('meta[name="theme-color"]').setAttribute('content',t==='light'?'#ffffff':'#050507')}catch(e){document.documentElement.dataset.theme='dark'}`;
 
 export const viewport: Viewport = { themeColor: '#050507' };
 
@@ -58,10 +56,10 @@ export default async function RootLayout({ children, params }: { children: React
 
   return (
     <html lang={locale} className={`${poppins.variable} ${hindSiliguri.variable}`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-      </head>
-      <body>{children}</body>
+      <body>
+        <ThemeScript />
+        {children}
+      </body>
     </html>
   );
 }
