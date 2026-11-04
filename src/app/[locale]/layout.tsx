@@ -41,7 +41,7 @@ export default async function RootLayout({ children, params }: { children: React
   if (!isLocale(locale)) notFound();
 
   return (
-    <html lang={locale} className={fontClasses} suppressHydrationWarning>
+    <html lang={locale} className={`site-zoom ${fontClasses}`} suppressHydrationWarning>
       <body>
         <ThemeScript />
         {children}

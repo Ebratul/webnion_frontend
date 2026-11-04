@@ -141,7 +141,7 @@ export default async function ProductsPage({ params, searchParams }: PageProps) 
           <ul className="mt-4 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <li key={product.id} className="reveal">
-                <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface">
+                <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary bg-surface">
                   <div className="relative overflow-hidden bg-surface-2">
                     <Image src={product.image} alt="" width={800} height={500} sizes="(min-width: 1024px) 370px, (min-width: 768px) 50vw, 100vw" className="aspect-[8/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
                     <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[0.6875rem] font-semibold text-ink shadow">

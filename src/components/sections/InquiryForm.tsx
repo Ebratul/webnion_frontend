@@ -35,7 +35,7 @@ export const InquiryForm = ({ locale, t, options }: InquiryFormProps) => {
         <button
           type="button"
           onClick={reset}
-          className="mt-6 min-h-12 rounded-full border border-line px-6 text-sm font-semibold transition-colors duration-200 hover:border-accent hover:text-accent"
+          className="mt-6 min-h-12 rounded-full px-6 text-sm font-semibold bg-primary text-white transition-colors duration-200 hover:bg-primary-hover"
         >
           {t.sendAnother}
         </button>

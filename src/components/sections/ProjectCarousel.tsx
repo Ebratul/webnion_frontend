@@ -11,7 +11,7 @@ import type { Project } from '@/lib/types';
 const AUTOPLAY_MS = 3000;
 const SLIDE_MS = 1000;
 // The most cards visible at once. With more projects than this the row loops, using a second copy of the cards.
-const MAX_VISIBLE = 4;
+const MAX_VISIBLE = 3;
 
 const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2);
 
@@ -181,29 +181,29 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
           <li
             key={`${project.id}-${copy}`}
             aria-hidden={copy || undefined}
-            className="w-[78%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3.75rem)/4)]"
+            className="w-[78%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2.5rem)/3)]"
           >
-            <article className="group relative flex h-full flex-col rounded-2xl border border-line bg-surface p-2 transition-colors duration-300 hover:border-accent/60">
+            <article className="group relative flex h-full flex-col rounded-2xl border border-primary bg-surface p-2.5 transition-colors duration-300 hover:border-accent">
               <div className="overflow-hidden rounded-xl bg-white">
                 <Image
                   src={project.image}
                   alt=""
                   width={768}
                   height={768}
-                  sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 78vw"
+                  sizes="(min-width: 1024px) 420px, (min-width: 768px) 50vw, (min-width: 640px) 45vw, 78vw"
                   className="aspect-square w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
               </div>
-              <div className="flex flex-1 flex-col gap-2 p-3">
-                <p className="max-w-full self-start truncate rounded-full border border-line bg-surface-2 px-2.5 py-0.5 text-[0.6875rem] text-muted">{project.category}</p>
+              <div className="flex flex-1 flex-col gap-3 p-3 lg:p-4">
+                <p className="max-w-full self-start truncate rounded-full border border-line bg-surface-2 px-3 py-0.5 text-xs text-muted">{project.category}</p>
                 <div className="flex items-center justify-between gap-3">
-                <h3 translate="no" className="min-w-0 truncate text-sm font-medium">{project.name}</h3>
+                <h3 translate="no" className="min-w-0 truncate text-base font-medium lg:text-lg">{project.name}</h3>
                 {/* The link stretches over the whole card, so clicking the image or the name opens the project too */}
                 <Link
                   href={`/${locale}/project/${project.slug}`}
                   aria-label={`${viewLabel}: ${project.name}`}
                   tabIndex={copy ? -1 : undefined}
-                  className="grid size-10 shrink-0 place-items-center rounded-full border border-line bg-bg text-fg transition-colors duration-300 after:absolute after:inset-0 after:rounded-2xl group-hover:border-primary group-hover:bg-primary group-hover:text-white"
+                  className="grid size-10 shrink-0 place-items-center rounded-full bg-primary text-white transition-colors duration-300 after:absolute after:inset-0 after:rounded-2xl group-hover:bg-primary-hover"
                 >
                   <ArrowUpRight aria-hidden className="size-4" />
                 </Link>
@@ -220,7 +220,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
           onClick={() => move(-1)}
           disabled={!loops && position === 0}
           aria-label={a11y.previous}
-          className="grid size-10 place-items-center rounded-full border border-line text-fg transition-colors duration-200 hover:border-accent disabled:opacity-40"
+          className="grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover disabled:opacity-40"
         >
           <ChevronLeft aria-hidden className="size-4" />
         </button>
@@ -243,7 +243,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
           onClick={() => move(1)}
           disabled={!loops && position >= maxPosition}
           aria-label={a11y.next}
-          className="grid size-10 place-items-center rounded-full border border-line text-fg transition-colors duration-200 hover:border-accent disabled:opacity-40"
+          className="grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover disabled:opacity-40"
         >
           <ChevronRight aria-hidden className="size-4" />
         </button>
@@ -251,7 +251,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
           type="button"
           onClick={() => setPaused((value) => !value)}
           aria-label={paused ? a11y.playMotion : a11y.pauseMotion}
-          className="grid size-10 place-items-center rounded-full border border-line text-fg transition-colors duration-200 hover:border-accent"
+          className="grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover"
         >
           {paused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
         </button>

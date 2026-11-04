@@ -72,12 +72,12 @@ export const TestimonialGrid = ({ testimonials, t, a11y }: TestimonialGridProps)
         ref={dialog}
         onClose={() => setResultItem(null)}
         aria-label={resultItem?.name}
-        className="m-auto max-h-[92svh] w-[min(26rem,92vw)] overflow-hidden rounded-2xl bg-transparent backdrop:bg-black/80 backdrop:backdrop-blur-sm"
+        className="m-auto max-h-[calc(92svh/var(--page-zoom))] w-[min(26rem,calc(92vw/var(--page-zoom)))] overflow-hidden rounded-2xl bg-transparent backdrop:bg-black/80 backdrop:backdrop-blur-sm"
       >
         {resultItem && (
-          <div className="relative overflow-y-auto overscroll-contain" style={{ maxHeight: '92svh' }}>
+          <div className="relative overflow-y-auto overscroll-contain" style={{ maxHeight: 'calc(92svh / var(--page-zoom))' }}>
             <form method="dialog" className="sticky top-0 z-10 flex h-0 justify-end">
-              <button type="submit" aria-label={a11y.close} className="m-3 grid size-10 place-items-center rounded-full bg-black/75 text-white transition-colors duration-200 hover:bg-primary">
+              <button type="submit" aria-label={a11y.close} className="m-3 grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary">
                 <X aria-hidden className="size-5" />
               </button>
             </form>

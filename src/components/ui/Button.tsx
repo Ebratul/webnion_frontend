@@ -10,7 +10,7 @@ const base =
 // md and lg are the header and hero sizes, measured from the live site
 const PRIMARY_SIZES = {
   sm: { link: 'min-h-12 pl-6 pr-1.5 text-sm', circle: 'size-9' },
-  md: { link: 'min-h-12 pl-6 pr-[5px] text-sm min-[1400px]:text-base', circle: 'size-[38px]' },
+  md: { link: 'min-h-12 pl-6 pr-[5px] text-sm', circle: 'size-[38px]' },
   lg: { link: 'min-h-14 pl-[30px] pr-[5px] text-base', circle: 'size-[46px]' },
 };
 
@@ -46,7 +46,7 @@ interface SecondaryLinkProps {
 }
 
 export const SecondaryLink = ({ href, children, className = '', size = 'sm' }: SecondaryLinkProps) => (
-  <Link href={href} className={`${base} ${SECONDARY_SIZES[size]} border border-line bg-bg/40 text-fg hover:border-accent hover:text-accent ${className}`}>
+  <Link href={href} className={`${base} ${SECONDARY_SIZES[size]} bg-primary text-white hover:bg-primary-hover ${className}`}>
     {children}
   </Link>
 );

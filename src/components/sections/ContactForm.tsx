@@ -26,7 +26,7 @@ export const ContactForm = ({ locale, t, inquiry }: ContactFormProps) => {
         <CheckCircle2 aria-hidden className="mx-auto size-12 text-accent" />
         <h3 className="mt-4 text-2xl font-semibold">{inquiry.successTitle}</h3>
         <p className="mt-2 text-muted">{inquiry.successText}</p>
-        <button type="button" onClick={reset} className="mt-6 min-h-12 rounded-xl border border-line px-6 text-sm font-semibold transition-colors duration-200 hover:border-accent hover:text-accent">
+        <button type="button" onClick={reset} className="mt-6 min-h-12 rounded-xl px-6 text-sm font-semibold bg-primary text-white transition-colors duration-200 hover:bg-primary-hover">
           {inquiry.sendAnother}
         </button>
       </div>

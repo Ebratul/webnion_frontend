@@ -21,6 +21,9 @@ interface Drag {
 
 const DRAG_THRESHOLD = 5;
 
+// offsetWidth ignores the page's CSS zoom, so it is converted to compare with pointer positions
+const pageZoom = () => parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+
 export const PausableMarquee = ({ pauseLabel, playLabel, className = '', buttonClassName, children }: PausableMarqueeProps) => {
   const [paused, setPaused] = useState(false);
   const drag = useRef<Drag | null>(null);
@@ -43,7 +46,7 @@ export const PausableMarquee = ({ pauseLabel, playLabel, className = '', buttonC
       duration,
       startX: event.clientX,
       startTime: Number(animation.currentTime),
-      msPerPixel: (duration / (track.offsetWidth / 2)) * direction,
+      msPerPixel: (duration / ((track.offsetWidth * pageZoom()) / 2)) * direction,
     };
   };
 
@@ -92,7 +95,7 @@ export const PausableMarquee = ({ pauseLabel, playLabel, className = '', buttonC
         type="button"
         onClick={() => setPaused((value) => !value)}
         aria-label={paused ? playLabel : pauseLabel}
-        className={`marquee-pause absolute grid size-10 place-items-center rounded-full border border-white/15 bg-black/70 text-white backdrop-blur transition-colors duration-200 hover:bg-primary ${buttonClassName}`}
+        className={`marquee-pause absolute grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover ${buttonClassName}`}
       >
         {paused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
       </button>

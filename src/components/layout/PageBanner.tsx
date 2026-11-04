@@ -13,8 +13,8 @@ interface PageBannerProps {
 }
 
 export const PageBanner = ({ titleLines, subtitle, homeHref, homeLabel, crumb }: PageBannerProps) => (
-  <section id="top" aria-label={crumb} className="px-3 pt-3">
-    <div className="rounded-2xl bg-[#9835cb] px-5 py-16 text-center text-white sm:py-20 lg:py-24">
+  <section id="top" aria-label={crumb} className="container-page pt-3">
+    <div className="rounded-2xl bg-primary px-5 py-16 text-center text-white sm:py-20 lg:py-24">
       <h1 className="text-3xl font-medium sm:text-4xl lg:text-5xl">
         {titleLines.map((line, index) => (
           <span key={line} className="hero-line">

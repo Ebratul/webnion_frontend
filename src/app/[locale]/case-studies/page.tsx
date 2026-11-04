@@ -77,7 +77,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
               const date = study.publishedAt ? formatDayMonth(study.publishedAt, locale) : null;
               return (
                 <li key={study.id} className="reveal">
-                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface">
+                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary bg-surface">
                     <div className="relative">
                       <Link href={href} tabIndex={-1} aria-hidden className="block overflow-hidden">
                         <Image
@@ -98,7 +98,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
                       )}
                       <Link
                         href={`${basePath}?category=${encodeURIComponent(study.category)}`}
-                        className="absolute bottom-3 right-3 max-w-[85%] truncate rounded-full bg-white px-3 py-1 text-[0.6875rem] font-semibold text-ink shadow transition-colors duration-200 hover:bg-primary hover:text-white"
+                        className="absolute bottom-3 right-3 max-w-[85%] truncate rounded-full bg-primary px-3 py-1 text-[0.6875rem] font-semibold text-white shadow transition-colors duration-200 hover:bg-primary-hover"
                       >
                         {study.category}
                       </Link>

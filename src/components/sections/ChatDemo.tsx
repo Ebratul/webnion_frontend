@@ -266,7 +266,7 @@ export const ChatDemo = ({ t }: { t: Copy }) => {
               type="submit"
               aria-label={t.send}
               disabled={!draft.trim() || replying}
-              className="grid size-8 shrink-0 place-items-center rounded-full text-fg transition-opacity duration-200 hover:bg-surface-2 disabled:pointer-events-none disabled:opacity-40"
+              className="grid size-8 shrink-0 place-items-center rounded-full bg-primary text-white transition-[background-color,opacity] duration-200 hover:bg-primary-hover disabled:pointer-events-none disabled:opacity-40"
             >
               <ArrowUp aria-hidden className="size-4" />
             </button>
@@ -279,7 +279,7 @@ export const ChatDemo = ({ t }: { t: Copy }) => {
                   <button
                     type="button"
                     onClick={() => send(t.questions[topic], topic)}
-                    className="min-h-8 rounded-full border border-line px-3 py-1 text-left text-xs transition-colors duration-200 hover:border-accent hover:text-accent"
+                    className="min-h-8 rounded-full bg-primary px-3 py-1 text-left text-xs text-white transition-colors duration-200 hover:bg-primary-hover"
                   >
                     {t.questions[topic]}
                   </button>
@@ -293,7 +293,7 @@ export const ChatDemo = ({ t }: { t: Copy }) => {
               type="button"
               aria-label={t.newChat}
               onClick={reset}
-              className="grid size-8 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-accent hover:text-accent"
+              className="grid size-8 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover"
             >
               <Plus aria-hidden className="size-4" />
             </button>
@@ -301,7 +301,7 @@ export const ChatDemo = ({ t }: { t: Copy }) => {
               type="button"
               aria-expanded={toolsOpen}
               onClick={() => setToolsOpen((open) => !open)}
-              className={`inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-xs transition-colors duration-200 hover:border-accent hover:text-accent ${toolsOpen ? 'border-accent text-accent' : 'border-line'}`}
+              className={`inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs text-white transition-colors duration-200 hover:bg-primary-hover ${toolsOpen ? 'bg-primary-hover' : 'bg-primary'}`}
             >
               <SlidersHorizontal aria-hidden className="size-3.5" />
               {t.tools}
@@ -311,7 +311,7 @@ export const ChatDemo = ({ t }: { t: Copy }) => {
               aria-label={t.voice}
               aria-pressed={listening}
               onClick={toggleVoice}
-              className={`ml-auto grid size-8 place-items-center rounded-full bg-fg text-bg transition-transform duration-200 hover:-translate-y-0.5 ${listening ? 'chat-listening' : ''}`}
+              className={`ml-auto grid size-8 place-items-center rounded-full bg-primary text-white transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-primary-hover ${listening ? 'chat-listening' : ''}`}
             >
               <Mic aria-hidden className="size-4" />
             </button>

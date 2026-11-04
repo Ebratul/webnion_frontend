@@ -41,7 +41,7 @@ export const ThemeToggle = ({ label }: { label: string }) => {
       type="button"
       onClick={toggleTheme}
       aria-label={label}
-      className="grid size-9 place-items-center rounded-full border border-line text-fg transition-colors duration-200 hover:border-accent hover:text-accent sm:size-10"
+      className="grid size-9 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover sm:size-10"
     >
       <Sun aria-hidden className="hidden size-4 dark:block" />
       <Moon aria-hidden className="size-4 dark:hidden" />

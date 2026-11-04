@@ -35,6 +35,7 @@ src/lib                 API client, types, formatters and contact details
 - Admin screens are English only, so their copy lives in `lib/admin/resources.ts` and the admin components, not the dictionaries.
 - Admin images are upload-only: `next/image` rejects unknown hosts, so a pasted link would break the public page.
 - Static copy comes from dictionaries. List content comes from `GET /home` in `lib/api.ts`, with ISR every 60 seconds.
+- `zoom` on `.site-zoom` shows the public site at 110% from 768px up. Divide screen-based sizes by `--page-zoom`, and convert `offsetWidth` when comparing it with pointer positions.
 - Links to homepage sections use `sectionHref`, so they also work from detail pages. Pages use `PageShell` for the header and footer.
 - `lib/api.ts` throws at runtime so Next.js keeps the last good page when the API is down; it returns empty data only
   during a build.

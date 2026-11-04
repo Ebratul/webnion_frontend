@@ -51,16 +51,16 @@ export const InquiryDialog = ({ locale, t, closeLabel, options }: InquiryDialogP
       aria-labelledby="inquiry-form-title"
       onClose={clearServiceFromUrl}
       onClick={closeOnBackdrop}
-      className="m-auto w-[min(44rem,92vw)] overflow-hidden rounded-3xl border border-line bg-bg text-left text-fg backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+      className="m-auto w-[min(44rem,calc(92vw/var(--page-zoom)))] overflow-hidden rounded-3xl border border-line bg-bg text-left text-fg backdrop:bg-black/70 backdrop:backdrop-blur-sm"
     >
-      <div className="max-h-[90svh] overflow-y-auto overscroll-contain p-6 sm:p-10">
+      <div className="max-h-[calc(90svh/var(--page-zoom))] overflow-y-auto overscroll-contain p-6 sm:p-10">
         <div className="flex items-start justify-between gap-4">
           <h2 id="inquiry-form-title" className="text-2xl font-semibold">{t.formTitle}</h2>
           <button
             type="button"
             onClick={() => dialog.current?.close()}
             aria-label={closeLabel}
-            className="grid size-10 shrink-0 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-accent hover:text-accent"
+            className="grid size-10 shrink-0 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover"
           >
             <X aria-hidden className="size-5" />
           </button>

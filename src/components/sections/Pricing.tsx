@@ -37,7 +37,7 @@ const TablePlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pric
 
     <ServiceLink
       slug={plan.slug}
-      className="plan-btn group mt-3 flex min-h-10 items-center justify-center rounded-[5px] bg-[#0073e6] text-sm font-medium text-white hover:bg-[#005fc0] hover:shadow-[0_12px_24px_-10px_rgb(0_95_192/0.75)] focus-visible:bg-[#005fc0]"
+      className="plan-btn group mt-3 flex min-h-10 items-center justify-center rounded-[5px] bg-primary text-sm font-medium text-white hover:bg-primary-hover hover:shadow-[0_12px_24px_-10px_var(--primary)] focus-visible:bg-primary-hover"
     >
       {t.cta}
       <ButtonArrow />
@@ -55,7 +55,7 @@ const TablePlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pric
       </ul>
     </div>
 
-    <ServiceLink slug={plan.slug} className="group mt-8 inline-flex items-center gap-2 self-start py-1 text-xs text-[#6f6f6f] transition-colors duration-200 hover:text-[#0073e6]">
+    <ServiceLink slug={plan.slug} className="group mt-8 inline-flex items-center gap-2 self-start py-1 text-xs text-[#6f6f6f] transition-colors duration-200 hover:text-accent">
       <ArrowDown aria-hidden className="size-3.5 transition-transform duration-200 group-hover:translate-y-0.5" strokeWidth={1.75} />
       {t.askPlan}
     </ServiceLink>
@@ -66,10 +66,10 @@ const HighlightedPlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary
   <li className="relative z-10 flex flex-col rounded-[2.5rem] border border-[#f8f8f8] bg-[#f3f3f3] p-2 shadow-[0_24px_60px_-16px_rgb(0_0_0/0.28)] lg:-mb-7 lg:-mt-14">
     <div className="px-4 pb-6 pt-4">
       <div className="flex items-center justify-between gap-3">
-        <span className="grid size-12 place-items-center rounded-full border border-[#dedede] text-[#7c8ce8]">
+        <span className="grid size-12 place-items-center rounded-full border border-[#dedede] text-accent">
           <Zap aria-hidden className="size-6 fill-current" strokeWidth={1.5} />
         </span>
-        {plan.badge && <span className="rounded-full border border-[#b7cfe6] bg-[#e0eaf4] px-3 py-1 text-[13px] font-medium text-[#1e4f8f]">{plan.badge}</span>}
+        {plan.badge && <span className="rounded-full border border-primary/30 bg-tint px-3 py-1 text-[13px] font-medium text-accent">{plan.badge}</span>}
       </div>
       <h3 className="mt-5 text-xl font-medium text-[#333]">{plan.name}</h3>
       <p className="mt-1 text-sm leading-snug text-[#666]">{plan.tagline}</p>
@@ -94,7 +94,7 @@ const HighlightedPlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary
       <div className="mt-auto pt-7">
         <ServiceLink
           slug={plan.slug}
-          className="plan-btn group flex min-h-14 items-center justify-center rounded-full bg-gradient-to-b from-[#346bf0] to-[#2860f0] text-[15px] font-medium text-white shadow-[0_8px_18px_-10px_rgb(40_96_240/0.7)] hover:shadow-[0_18px_32px_-12px_rgb(40_96_240/0.8)] hover:brightness-95 focus-visible:brightness-95"
+          className="plan-btn group flex min-h-14 items-center justify-center rounded-full bg-primary text-[15px] font-medium text-white shadow-[0_8px_18px_-10px_var(--primary)] hover:shadow-[0_18px_32px_-12px_var(--primary)] hover:brightness-95 focus-visible:brightness-95"
         >
           {t.cta}
           <ButtonArrow />

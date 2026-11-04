@@ -58,14 +58,14 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
         overHero ? 'border-transparent bg-transparent' : 'border-line bg-bg dark:border-transparent dark:bg-black'
       }`}
     >
-      <div className="flex h-[4.5rem] items-center justify-between gap-2 px-5 sm:gap-4 xl:h-20 xl:px-6 min-[100rem]:px-[30px]">
+      <div className="container-page flex h-[4.5rem] items-center justify-between gap-2 sm:gap-4 xl:h-20">
         <Logo locale={locale} />
 
         <nav aria-label={a11y.primaryNav} className="hidden xl:block">
-          <ul className="flex items-center gap-4 min-[1400px]:gap-6 min-[100rem]:gap-[30px]">
+          <ul className="flex items-center gap-3.5">
             {links.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} aria-current={pathname === link.href ? 'page' : undefined} className="text-sm font-medium text-fg/90 min-[1400px]:text-base transition-colors duration-200 hover:text-accent aria-[current=page]:text-accent">
+                <Link href={link.href} aria-current={pathname === link.href ? 'page' : undefined} className="text-sm font-medium text-fg/90 transition-colors duration-200 hover:text-accent aria-[current=page]:text-accent">
                   {link.label}
                 </Link>
               </li>
@@ -74,14 +74,9 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
         </nav>
 
         <div className="flex items-center gap-1.5 sm:gap-2">
-          {/* On wide screens these take no layout space, so the menu sits exactly where it does on the live site */}
-          <div className="relative flex items-center gap-1.5 sm:gap-2 min-[100rem]:w-0">
-            <div className="flex items-center gap-1.5 sm:gap-2 min-[100rem]:absolute min-[100rem]:right-1">
-              <LanguageSwitch locale={locale} text={nav.switchLanguage} label={nav.switchLanguageLabel} />
-              <ThemeToggle label={a11y.toggleTheme} />
-            </div>
-          </div>
-          <div className="ml-1 hidden xl:block">
+          <LanguageSwitch locale={locale} text={nav.switchLanguage} label={nav.switchLanguageLabel} />
+          <ThemeToggle label={a11y.toggleTheme} />
+          <div className="hidden xl:block">
             <PrimaryLink size="md" href={`/${locale}/contact`}>{nav.cta}</PrimaryLink>
           </div>
           <button
@@ -90,7 +85,7 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? a11y.closeMenu : a11y.openMenu}
-            className="grid size-9 place-items-center rounded-full border border-line text-fg sm:size-10 xl:hidden"
+            className="grid size-9 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover sm:size-10 xl:hidden"
           >
             {open ? <X aria-hidden className="size-5" /> : <Menu aria-hidden className="size-5" />}
           </button>

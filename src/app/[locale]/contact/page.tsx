@@ -17,9 +17,9 @@ type PageProps = { params: Promise<{ locale: string }> };
 
 const delay = (ms: number) => ({ '--delay': `${ms}ms` }) as CSSProperties;
 
-// Same width as the live page: 1320px, with a small margin on narrower screens
-const wrap = 'mx-auto w-[min(82.5rem,calc(100%-2.5rem))]';
-const violetCard = 'bg-[radial-gradient(circle_at_85%_15%,rgb(255_255_255/0.14),transparent_30%),linear-gradient(145deg,#7c3aed,#5b21b6)] text-white';
+// Same width as the rest of the site, so the cards line up with the header
+const wrap = 'container-page';
+const violetCard = 'bg-[radial-gradient(circle_at_85%_15%,rgb(255_255_255/0.14),transparent_30%),linear-gradient(145deg,#8224e3,#5c17a8)] text-white';
 const lightCard = 'border border-line bg-white dark:bg-surface';
 const softShadow = 'shadow-[0_28px_85px_rgb(20_13_38/0.12)]';
 
@@ -72,7 +72,7 @@ export default async function ContactPage({ params }: PageProps) {
         <section
           id="top"
           aria-label={t.crumb}
-          className="band-dark bg-[#0c0915]! bg-[radial-gradient(circle_at_15%_20%,rgb(124_58_237/0.24),transparent_32%),radial-gradient(circle_at_86%_80%,rgb(124_58_237/0.14),transparent_30%)]! px-5 pb-[185px] pt-16 text-center xl:pt-[79px]"
+          className="band-dark bg-[#0c0915]! bg-[radial-gradient(circle_at_15%_20%,rgb(130_36_227/0.24),transparent_32%),radial-gradient(circle_at_86%_80%,rgb(130_36_227/0.14),transparent_30%)]! px-5 pb-[185px] pt-16 text-center xl:pt-[79px]"
         >
           <p style={delay(100)} className="hero-fade inline-block rounded-full bg-white/[0.08] px-3.5 py-2 text-xs font-medium leading-[22px] text-[#ddd6fe]">{t.badge}</p>
           <h1 className="mt-[27px] text-[clamp(2rem,7.5vw,4.25rem)] font-medium leading-[1.02] text-white [&:lang(bn)]:leading-[1.3] [&:lang(en)]:tracking-[-0.04em]">
@@ -115,7 +115,8 @@ export default async function ContactPage({ params }: PageProps) {
           </article>
         </div>
 
-        <ul className={`${wrap} reveal mt-[51px] grid divide-y divide-line rounded-[22px] md:grid-cols-3 md:divide-x md:divide-y-0 ${lightCard} shadow-[0_18px_50px_rgb(20_13_38/0.05)]`}>
+        <div className={`${wrap} mt-[51px]`}>
+        <ul className={`reveal grid divide-y divide-line rounded-[22px] md:grid-cols-3 md:divide-x md:divide-y-0 ${lightCard} shadow-[0_18px_50px_rgb(20_13_38/0.05)]`}>
           <QuickFact Icon={Clock} label={t.responseLabel}>{t.responseValue}</QuickFact>
           <QuickFact Icon={Mail} label={t.emailLabel}>
             <a href={`mailto:${CONTACT.email}`} className="transition-colors duration-200 hover:text-accent">{CONTACT.email}</a>
@@ -124,6 +125,7 @@ export default async function ContactPage({ params }: PageProps) {
             <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="transition-colors duration-200 hover:text-accent">{CONTACT.phoneLocal}</a>
           </QuickFact>
         </ul>
+        </div>
 
         <section id={FORM_ID} aria-labelledby="contact-form-title" className={`${wrap} grid scroll-mt-24 items-start gap-[30px] pb-20 pt-20 lg:grid-cols-[503fr_787fr] lg:pb-[120px] lg:pt-[115px]`}>
           <div className={`reveal rounded-[26px] p-6 sm:p-[45px] ${violetCard}`}>
@@ -160,7 +162,7 @@ export default async function ContactPage({ params }: PageProps) {
           <div className="reveal mx-auto mt-10 max-w-[61.5rem] lg:mt-[52px] overflow-hidden rounded-md border border-line bg-white dark:bg-surface">
             {t.faqs.map((faq, index) => (
               <details key={faq.question} name="contact-faq" open={index === 0} className="group border-line [&:not(:first-child)]:border-t">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 transition-colors duration-200 group-open:bg-[#cfe2ff] group-open:text-[#052c65] dark:group-open:bg-tint dark:group-open:text-fg">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 transition-colors duration-200 group-open:bg-tint group-open:text-accent dark:group-open:bg-tint dark:group-open:text-fg">
                   {faq.question}
                   <ChevronDown aria-hidden className="size-5 shrink-0 transition-transform duration-200 group-open:rotate-180" />
                 </summary>

@@ -13,7 +13,7 @@ interface PaginationProps {
   next: string;
 }
 
-const arrowClass = 'grid size-10 place-items-center rounded-full border border-line';
+const arrowClass = 'grid size-10 place-items-center rounded-full bg-primary text-white';
 
 export const Pagination = ({ page, pageCount, hrefFor, locale, label, previous, next }: PaginationProps) => {
   if (pageCount <= 1) return null;
@@ -23,7 +23,7 @@ export const Pagination = ({ page, pageCount, hrefFor, locale, label, previous, 
       <ul className="flex items-center justify-center gap-2">
         <li>
           {page > 1 ? (
-            <Link href={hrefFor(page - 1)} aria-label={previous} className={`${arrowClass} transition-colors duration-200 hover:border-accent hover:text-accent`}>
+            <Link href={hrefFor(page - 1)} aria-label={previous} className={`${arrowClass} transition-colors duration-200 hover:bg-primary-hover`}>
               <ChevronLeft aria-hidden className="size-4" />
             </Link>
           ) : (
@@ -36,7 +36,7 @@ export const Pagination = ({ page, pageCount, hrefFor, locale, label, previous, 
               href={hrefFor(number)}
               aria-label={`${label} ${formatNumber(number, locale)}`}
               aria-current={number === page ? 'page' : undefined}
-              className={`grid size-10 place-items-center rounded-full text-sm font-medium transition-colors duration-200 ${number === page ? 'bg-primary text-white' : 'border border-line hover:border-accent hover:text-accent'}`}
+              className={`grid size-10 place-items-center rounded-full text-sm font-medium transition-colors duration-200 ${number === page ? 'bg-primary text-white' : 'bg-tint text-accent hover:bg-primary hover:text-white'}`}
             >
               {formatNumber(number, locale)}
             </Link>
@@ -44,7 +44,7 @@ export const Pagination = ({ page, pageCount, hrefFor, locale, label, previous, 
         ))}
         <li>
           {page < pageCount ? (
-            <Link href={hrefFor(page + 1)} aria-label={next} className={`${arrowClass} transition-colors duration-200 hover:border-accent hover:text-accent`}>
+            <Link href={hrefFor(page + 1)} aria-label={next} className={`${arrowClass} transition-colors duration-200 hover:bg-primary-hover`}>
               <ChevronRight aria-hidden className="size-4" />
             </Link>
           ) : (

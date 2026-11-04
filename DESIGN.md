@@ -4,8 +4,14 @@ The source of truth for how the Webnion website looks. Read this before changing
 
 ## Direction
 
-Clean, simple and premium, with generous whitespace and real work on show. The client wants each homepage section in the
-colours of its reference image, and the site opens in dark mode. Fonts stay Poppins and Hind Siliguri.
+Clean, simple and premium, with generous whitespace and real work on show. The brand colour is the purple of the logo, `#8224E3`.
+Section backgrounds follow the client's reference images, and the site opens in dark mode. Fonts stay Poppins and Hind Siliguri.
+
+## Size and alignment
+
+- The public site shows at 110% from 768px up, through `zoom` on `.site-zoom`. Phones stay at 100%. Admin is not zoomed.
+- Viewport units are multiplied by the zoom, so anything sized from the screen divides by it: `calc(100svh / var(--page-zoom))`.
+- Header, cards and banners share the `container-page` edges. A box with a border or background goes inside `container-page`, never on it, because its padding would push the box past those edges.
 
 ## Homepage hero
 
@@ -14,9 +20,7 @@ Follows the client's reference: charcoal `#1E1E1E` with a faint warm glow in two
 
 ## Light mode section colours
 
-Sampled from the client's references. Buttons are orange unless a section's image shows another colour, set with an `action-*`
-class in `globals.css`: Problems, Services and Featured Projects violet, Testimonials indigo, Outcomes navy, Process terracotta,
-FAQs coral. Pricing uses the white and grey of the client's image in both themes, with its blue darkened to `#0073E6` so white button text stays readable. Each is the closest colour to its image that keeps white button text readable.
+Sampled from the client's references. Buttons and accents are brand purple in every section. Pricing uses the white and grey of the client's image in both themes.
 
 | Section | Background |
 | --- | --- |
@@ -44,9 +48,10 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 | `fg` | `#F6F6F9` | `#0E0E14` | Text |
 | `muted` | `#A3A3B2` | `#5A5A6C` | Secondary text |
 | `line` | white 10% | ink 10% | Hairlines |
-| `primary` | `#CF4A14` | `#CF4A14` | Primary actions (white text only) |
-| `accent` | `#FB923C` | `#B53C0B` | Coloured text and icons |
-| `tint` | orange 16% | orange 8% | Chips and selected states |
+| `primary` | `#8224E3` | `#8224E3` | Button backgrounds and card borders (white text only) |
+| `primary-hover` | `#6C1BC2` | `#6C1BC2` | Button hover |
+| `accent` | `#B78CF5` | `#6C1BC2` | Coloured text and icons |
+| `tint` | purple 16% | purple 8% | Chips and selected states |
 
 - Never use `primary` as text on dark surfaces: use `accent`, which keeps its contrast in both themes.
 - Green `#25D366` is for WhatsApp only. Amber is for review stars only.
@@ -66,13 +71,15 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 
 ## Components
 
-- **Primary button:** pill in the section's action colour with the black arrow circle. Use one per view.
-- **Secondary button:** outlined pill.
+- **Buttons:** every button has a `primary` background with white text, including icon buttons and header controls. Exceptions: the green WhatsApp button, and controls that show a state (carousel dots, the pages you are not on in pagination, assistant choices), where only the selected one is solid.
+- **Primary button:** pill with the black arrow circle. Use one per view.
+- **Content cards:** project, case study, product, service, team and technology cards have a 1px `primary` border, `accent` on hover.
+- **Project carousel:** three equal cards on desktop, two on tablet, one on phones.
 - **Eyebrow chip:** tinted pill with a dot, above section headings.
-- **Highlighted pricing plan:** light grey card with large corners, raised, icon and badge, white inner panel, blue gradient pill button.
+- **Highlighted pricing plan:** light grey card with large corners, raised, icon and badge, white inner panel, brand pill button.
 - **Pricing buttons:** `plan-btn` lifts the button, passes a light across it and slides in an arrow on hover and keyboard focus.
 - **Fan of client sites:** on hover a screen straightens, lifts and catches a passing light, and the others dim. The screen moves inside a still card, so the pointer cannot slip off a moving edge.
-- **Footer:** soft top glow, faint name behind the content, short lines under headings and links, and contact details in cards.
+- **Footer:** soft brand glow, faint name behind the content, short lines under headings and links, and contact details in cards.
 - **Chat demo:** `ChatDemo` follows the client's reference. Answers are scripted in the dictionaries and nothing leaves the browser, apart from the browser's own speech service if a visitor uses the mic.
 
 ## Motion

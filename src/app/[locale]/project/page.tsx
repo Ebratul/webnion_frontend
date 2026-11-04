@@ -60,8 +60,8 @@ export default async function ProjectsPage({ params, searchParams }: PageProps) 
               return (
                 <li key={project.id} className="reveal">
                   {/* The caption overlaps the image from the bottom, so a long name grows upward and cards stay level */}
-                  <article className="group relative pb-14">
-                    <Link href={href} tabIndex={-1} aria-hidden className="block overflow-hidden bg-white">
+                  <article className="group relative rounded-2xl border border-primary bg-surface p-2.5 pb-16 transition-colors duration-300 hover:border-accent">
+                    <Link href={href} tabIndex={-1} aria-hidden className="block overflow-hidden rounded-xl bg-white">
                       <Image
                         src={project.image}
                         alt=""
@@ -72,7 +72,7 @@ export default async function ProjectsPage({ params, searchParams }: PageProps) 
                         className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       />
                     </Link>
-                    <div className="absolute inset-x-2 bottom-0 flex items-center justify-between gap-3 rounded-b-lg border border-line bg-surface p-4 sm:px-4">
+                    <div className="absolute inset-x-5 bottom-2.5 flex items-center justify-between gap-3 rounded-xl border border-line bg-surface p-4">
                       <div className="min-w-0">
                         <p className="inline-block rounded-full border border-line bg-surface-2 px-2.5 py-0.5 text-[0.6875rem]">{project.category}</p>
                         <h2 translate="no" className="mt-2 font-medium [overflow-wrap:anywhere]">
@@ -82,7 +82,7 @@ export default async function ProjectsPage({ params, searchParams }: PageProps) 
                       <Link
                         href={href}
                         aria-label={`${dictionary.projects.viewProject}: ${project.name}`}
-                        className="grid size-10 shrink-0 place-items-center rounded-full border border-line transition-colors duration-200 hover:border-primary hover:bg-primary hover:text-white group-hover:border-primary"
+                        className="grid size-10 shrink-0 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover"
                       >
                         <ArrowUpRight aria-hidden className="size-4" />
                       </Link>

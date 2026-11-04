@@ -7,7 +7,7 @@ import { SectionHeading } from '../ui/SectionHeading';
 import { ServiceCard } from '../ui/ServiceCard';
 
 export const Services = ({ locale, t, services }: { locale: Locale; t: Dictionary['services']; services: Service[] }) => (
-  <section id={SECTION_IDS.services} aria-labelledby="services-title" className="action-violet pb-20 lg:pb-28">
+  <section id={SECTION_IDS.services} aria-labelledby="services-title" className="pb-20 lg:pb-28">
     <div className="container-page">
       <SectionHeading id="services-title" title={t.title} />
 

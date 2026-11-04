@@ -26,7 +26,7 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 };
 
 const TeamCard = ({ member }: { member: TeamMember }) => (
-  <article className="team-card h-full overflow-hidden rounded-[18px] border border-line bg-bg md:rounded-[22px]">
+  <article className="team-card h-full overflow-hidden rounded-[18px] border border-primary bg-bg md:rounded-[22px]">
     <div className="team-photo relative aspect-[4/5] overflow-hidden bg-surface-2">
       <Image
         src={member.photo}
@@ -56,7 +56,7 @@ export default async function TeamPage({ params }: PageProps) {
     <PageShell locale={locale}>
       <PageBanner titleLines={t.titleLines} subtitle={t.subtitle} homeHref={`/${locale}`} homeLabel={dictionary.nav.home} crumb={t.crumb} />
 
-      <section aria-labelledby="team-page-title" className="team-page action-violet py-14 sm:py-[68px] md:py-20 lg:pb-[115px] lg:pt-[105px]">
+      <section aria-labelledby="team-page-title" className="team-page py-14 sm:py-[68px] md:py-20 lg:pb-[115px] lg:pt-[105px]">
         <div className="container-page">
           <div className="reveal mx-auto mb-9 max-w-3xl text-center md:mb-[52px]">
             <p className="team-kicker mb-3.5 inline-flex items-center gap-2 text-[13px] font-semibold uppercase leading-none text-accent [&:lang(en)]:tracking-[0.11em]">{t.kicker}</p>

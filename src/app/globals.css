@@ -11,11 +11,11 @@
   --fg: #f6f6f9;
   --muted: #a3a3b2;
   --line: rgb(255 255 255 / 0.1);
-  /* Orange from the client's references, darkened just enough for white button text to stay readable */
-  --primary: #cf4a14;
-  --primary-hover: #b53f10;
-  --accent: #fb923c;
-  --tint: rgb(207 74 20 / 0.16);
+  /* The purple of the Webnion logo. Accent is the same hue, lightened or darkened so it stays readable as text. */
+  --primary: #8224e3;
+  --primary-hover: #6c1bc2;
+  --accent: #b78cf5;
+  --tint: rgb(130 36 227 / 0.16);
   --shadow: 0 24px 60px -24px rgb(0 0 0 / 0.8);
   --font: var(--font-poppins), var(--font-hind), system-ui, sans-serif;
   --heading-tracking: -0.025em;
@@ -31,8 +31,8 @@
   --fg: #0e0e14;
   --muted: #5a5a6c;
   --line: rgb(16 16 40 / 0.1);
-  --accent: #b53c0b;
-  --tint: rgb(207 74 20 / 0.08);
+  --accent: #6c1bc2;
+  --tint: rgb(130 36 227 / 0.08);
   --shadow: 0 24px 60px -28px rgb(50 30 110 / 0.28);
 }
 
@@ -59,6 +59,19 @@
   --color-whatsapp: #25d366;
   --font-sans: var(--font);
   --shadow-soft: var(--shadow);
+}
+
+/* The public site shows at 110% from tablets up, the same as browser zoom. Phones already fill the screen.
+   Viewport units are multiplied by zoom too, so anything sized from the screen divides by --page-zoom. */
+:root {
+  --page-zoom: 1;
+}
+
+@media (min-width: 48rem) {
+  .site-zoom {
+    --page-zoom: 1.1;
+    zoom: var(--page-zoom);
+  }
 }
 
 @layer base {
@@ -150,7 +163,8 @@
   --fg: #0e0e14;
   --muted: #5a5a6c;
   --line: rgb(16 16 40 / 0.1);
-  --accent: #b53c0b;
+  --accent: #6c1bc2;
+  --tint: rgb(130 36 227 / 0.08);
   --shadow: 0 18px 40px -24px rgb(50 30 110 / 0.28);
   background: #ffffff;
   color: var(--fg);
@@ -165,75 +179,10 @@
   --fg: #f6f6f9;
   --muted: #a3a3b2;
   --line: rgb(255 255 255 / 0.1);
-  --accent: #fb923c;
-  --tint: rgb(207 74 20 / 0.16);
+  --accent: #b78cf5;
+  --tint: rgb(130 36 227 / 0.16);
   background: #050507;
   color: var(--fg);
-}
-
-/* Homepage sections use the action colour from the client's image of that section; everything else stays orange.
-   Colours are the closest to each image that keep white button text readable. */
-.action-violet {
-  --primary: #7c3aed;
-  --primary-hover: #6d28d9;
-  --accent: #6d28d9;
-  --tint: rgb(124 58 237 / 0.08);
-}
-
-.action-indigo {
-  --primary: #5f45ff;
-  --primary-hover: #4a32e0;
-  --accent: #4f36e8;
-  --tint: rgb(95 69 255 / 0.08);
-}
-
-.action-navy {
-  --primary: #153a5d;
-  --primary-hover: #0f2c47;
-  --accent: #153a5d;
-  --tint: rgb(21 58 93 / 0.08);
-}
-
-.action-terracotta {
-  --primary: #b15c2d;
-  --primary-hover: #97491f;
-  --accent: #97491f;
-  --tint: rgb(177 92 45 / 0.08);
-}
-
-.action-coral {
-  --primary: #d9381e;
-  --primary-hover: #bd2f18;
-  --accent: #b9301a;
-  --tint: rgb(217 56 30 / 0.08);
-}
-
-[data-theme='dark'] .action-violet,
-.band-dark.action-violet {
-  --accent: #a78bfa;
-  --tint: rgb(124 58 237 / 0.16);
-}
-
-[data-theme='dark'] .action-indigo {
-  --accent: #a9a0ff;
-  --tint: rgb(95 69 255 / 0.18);
-}
-
-[data-theme='dark'] .action-navy {
-  --primary: #1f5280;
-  --primary-hover: #2a659c;
-  --accent: #8dbbe6;
-  --tint: rgb(141 187 230 / 0.14);
-}
-
-[data-theme='dark'] .action-terracotta {
-  --accent: #e3a782;
-  --tint: rgb(177 92 45 / 0.2);
-}
-
-[data-theme='dark'] .action-coral {
-  --accent: #ff8a75;
-  --tint: rgb(217 56 30 / 0.18);
 }
 
 /* Hero: charcoal with a faint warm glow in two corners, measured from the client's reference. */
@@ -250,7 +199,7 @@
 
 /* The hero fills the first screen, and starts behind the transparent header. */
 .hero-screen {
-  min-height: 100svh;
+  min-height: calc(100svh / var(--page-zoom));
   margin-top: calc(-4.5rem - 1px);
 }
 
@@ -395,13 +344,13 @@
 [data-theme='dark'] .problems-sky,
 :root:not([data-theme]) .problems-sky {
   background:
-    radial-gradient(60% 40% at 20% 8%, rgb(124 58 237 / 0.16), transparent 70%),
+    radial-gradient(60% 40% at 20% 8%, rgb(130 36 227 / 0.16), transparent 70%),
     linear-gradient(180deg, #11142a 0%, #17132a 50%, #2a1328 100%);
 }
 
 /* Team page, following the live site's measurements. */
 .team-page {
-  background: radial-gradient(circle at 8% 12%, rgb(124 58 237 / 0.055), transparent 24%);
+  background: radial-gradient(circle at 8% 12%, rgb(130 36 227 / 0.055), transparent 24%);
 }
 
 .team-kicker::before {
@@ -446,7 +395,7 @@
 
 @media (hover: hover) {
   .team-card:hover {
-    border-color: rgb(124 58 237 / 0.22);
+    border-color: var(--accent);
     box-shadow: 0 22px 55px rgb(29 20 43 / 0.11);
   }
 
@@ -556,11 +505,11 @@
 
 @keyframes chat-listening {
   from {
-    box-shadow: 0 0 0 0 rgb(124 58 237 / 0.55);
+    box-shadow: 0 0 0 0 rgb(130 36 227 / 0.55);
   }
 
   to {
-    box-shadow: 0 0 0 10px rgb(124 58 237 / 0);
+    box-shadow: 0 0 0 10px rgb(130 36 227 / 0);
   }
 }
 
@@ -628,7 +577,7 @@
     box-shadow:
       0 0 0 1px rgb(255 255 255 / 0.28),
       0 28px 60px -18px rgb(0 0 0 / 0.55),
-      0 0 52px -12px rgb(251 146 60 / 0.5);
+      0 0 52px -12px rgb(130 36 227 / 0.6);
   }
 
   .fan:has(.fan-card:hover) .fan-card:not(:hover) .fan-screen {
@@ -654,8 +603,8 @@
   isolation: isolate;
   overflow: hidden;
   background-image:
-    radial-gradient(55% 60% at 12% 0%, rgb(251 146 60 / 0.09), transparent 70%),
-    radial-gradient(50% 70% at 92% 100%, rgb(124 58 237 / 0.1), transparent 70%);
+    radial-gradient(55% 60% at 12% 0%, rgb(130 36 227 / 0.08), transparent 70%),
+    radial-gradient(50% 70% at 92% 100%, rgb(130 36 227 / 0.1), transparent 70%);
 }
 
 .site-footer::before {

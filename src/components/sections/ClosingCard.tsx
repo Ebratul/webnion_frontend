@@ -34,7 +34,7 @@ export const ClosingCard = ({ locale, t, inquiry, closeLabel, services, plans }:
           </p>
           <div data-line-item className="mt-6 flex flex-wrap justify-center gap-3">
             <InquiryButton className={`${buttonClass} bg-primary text-white shadow-[0_10px_24px_-10px_var(--primary)] hover:bg-primary-hover`}>{t.book}</InquiryButton>
-            <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={`${buttonClass} border border-line bg-white text-accent hover:border-accent`}>
+            <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={`${buttonClass} bg-primary text-white hover:bg-primary-hover`}>
               {t.whatsapp}
             </a>
           </div>

@@ -9,7 +9,7 @@ import { LineText } from '../ui/LineText';
 const photoClass = 'rounded-2xl object-cover';
 
 export const Outcomes = ({ t }: { t: Dictionary['outcomes'] }) => (
-  <section aria-labelledby="outcomes-title" className="action-navy section-y bg-[#f7eee8] dark:bg-surface">
+  <section aria-labelledby="outcomes-title" className="section-y bg-[#f7eee8] dark:bg-surface">
     <div className="mx-auto w-[min(62rem,calc(100%-2.5rem))]">
       <div className="grid gap-8 md:grid-cols-[1.1fr_1fr] md:gap-12">
         <div className="flex flex-col justify-between gap-10">

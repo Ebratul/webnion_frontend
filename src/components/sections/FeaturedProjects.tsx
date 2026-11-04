@@ -19,23 +19,23 @@ export const FeaturedProjects = ({ locale, t, a11y, projects, caseStudies }: Fea
   const featured = projects.filter((project) => project.isFeatured);
 
   return (
-    <section id={SECTION_IDS.portfolio} aria-labelledby="projects-title" className="action-violet pt-20 lg:pt-28">
+    <section id={SECTION_IDS.portfolio} aria-labelledby="projects-title" className="pt-20 lg:pt-28">
       <div className="container-page">
         <SectionHeading id="projects-title" title={t.title} subtitle={t.subtitle} />
       </div>
 
-      <div className="band-dark action-violet mt-10 bg-[#131620]! pb-14 pt-10 lg:mt-12 lg:pb-20 lg:pt-12">
+      <div className="band-dark mt-10 bg-[#131620]! pb-14 pt-10 lg:mt-12 lg:pb-20 lg:pt-12">
         <div className="container-page">
           <ProjectCarousel locale={locale} projects={featured} viewLabel={t.viewProject} a11y={a11y} />
 
 
           <h3 className="mt-16 text-center text-xl font-semibold">{t.caseStudiesTitle}</h3>
-          <ul className="mt-6 grid gap-4 md:grid-cols-3">
+          <ul className="mt-6 grid gap-4 md:grid-cols-3 lg:gap-5">
             {caseStudies.slice(0, 3).map((study) => (
               <li key={study.id}>
                 <Link
                   href={`/${locale}/case-studies/${study.slug}`}
-                  className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-colors duration-200 hover:border-accent"
+                  className="group flex h-full flex-col rounded-2xl border border-primary bg-surface p-6 transition-colors duration-200 hover:border-accent"
                 >
                   <span className="text-xs font-medium text-accent">{study.category}</span>
                   <span className="mt-3 flex-1 text-sm font-medium leading-relaxed">{study.title}</span>
