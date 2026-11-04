@@ -16,7 +16,7 @@ Follows the client's reference: charcoal `#1E1E1E` with a faint warm glow in two
 
 Sampled from the client's references. Buttons are orange unless a section's image shows another colour, set with an `action-*`
 class in `globals.css`: Problems, Services and Featured Projects violet, Testimonials indigo, Outcomes navy, Process terracotta,
-Pricing blue, FAQs coral. Each is the closest colour to its image that keeps white button text readable.
+FAQs coral. Pricing uses the white and grey of the client's image in both themes, with its blue darkened to `#0073E6` so white button text stays readable. Each is the closest colour to its image that keeps white button text readable.
 
 | Section | Background |
 | --- | --- |
@@ -57,7 +57,7 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 - English: Poppins. Bangla: Hind Siliguri. Selected through `:lang()` in `globals.css`; weights 400 to 700.
 - Bangla gets zero letter-spacing and taller line-height, because negative tracking breaks conjuncts.
   Never add `tracking-*` to text that can be Bangla without scoping it to `[&:lang(en)]`.
-- Headings: weight 600. Delivery Stories alone uses bold uppercase as a deliberate change of pace.
+- Section headings: weight 500 at 44px on desktop. Delivery Stories alone uses semibold uppercase as a deliberate change of pace.
 
 ## Shape and depth
 
@@ -69,7 +69,7 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 - **Primary button:** pill in the section's action colour with the black arrow circle. Use one per view.
 - **Secondary button:** outlined pill.
 - **Eyebrow chip:** tinted pill with a dot, above section headings.
-- **Highlighted pricing plan:** coloured ring, raised, icon and badge, inner panel, gradient button.
+- **Highlighted pricing plan:** light grey card with large corners, raised, icon and badge, white inner panel, blue gradient pill button.
 
 ## Motion
 
