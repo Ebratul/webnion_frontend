@@ -11,7 +11,6 @@ import { Pricing } from '@/components/sections/Pricing';
 import { Problems } from '@/components/sections/Problems';
 import { Process } from '@/components/sections/Process';
 import { Services } from '@/components/sections/Services';
-import { Team } from '@/components/sections/Team';
 import { Technologies } from '@/components/sections/Technologies';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { isLocale } from '@/i18n/config';
@@ -53,7 +52,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <DeliveryStories t={t.delivery} stories={data.deliveryStories} />
         <Process t={t.process} />
         <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} />
-        <Team t={t.team} members={data.team} />
         <Technologies t={t.technologies} />
         <Faqs t={t.faq} faqs={data.faqs} founder={data.team[0]} />
         <FinalInquiry locale={locale} t={t.inquiry} closeLabel={t.a11y.close} services={data.services} plans={data.pricingPlans} />

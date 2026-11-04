@@ -20,6 +20,5 @@ export const SECTION_IDS = {
   services: 'services',
   portfolio: 'portfolio',
   pricing: 'pricing',
-  team: 'team',
   contact: 'contact',
 };
