@@ -282,8 +282,39 @@
   }
 }
 
+/* Cards with text stop on hover so they can be read. */
+@media (hover: hover) {
+  .marquee-wrap:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track {
     animation: none;
+  }
+
+  .marquee-pause {
+    display: none;
+  }
+
+  /* Without motion nothing would bring hidden cards into view, so they wrap instead. */
+  .marquee-wrap {
+    mask-image: none;
+  }
+
+  .marquee-wrap .marquee-track {
+    width: auto;
+    justify-content: center;
+  }
+
+  .marquee-wrap .marquee-track > ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.75rem;
+  }
+
+  .marquee-wrap .marquee-track > [aria-hidden='true'] {
+    display: none;
   }
 }

@@ -25,7 +25,7 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 
 - Never use `primary` as text on dark surfaces: use `accent`, which keeps its contrast in both themes.
 - Green `#25D366` is for WhatsApp only. Amber is for review stars only.
-- `.band-dark` keeps a section dark in both themes by pinning the dark tokens (Featured Projects, project mosaic).
+- `.band-dark` keeps a section dark in both themes by pinning the dark tokens (Featured Projects, project mosaic, Technologies).
 
 ## Type
 

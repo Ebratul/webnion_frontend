@@ -1,9 +1,6 @@
-'use client';
-
-import { Pause, Play } from 'lucide-react';
 import Image from 'next/image';
-import { useState } from 'react';
 import type { Project } from '@/lib/types';
+import { PausableMarquee } from '../ui/PausableMarquee';
 
 interface ProjectMosaicProps {
   projects: Project[];
@@ -30,23 +27,14 @@ const Row = ({ projects, direction }: { projects: Project[]; direction?: 'revers
 );
 
 export const ProjectMosaic = ({ projects, pauseLabel, playLabel }: ProjectMosaicProps) => {
-  const [paused, setPaused] = useState(false);
   const middle = Math.ceil(projects.length / 2);
 
   return (
-    <div data-paused={paused} className="band-dark relative py-4 sm:py-5">
+    <PausableMarquee pauseLabel={pauseLabel} playLabel={playLabel} className="band-dark py-4 sm:py-5" buttonClassName="bottom-7 right-5 sm:right-8">
       <div className="fade-edges flex flex-col gap-3 overflow-hidden sm:gap-4">
         <Row projects={projects.slice(0, middle)} />
         <Row projects={projects.slice(middle)} direction="reverse" />
       </div>
-      <button
-        type="button"
-        onClick={() => setPaused((value) => !value)}
-        aria-label={paused ? playLabel : pauseLabel}
-        className="absolute bottom-7 right-5 grid size-10 place-items-center rounded-full border border-white/15 bg-black/70 text-white backdrop-blur transition-colors duration-200 hover:bg-primary sm:right-8"
-      >
-        {paused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
-      </button>
-    </div>
+    </PausableMarquee>
   );
 };

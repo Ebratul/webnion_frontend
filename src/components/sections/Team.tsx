@@ -4,8 +4,6 @@ import { SECTION_IDS } from '@/lib/site';
 import type { TeamMember } from '@/lib/types';
 import { SectionHeading } from '../ui/SectionHeading';
 
-const TECHNOLOGIES = ['Next.js', 'React.js', 'Node.js', 'Laravel', 'PHP', 'MySQL', 'MongoDB', 'WordPress', 'WooCommerce', 'Shopify', 'Webflow', 'Git & GitHub'];
-
 export const Team = ({ t, members }: { t: Dictionary['team']; members: TeamMember[] }) => (
   <section id={SECTION_IDS.team} aria-labelledby="team-title" className="section-y bg-surface">
     <div className="container-page">
@@ -27,17 +25,6 @@ export const Team = ({ t, members }: { t: Dictionary['team']; members: TeamMembe
           </li>
         ))}
       </ul>
-
-      <div className="reveal mt-14 text-center">
-        <p className="text-sm font-medium text-muted">{t.stackLabel}</p>
-        <ul translate="no" className="mx-auto mt-4 flex max-w-3xl flex-wrap justify-center gap-2">
-          {TECHNOLOGIES.map((technology) => (
-            <li key={technology} className="rounded-full border border-line bg-bg px-3.5 py-1.5 text-xs font-medium">
-              {technology}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   </section>
 );

@@ -201,7 +201,25 @@ export const en = {
     title: 'The People Behind Webnion',
     subtitle:
       'A focused team of developers, designers, and digital specialists working together to create reliable products and measurable business results.',
-    stackLabel: 'Technologies we build with',
+  },
+  technologies: {
+    title: 'Powerful Technologies Behind Every Website',
+    pause: 'Pause moving technology cards',
+    play: 'Play moving technology cards',
+    items: [
+      { name: 'Laravel', logo: 'laravel', description: 'Powerful PHP framework for building secure and scalable web applications.' },
+      { name: 'React.js', logo: 'react', description: 'Modern JavaScript library for creating fast and interactive user interfaces.' },
+      { name: 'Next.js', logo: 'nextjs', description: 'High-performance React framework for SEO-friendly and scalable websites.' },
+      { name: 'Node.js', logo: 'nodejs', description: 'Efficient backend runtime for building fast and scalable applications.' },
+      { name: 'MySQL', logo: 'mysql', description: 'Reliable database system for structured data storage.' },
+      { name: 'MongoDB', logo: 'mongodb', description: 'Flexible NoSQL database ideal for modern web applications.' },
+      { name: 'PHP', logo: 'php', description: 'Widely used server-side language for dynamic website development.' },
+      { name: 'WordPress', logo: 'wordpress', description: 'Popular CMS for building flexible and easy-to-manage websites.' },
+      { name: 'Shopify', logo: 'shopify', description: 'E-commerce platform for creating powerful online stores.' },
+      { name: 'WooCommerce', logo: 'woocommerce', description: 'Customizable e-commerce solution built on WordPress.' },
+      { name: 'Webflow', logo: 'webflow', description: 'Visual development platform for creating modern responsive websites.' },
+      { name: 'Git & GitHub', logo: 'github', description: 'Version control tools for managing and collaborating on code.' },
+    ],
   },
   faq: {
     eyebrow: 'FAQs',
