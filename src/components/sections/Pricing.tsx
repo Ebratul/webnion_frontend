@@ -1,4 +1,4 @@
-import { ArrowDown, Check, Zap } from 'lucide-react';
+import { ArrowDown, ArrowRight, Check, Zap } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
@@ -17,6 +17,14 @@ interface PricingProps {
 // Colours follow the client's image, with blues just dark enough for white button text, and stay the same in both themes.
 const monoLabel = 'uppercase text-[#666] [&:lang(en)]:font-mono';
 
+// Slides in beside the label on hover and on keyboard focus
+const ButtonArrow = () => (
+  <ArrowRight
+    aria-hidden
+    className="ml-0 size-4 w-0 opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:w-4 group-hover:opacity-100 group-focus-visible:ml-2 group-focus-visible:w-4 group-focus-visible:opacity-100"
+  />
+);
+
 const TablePlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale }) => (
   <li className="flex flex-col rounded-xl border border-[#f0f0f0] bg-white p-5 lg:rounded-none lg:border-0 lg:border-l lg:border-[#f2f2f2] lg:bg-transparent lg:first:border-l-0">
     <h3 className="text-lg font-medium text-[#2b2b2b]">{plan.name}</h3>
@@ -29,9 +37,10 @@ const TablePlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pric
 
     <ServiceLink
       slug={plan.slug}
-      className="mt-3 flex min-h-10 items-center justify-center rounded-[5px] bg-[#0073e6] text-sm font-medium text-white transition-colors duration-200 hover:bg-[#005fc0]"
+      className="plan-btn group mt-3 flex min-h-10 items-center justify-center rounded-[5px] bg-[#0073e6] text-sm font-medium text-white hover:bg-[#005fc0] hover:shadow-[0_12px_24px_-10px_rgb(0_95_192/0.75)] focus-visible:bg-[#005fc0]"
     >
       {t.cta}
+      <ButtonArrow />
     </ServiceLink>
 
     <div className="mt-7 flex-1">
@@ -46,8 +55,8 @@ const TablePlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pric
       </ul>
     </div>
 
-    <ServiceLink slug={plan.slug} className="mt-8 inline-flex items-center gap-2 self-start py-1 text-xs text-[#6f6f6f] transition-colors duration-200 hover:text-[#0073e6]">
-      <ArrowDown aria-hidden className="size-3.5" strokeWidth={1.75} />
+    <ServiceLink slug={plan.slug} className="group mt-8 inline-flex items-center gap-2 self-start py-1 text-xs text-[#6f6f6f] transition-colors duration-200 hover:text-[#0073e6]">
+      <ArrowDown aria-hidden className="size-3.5 transition-transform duration-200 group-hover:translate-y-0.5" strokeWidth={1.75} />
       {t.askPlan}
     </ServiceLink>
   </li>
@@ -85,9 +94,10 @@ const HighlightedPlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary
       <div className="mt-auto pt-7">
         <ServiceLink
           slug={plan.slug}
-          className="flex min-h-14 items-center justify-center rounded-full bg-gradient-to-b from-[#346bf0] to-[#2860f0] text-[15px] font-medium text-white transition-[filter] duration-200 hover:brightness-95"
+          className="plan-btn group flex min-h-14 items-center justify-center rounded-full bg-gradient-to-b from-[#346bf0] to-[#2860f0] text-[15px] font-medium text-white shadow-[0_8px_18px_-10px_rgb(40_96_240/0.7)] hover:shadow-[0_18px_32px_-12px_rgb(40_96_240/0.8)] hover:brightness-95 focus-visible:brightness-95"
         >
           {t.cta}
+          <ButtonArrow />
         </ServiceLink>
       </div>
     </div>
