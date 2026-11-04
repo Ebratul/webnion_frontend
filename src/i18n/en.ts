@@ -87,41 +87,12 @@ export const en = {
     seeAll: 'See All Services',
   },
   outcomes: {
-    eyebrow: 'Business Outcomes',
     title: 'Built For Smarter Business Growth.',
-    subtitle:
-      'We combine professional website design, business automation, AI, and advanced tracking to help your business attract customers, work efficiently, and grow with confidence.',
     cta: 'Book A Strategy Meeting',
-    items: [
-      {
-        key: 'more-customers',
-        title: 'Get More Customers',
-        description:
-          'Turn more visitors into real inquiries, bookings, and sales with a conversion-focused website built around your customers and business goals.',
-        points: ['Reach the right audience', 'Generate qualified leads', 'Increase inquiries and bookings', 'Convert more visitors into customers'],
-      },
-      {
-        key: 'customer-trust',
-        title: 'Build Customer Trust',
-        description:
-          'Create a strong and professional online presence that gives customers the confidence to choose your business over competitors.',
-        points: ['Present a professional brand', 'Showcase services clearly', 'Build credibility with real proof', 'Create a consistent customer experience'],
-      },
-      {
-        key: 'work-smarter',
-        title: 'Manage Work Smarter',
-        description:
-          'Reduce repetitive manual work by connecting customer inquiries, bookings, sales, and daily operations through one organized digital system.',
-        points: ['Automate repetitive tasks', 'Manage leads and inquiries', 'Organize business information', 'Save time for important work'],
-      },
-      {
-        key: 'track-sales',
-        title: 'Track & Improve Sales',
-        description:
-          'Understand what brings customers to your business, which campaigns generate results, and where you can improve your sales process.',
-        points: ['Track customer actions', 'Measure marketing performance', 'Identify growth opportunities', 'Make decisions with real data'],
-      },
-    ],
+    photoTeam: 'Webnion team members working together on a client website',
+    photoFounder: 'Md Anik Hossen, founder and CEO of Webnion',
+    photoHandover: 'A Webnion team member handing over a project to a client',
+    items: ['Get More Customers', 'Build Customer Trust', 'Manage Work Smarter', 'Track & Improve Sales'],
   },
   projects: {
     eyebrow: 'Featured Projects',
