@@ -31,7 +31,10 @@ export const ClientTrust = ({ t, a11y, projects, clients }: ClientTrustProps) =>
       <ul aria-label={t.logosLabel} className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {clients.map((client) => (
           <li key={client.id} className="grid h-20 place-items-center rounded-xl border border-line bg-white px-5">
-            <Image src={client.logo} alt={client.name} width={160} height={56} sizes="160px" className="h-auto max-h-12 w-auto object-contain" />
+            {/* Logos have very different shapes, so each one is fitted inside the same box */}
+            <span className="relative block h-12 w-full">
+              <Image src={client.logo} alt={client.name} fill sizes="170px" className="object-contain" />
+            </span>
           </li>
         ))}
       </ul>
