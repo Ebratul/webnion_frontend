@@ -180,19 +180,18 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
             aria-hidden={copy || undefined}
             className="w-[82%] shrink-0 snap-start sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)]"
           >
-            <article className="group relative flex h-full flex-col rounded-3xl border border-primary bg-gradient-to-b from-white/[0.06] to-white/[0.015] p-3 transition-shadow duration-300 hover:shadow-[0_24px_60px_-28px_var(--primary)]">
-              <div className="overflow-hidden rounded-2xl bg-white">
-                <Image
-                  src={project.image}
-                  alt=""
-                  width={768}
-                  height={768}
-                  sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 82vw"
-                  draggable={false}
-                  className="aspect-square w-full object-cover"
-                />
-              </div>
-              <div className="flex flex-1 items-center justify-between gap-4 px-2 pb-1 pt-4">
+            {/* The square image sits at the top and a dark gradient carries the text below it, so nothing of the image is cropped */}
+            <article className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-primary bg-[#0d0f18] transition-shadow duration-300 hover:shadow-[0_24px_60px_-28px_var(--primary)]">
+              <Image
+                src={project.image}
+                alt=""
+                width={768}
+                height={768}
+                sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 82vw"
+                draggable={false}
+                className="absolute inset-x-0 top-0 aspect-square w-full bg-white object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-[#0d0f18] from-55% via-[#0d0f18]/85 via-75% to-transparent p-5 pt-24 text-white">
                 <div className="min-w-0">
                   <p className="truncate text-xs font-medium text-accent">{project.category}</p>
                   <h3 translate="no" className="mt-1 truncate text-lg font-medium">{project.name}</h3>

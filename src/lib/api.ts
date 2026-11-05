@@ -8,6 +8,7 @@ const EMPTY_HOME: HomeData = {
   caseStudies: [],
   testimonials: [],
   deliveryStories: [],
+  outcomeCards: [],
   pricingPlans: [],
   faqs: [],
   team: [],
@@ -23,7 +24,8 @@ export const getHomeData = async (locale: Locale): Promise<HomeData> => {
     });
     if (!response.ok) throw new Error(`Homepage API responded with ${response.status}`);
     const body: { data: HomeData } = await response.json();
-    return body.data;
+    // A cached response from before a new section was added has no entry for it
+    return { ...EMPTY_HOME, ...body.data };
   } catch (error) {
     // A build must succeed without the API; the page fills in on its first revalidation.
     if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) return EMPTY_HOME;

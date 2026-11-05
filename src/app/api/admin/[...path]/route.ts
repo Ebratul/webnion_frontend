@@ -13,6 +13,7 @@ const ALLOWED_RESOURCES = new Set([
   'team',
   'clients',
   'delivery-stories',
+  'outcome-cards',
   'inquiries',
   'users',
   'uploads',

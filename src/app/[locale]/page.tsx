@@ -6,6 +6,7 @@ import { Faqs } from '@/components/sections/Faqs';
 import { FeaturedProjects } from '@/components/sections/FeaturedProjects';
 import { FinalInquiry } from '@/components/sections/FinalInquiry';
 import { Hero } from '@/components/sections/Hero';
+import { OutcomeCards } from '@/components/sections/OutcomeCards';
 import { Outcomes } from '@/components/sections/Outcomes';
 import { Pricing } from '@/components/sections/Pricing';
 import { Problems } from '@/components/sections/Problems';
@@ -48,6 +49,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Services locale={locale} t={t.services} services={data.services} />
         <Outcomes t={t.outcomes} />
         <FeaturedProjects locale={locale} t={t.projects} a11y={t.a11y} projects={data.projects} />
+        <OutcomeCards locale={locale} t={t.outcomeCards} cards={data.outcomeCards} />
         <Testimonials locale={locale} t={t.testimonials} a11y={t.a11y} testimonials={data.testimonials} />
         <DeliveryStories locale={locale} t={t.delivery} stories={data.deliveryStories} />
         <Process t={t.process} />

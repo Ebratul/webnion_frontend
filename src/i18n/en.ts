@@ -313,6 +313,9 @@ export const en = {
     happyCount: '80+',
     videoUnsupported: 'Your browser cannot play this video.',
   },
+  outcomeCards: {
+    label: 'How We Help Your Business Grow',
+  },
   delivery: {
     title: 'Real Projects, Delivered Face To Face',
     subtitle: 'We sit with our clients, agree on a clear scope, and stay close long after the project is delivered.',
@@ -344,7 +347,6 @@ export const en = {
     included: "What's Included",
     cta: 'Book A Meeting',
     note: 'Project-based service. Final cost depends on features, pages, design quality, and business requirements.',
-    projectBased: 'Project-based service',
     askPlan: 'Ask About This Plan',
   },
   team: {

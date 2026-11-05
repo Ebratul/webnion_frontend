@@ -808,6 +808,90 @@
   }
 }
 
+/* Outcome cards pile up as the page scrolls. Each one stops a step lower than the last, so the small label of every
+   card stays in view. The step shrinks on short screens, because a card taller than the space left could not be read. */
+.outcome-stack {
+  --stack-top: 5.5rem;
+  --stack-card: 30rem;
+  --stack-step: clamp(0.75rem, calc((100svh / var(--page-zoom) - var(--stack-top) - var(--stack-card) - 1rem) / var(--steps)), 3.5rem);
+  display: grid;
+  gap: 1.25rem;
+  timeline-scope: --outcome-0, --outcome-1, --outcome-2, --outcome-3, --outcome-4, --outcome-5, --outcome-6, --outcome-7;
+}
+
+.outcome-card {
+  box-shadow: 0 -18px 44px -30px rgb(0 0 0 / 0.45);
+}
+
+@media (min-width: 80rem) {
+  .outcome-stack {
+    --stack-top: 6rem;
+    --stack-card: 27rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .outcome-stack {
+    gap: 5rem;
+  }
+
+  .outcome-item {
+    position: sticky;
+    top: calc(var(--stack-top) + var(--i) * var(--stack-step));
+  }
+
+  .outcome-card {
+    min-height: var(--stack-card);
+    transform-origin: top;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .outcome-item {
+      animation: outcome-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    /* The next card's arrival drives this one, which settles back a little underneath it. */
+    .outcome-item:not(:last-child) .outcome-card {
+      animation: outcome-recede linear both;
+      animation-timeline: var(--next);
+      animation-range: entry 20% entry 100%;
+    }
+
+    .outcome-image {
+      animation: outcome-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+  }
+}
+
+@keyframes outcome-rise {
+  from {
+    opacity: 0;
+    transform: translateY(4rem);
+  }
+}
+
+@keyframes outcome-recede {
+  to {
+    transform: scale(0.97);
+  }
+}
+
+@keyframes outcome-drift {
+  from {
+    transform: translateY(5%) scale(1.1);
+  }
+
+  to {
+    transform: translateY(0) scale(1.04);
+  }
+}
+
 /* Rows stop under the mouse so cards can be read, and can be dragged left and right. */
 .marquee-track {
   cursor: grab;

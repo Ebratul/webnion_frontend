@@ -416,6 +416,42 @@ export const RESOURCES: Resource[] = [
     ],
   },
   {
+    key: 'outcome-cards',
+    label: 'Outcome Cards',
+    singular: 'Card',
+    description: 'The stacking cards above Customer Reviews on the homepage.',
+    apiPath: '/outcome-cards',
+    listPath: '/outcome-cards/all',
+    group: 'Website',
+    sortable: true,
+    canCreate: true,
+    canDelete: true,
+    rowTitle: (row) => en(row.title),
+    rowSubtitle: (row) => en(row.eyebrow),
+    rowImage: (row) => text(row.image),
+    sections: [
+      {
+        title: 'Card',
+        fields: [
+          { name: 'eyebrow', label: 'Small label', type: 'localized', hint: 'Optional. Stays visible when the next card stacks on top. For example: Growth' },
+          { name: 'title', label: 'Title', type: 'localized', required: true },
+          { name: 'description', label: 'Text', type: 'localizedTextarea', required: true },
+          { name: 'image', label: 'Image', type: 'image', required: true, hint: 'Nearly square works best, at least 800 × 800 px.' },
+        ],
+      },
+      { title: 'Points', description: 'Optional short lines under the text. Four fit best.', fields: [{ name: 'points', label: 'Points', type: 'features' }] },
+      {
+        title: 'Button',
+        description: 'Shown only when both are filled in.',
+        fields: [
+          { name: 'buttonLabel', label: 'Button text', type: 'localized' },
+          { name: 'buttonUrl', label: 'Button link', type: 'text', hint: 'A section (#contact), a page (/contact) or a full address starting with https://' },
+        ],
+      },
+      { title: 'Visibility', fields: [visibility] },
+    ],
+  },
+  {
     key: 'delivery-stories',
     label: 'Delivery Stories',
     singular: 'Story',

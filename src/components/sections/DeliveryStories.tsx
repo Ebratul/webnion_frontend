@@ -46,13 +46,13 @@ export const DeliveryStories = ({ locale, t, stories }: DeliveryStoriesProps) =>
       <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-6 lg:grid-cols-4">
         {stories.map((story, index) => (
           <li key={story.id} style={{ '--i': index } as CSSProperties} className="story-card">
-            <article className="relative aspect-[4/5] overflow-clip rounded-3xl border border-line bg-surface-2 transition-[border-color] duration-300 hover:border-primary/50">
+            <article className="relative aspect-[4/5] overflow-clip rounded-3xl bg-surface-2">
               <Image src={story.image} alt={story.title} fill sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw" className="story-photo object-cover" />
               <span aria-hidden className="absolute left-4 top-4 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold tabular-nums text-white backdrop-blur-sm">
                 {formatCounter(index + 1, locale)}
               </span>
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/65 to-transparent p-5 pt-16 text-white">
-                <h3 className="text-base font-semibold tracking-normal">{story.title}</h3>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-5 pt-20 text-white">
+                <h3 className="text-base font-medium tracking-normal">{story.title}</h3>
                 <p className="mt-0.5 text-xs text-white/80">{story.caption}</p>
               </div>
             </article>

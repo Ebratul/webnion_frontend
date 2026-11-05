@@ -93,6 +93,17 @@ export interface DeliveryStory {
   image: string;
 }
 
+export interface OutcomeCard {
+  id: string;
+  eyebrow: string | null;
+  title: string;
+  description: string;
+  points: string[];
+  image: string;
+  buttonLabel: string | null;
+  buttonUrl: string | null;
+}
+
 export interface PricingPlan {
   id: string;
   slug: string;
@@ -131,6 +142,7 @@ export interface HomeData {
   caseStudies: CaseStudy[];
   testimonials: Testimonial[];
   deliveryStories: DeliveryStory[];
+  outcomeCards: OutcomeCard[];
   pricingPlans: PricingPlan[];
   faqs: Faq[];
   team: TeamMember[];
