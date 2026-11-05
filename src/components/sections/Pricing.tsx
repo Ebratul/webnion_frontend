@@ -14,7 +14,7 @@ interface PricingProps {
   plans: PricingPlan[];
 }
 
-// Colours follow the client's image, with blues just dark enough for white button text, and stay the same in both themes.
+// Colours follow the client's image and stay the same in both themes.
 const monoLabel = 'uppercase text-[#666] [&:lang(en)]:font-mono';
 
 // Slides in beside the label on hover and on keyboard focus
@@ -26,7 +26,7 @@ const ButtonArrow = () => (
 );
 
 const TablePlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale }) => (
-  <li className="flex flex-col rounded-xl border border-[#f0f0f0] bg-white p-5 lg:rounded-none lg:border-0 lg:border-l lg:border-[#f2f2f2] lg:bg-transparent lg:first:border-l-0">
+  <li className="flex flex-col rounded-2xl border border-[#ececec] bg-white p-5 shadow-[0_14px_40px_-24px_rgb(0_0_0/0.2)]">
     <h3 className="text-lg font-medium text-[#2b2b2b]">{plan.name}</h3>
     <p className="mt-1 text-[13px] leading-snug text-[#6f6f6f] lg:min-h-[3.25rem]">{plan.tagline}</p>
 
@@ -63,26 +63,24 @@ const TablePlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pric
 );
 
 const HighlightedPlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale }) => (
-  <li className="relative z-10 flex flex-col rounded-[2.5rem] border border-[#f8f8f8] bg-[#f3f3f3] p-2 shadow-[0_24px_60px_-16px_rgb(0_0_0/0.28)] lg:-mb-7 lg:-mt-14">
+  <li className="flex flex-col rounded-[2rem] border-2 border-primary bg-[#f3f3f3] p-2 shadow-[0_24px_56px_-18px_rgb(130_36_227/0.5)] lg:-my-6">
     <div className="px-4 pb-6 pt-4">
       <div className="flex items-center justify-between gap-3">
         <span className="grid size-12 place-items-center rounded-full border border-[#dedede] text-accent">
           <Zap aria-hidden className="size-6 fill-current" strokeWidth={1.5} />
         </span>
-        {plan.badge && <span className="rounded-full border border-primary/30 bg-tint px-3 py-1 text-[13px] font-medium text-accent">{plan.badge}</span>}
+        {plan.badge && <span className="whitespace-nowrap rounded-full border border-primary/30 bg-tint px-3 py-1 text-[13px] font-medium text-accent">{plan.badge}</span>}
       </div>
       <h3 className="mt-5 text-xl font-medium text-[#333]">{plan.name}</h3>
       <p className="mt-1 text-sm leading-snug text-[#666]">{plan.tagline}</p>
-      <div className="mt-4 flex items-end justify-between gap-3">
-        <p className="flex items-baseline gap-2">
-          <span className="text-[2.75rem] font-medium leading-none tabular-nums text-[#0a0a0a]">{formatPrice(plan.price, plan.currency, locale)}</span>
-          <span className="text-sm text-[#6f6f6f]">{t.starting}</span>
-        </p>
-        <span className="max-w-24 text-right text-xs leading-snug text-[#6f6f6f]">{t.projectBased}</span>
-      </div>
+      <p className="mt-4 flex items-baseline gap-2">
+        <span className="text-[2.75rem] font-medium leading-none tabular-nums text-[#0a0a0a]">{formatPrice(plan.price, plan.currency, locale)}</span>
+        <span className="text-sm text-[#6f6f6f]">{t.starting}</span>
+      </p>
+      <p className="mt-1.5 text-xs leading-snug text-[#6f6f6f]">{t.projectBased}</p>
     </div>
 
-    <div className="flex flex-1 flex-col rounded-[2rem] border border-white bg-gradient-to-b from-[#fbfbfb] to-white p-3 pt-6 shadow-[0_6px_20px_-12px_rgb(0_0_0/0.2)]">
+    <div className="flex flex-1 flex-col rounded-3xl bg-white p-3 pt-6">
       <ul className="space-y-3.5 px-2">
         {plan.features.map((feature) => (
           <li key={feature} className="flex items-start gap-3 text-sm leading-snug text-[#5f5f5f]">
@@ -94,7 +92,7 @@ const HighlightedPlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary
       <div className="mt-auto pt-7">
         <ServiceLink
           slug={plan.slug}
-          className="plan-btn group flex min-h-14 items-center justify-center rounded-full bg-primary text-[15px] font-medium text-white shadow-[0_8px_18px_-10px_var(--primary)] hover:shadow-[0_18px_32px_-12px_var(--primary)] hover:brightness-95 focus-visible:brightness-95"
+          className="plan-btn group flex min-h-14 items-center justify-center rounded-full bg-primary text-[15px] font-medium text-white hover:bg-primary-hover focus-visible:bg-primary-hover"
         >
           {t.cta}
           <ButtonArrow />
@@ -111,20 +109,16 @@ export const Pricing = ({ locale, t, plans }: PricingProps) => (
         <SectionHeading id="pricing-title" title={t.title} />
       </div>
 
-      {/* Desktop: plans share one table, and the highlighted plan lifts out of it as its own card */}
-      <div className={`reveal relative mx-auto mt-12 lg:mt-24 ${plans.length > 3 ? 'max-w-6xl' : 'max-w-5xl'}`}>
-        <div aria-hidden className="absolute inset-0 hidden rounded-xl border border-[#f0f0f0] bg-white shadow-[0_14px_40px_-22px_rgb(0_0_0/0.2)] lg:block" />
-        <ul
-          style={{ '--plan-count': plans.length } as CSSProperties}
-          className="relative grid gap-5 lg:grid-cols-[repeat(var(--plan-count),minmax(0,1fr))] lg:gap-0"
-        >
+      {/* Separate cards with one gap. The highlighted plan stands taller by 1.5rem at each end, which the outer margins allow for. */}
+      <div className="reveal mx-auto mt-12 lg:mt-[4.5rem]">
+        <ul style={{ '--plan-count': plans.length } as CSSProperties} className="grid gap-5 lg:grid-cols-[repeat(var(--plan-count),minmax(0,1fr))]">
           {plans.map((plan) =>
             plan.isFeatured ? <HighlightedPlan key={plan.id} plan={plan} t={t} locale={locale} /> : <TablePlan key={plan.id} plan={plan} t={t} locale={locale} />,
           )}
         </ul>
       </div>
 
-      <p className="reveal mx-auto mt-14 max-w-2xl text-center text-xs leading-relaxed text-[#6f6f6f]">{t.note}</p>
+      <p className="reveal mx-auto mt-12 max-w-2xl lg:mt-[4.5rem] text-center text-xs leading-relaxed text-[#6f6f6f]">{t.note}</p>
     </div>
   </section>
 );

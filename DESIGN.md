@@ -81,10 +81,10 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 - **Project carousel:** three equal cards on desktop, two on tablet, one on phones. One card every 2 seconds, right to left. A counter, a thin progress line and the controls sit under it, not dots.
 - **Delivery Stories:** four numbered photo cards with the text over the image. As the page scrolls a line draws across them, the cards rise one after another and each photo drifts inside its card. Scroll-driven photos need `overflow-clip` on the card, because `overflow-hidden` would become their timeline.
 - **Eyebrow chip:** tinted pill with a dot, above section headings.
-- **Highlighted pricing plan:** light grey card with large corners, raised, icon and badge, white inner panel, brand pill button.
+- **Pricing plans:** separate cards with the standard `gap-5`. The highlighted plan stands taller, with a 2px `primary` border and a brand glow outside it, and nothing casts a shadow inside it: grey card, icon and badge, flat white inner panel, brand pill button.
 - **Pricing buttons:** `plan-btn` lifts the button, passes a light across it and slides in an arrow on hover and keyboard focus.
-- **Fan of client sites:** on hover a screen straightens, lifts and catches a passing light, and the others dim. The screen moves inside a still card, so the pointer cannot slip off a moving edge.
-- **Footer:** soft brand glow, faint name behind the content, short lines under headings and links, and contact details in cards.
+- **Fan of client sites:** solid screens that run straight into the footer, with no fade. On hover a screen straightens, lifts and catches a passing light, and the others dim. The screen moves inside a still card, so the pointer cannot slip off a moving edge.
+- **Footer:** flat background with no gradients, faint name behind the content, short lines under headings and links, and contact details in cards.
 - **Chat demo:** one card with a header, a scrolling conversation (it hands the wheel back to the page at its ends), suggestions that step aside after the first question, and a one-line composer. Answers are scripted in the dictionaries and nothing leaves the browser, apart from the browser's own speech service if a visitor uses the mic.
 
 ## Motion

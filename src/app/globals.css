@@ -548,19 +548,18 @@
   color: var(--accent);
 }
 
-/* Fan of phone screens in the final section. It fades out at the bottom, into the footer. */
+/* Fan of phone screens in the final section. */
 .fan {
   --u: clamp(5px, 1vw, 14.4px);
   width: calc(var(--u) * 88);
   height: calc(var(--u) * 26);
 }
 
-/* The stage reaches above the fan, because a mask also cuts off a card lifted past its edge. */
+/* The screens run straight into the footer, which cuts them off along a clean line. */
 .fan-stage {
   --headroom: calc(var(--u) * 3);
   position: absolute;
   inset: calc(var(--headroom) * -1) 0 0;
-  mask-image: linear-gradient(#000 calc(var(--headroom) + var(--u) * 9.1), transparent 98%);
 }
 
 /* The card holds still and its screen moves, so the pointer never slips off a moving edge. */
@@ -619,23 +618,11 @@
   }
 }
 
-/* Footer: a soft glow from the top, a thin light along its edge, and the name faintly behind the content. */
+/* Footer: a flat background with the name faintly behind the content. */
 .site-footer {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background-image:
-    radial-gradient(55% 60% at 12% 0%, rgb(130 36 227 / 0.08), transparent 70%),
-    radial-gradient(50% 70% at 92% 100%, rgb(130 36 227 / 0.1), transparent 70%);
-}
-
-.site-footer::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
-  opacity: 0.45;
 }
 
 .footer-mark {
@@ -649,7 +636,7 @@
   text-align: center;
   white-space: nowrap;
   color: transparent;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--fg) 5%, transparent), transparent 62%);
+  background-color: color-mix(in srgb, var(--fg) 3%, transparent);
   background-clip: text;
   user-select: none;
   pointer-events: none;
@@ -668,7 +655,7 @@
   width: 1.75rem;
   height: 2px;
   border-radius: 9999px;
-  background: linear-gradient(90deg, var(--accent), transparent);
+  background: var(--accent);
   transition: width 0.3s ease;
 }
 

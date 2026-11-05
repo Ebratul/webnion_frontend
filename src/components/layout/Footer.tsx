@@ -37,7 +37,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
   ];
 
   return (
-    <footer className="site-footer bg-[#faf2e6] dark:bg-surface">
+    <footer className="site-footer border-t border-line bg-[#faf2e6] dark:bg-surface">
       <span aria-hidden translate="no" className="footer-mark">Webnion</span>
       <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1.1fr_1.5fr]">
         <div>

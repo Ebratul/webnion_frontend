@@ -20,11 +20,11 @@ interface FinalInquiryProps {
 
 // Live mobile screens of client sites. Sizes are in --u, about 1% of the screen width, so the fan scales as one piece.
 const FAN = [
-  { image: 'tasin', width: 14, x: -34, y: 11, rotate: -4, opacity: 0.6, z: 1 },
-  { image: 'saltfoodmart', width: 18, x: -19, y: 5, rotate: -7, opacity: 0.92, z: 2 },
+  { image: 'tasin', width: 14, x: -34, y: 11, rotate: -4, opacity: 1, z: 1 },
+  { image: 'saltfoodmart', width: 18, x: -19, y: 5, rotate: -7, opacity: 1, z: 2 },
   { image: 'sabazarshop', width: 22, x: 0, y: 0, rotate: 0, opacity: 1, z: 3 },
-  { image: 'neqvix', width: 18, x: 19, y: 5, rotate: 7, opacity: 0.92, z: 2 },
-  { image: 'gigaloy', width: 14, x: 34, y: 11, rotate: 4, opacity: 0.6, z: 1 },
+  { image: 'neqvix', width: 18, x: 19, y: 5, rotate: 7, opacity: 1, z: 2 },
+  { image: 'gigaloy', width: 14, x: 34, y: 11, rotate: 4, opacity: 1, z: 1 },
 ];
 
 const badgeClass =
