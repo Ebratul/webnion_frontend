@@ -18,6 +18,8 @@ export const formatDate = (date: string, locale: Locale) =>
 
 export const formatNumber = (value: number, locale: Locale) => new Intl.NumberFormat(intlLocale(locale)).format(value);
 
+export const formatCounter = (value: number, locale: Locale) => new Intl.NumberFormat(intlLocale(locale), { minimumIntegerDigits: 2 }).format(value);
+
 export const formatDayMonth = (date: string, locale: Locale) => {
   const parts = new Intl.DateTimeFormat(intlLocale(locale), { day: '2-digit', month: 'short', timeZone: 'UTC' }).formatToParts(new Date(date));
   return { day: parts.find((part) => part.type === 'day')?.value ?? '', month: parts.find((part) => part.type === 'month')?.value ?? '' };

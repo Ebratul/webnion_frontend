@@ -7,7 +7,7 @@ import { SectionHeading } from '../ui/SectionHeading';
 import { ServiceCard } from '../ui/ServiceCard';
 
 export const Services = ({ locale, t, services }: { locale: Locale; t: Dictionary['services']; services: Service[] }) => (
-  <section id={SECTION_IDS.services} aria-labelledby="services-title" className="pb-20 lg:pb-28">
+  <section id={SECTION_IDS.services} aria-labelledby="services-title" className="section-b">
     <div className="container-page">
       <SectionHeading id="services-title" title={t.title} />
 
@@ -19,7 +19,7 @@ export const Services = ({ locale, t, services }: { locale: Locale; t: Dictionar
         ))}
       </ul>
 
-      <div className="mt-6 text-center">
+      <div className="mt-8 text-center">
         <Link href={`/${locale}/service`} className="inline-block py-1.5 text-xs font-semibold underline underline-offset-4 transition-colors duration-200 hover:text-accent">
           {t.seeAll}
         </Link>

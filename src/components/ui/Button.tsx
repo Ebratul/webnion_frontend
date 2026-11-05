@@ -7,11 +7,12 @@ type LinkHref = ComponentProps<typeof Link>['href'];
 const base =
   'inline-flex items-center justify-center gap-3 rounded-full font-semibold transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98]';
 
-// md and lg are the header and hero sizes, measured from the live site
+// xs is the header size. lg is the hero size, measured from the live site
 const PRIMARY_SIZES = {
-  sm: { link: 'min-h-12 pl-6 pr-1.5 text-sm', circle: 'size-9' },
-  md: { link: 'min-h-12 pl-6 pr-[5px] text-sm', circle: 'size-[38px]' },
-  lg: { link: 'min-h-14 pl-[30px] pr-[5px] text-base', circle: 'size-[46px]' },
+  xs: { link: 'min-h-10 gap-2 pl-4 pr-1 text-[0.8125rem]', circle: 'size-8', icon: 'size-4' },
+  sm: { link: 'min-h-12 pl-6 pr-1.5 text-sm', circle: 'size-9', icon: 'size-[18px]' },
+  md: { link: 'min-h-12 pl-6 pr-[5px] text-sm', circle: 'size-[38px]', icon: 'size-[18px]' },
+  lg: { link: 'min-h-14 pl-[30px] pr-[5px] text-base', circle: 'size-[46px]', icon: 'size-[18px]' },
 };
 
 const SECONDARY_SIZES = {
@@ -33,7 +34,7 @@ export const PrimaryLink = ({ href, children, className = '', size = 'sm' }: Pri
   >
     {children}
     <span className={`grid shrink-0 place-items-center rounded-full bg-ink text-white ${PRIMARY_SIZES[size].circle}`}>
-      <ArrowUpRight aria-hidden strokeWidth={2.5} className="size-[18px] transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px" />
+      <ArrowUpRight aria-hidden strokeWidth={2.5} className={`${PRIMARY_SIZES[size].icon} transition-transform duration-200 group-hover:translate-x-px group-hover:-translate-y-px`} />
     </span>
   </Link>
 );

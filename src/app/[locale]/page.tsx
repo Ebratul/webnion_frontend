@@ -47,9 +47,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Problems t={t.problems} />
         <Services locale={locale} t={t.services} services={data.services} />
         <Outcomes t={t.outcomes} />
-        <FeaturedProjects locale={locale} t={t.projects} a11y={t.a11y} projects={data.projects} caseStudies={data.caseStudies} />
+        <FeaturedProjects locale={locale} t={t.projects} a11y={t.a11y} projects={data.projects} />
         <Testimonials locale={locale} t={t.testimonials} a11y={t.a11y} testimonials={data.testimonials} />
-        <DeliveryStories t={t.delivery} stories={data.deliveryStories} />
+        <DeliveryStories locale={locale} t={t.delivery} stories={data.deliveryStories} />
         <Process t={t.process} />
         <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} />
         <Technologies t={t.technologies} />

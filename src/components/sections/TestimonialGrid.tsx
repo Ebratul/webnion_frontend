@@ -38,7 +38,7 @@ export const TestimonialGrid = ({ testimonials, t, a11y }: TestimonialGridProps)
 
   return (
     <>
-      <ul className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
+      <ul className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain px-5 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
         {testimonials.map((item) => (
           <li key={item.id} className="relative aspect-[4/5] w-[68%] shrink-0 snap-center overflow-hidden rounded-2xl border border-line bg-surface-2 sm:w-[40%] md:w-auto">
             {item.kind === 'VIDEO' && playingId === item.id && item.videoUrl ? (

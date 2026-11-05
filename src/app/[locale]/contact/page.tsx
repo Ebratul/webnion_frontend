@@ -92,7 +92,7 @@ export default async function ContactPage({ params }: PageProps) {
           </nav>
         </section>
 
-        <div className={`${wrap} relative -mt-[6.625rem] grid gap-[22px] md:grid-cols-2`}>
+        <div className={`${wrap} relative -mt-[6.625rem] grid gap-5 md:grid-cols-2`}>
           <article className={`reveal flex flex-col rounded-[28px] p-6 sm:p-[42px] lg:min-h-[401px] ${violetCard} ${softShadow}`}>
             <p className="self-start rounded-full bg-white/[0.13] px-3.5 py-2 text-xs font-medium">{t.meeting.badge}</p>
             <h2 className="mt-5 text-3xl font-medium leading-[1.08] xl:text-[2.5rem] [&:lang(en)]:tracking-[-0.04em]">{t.meeting.title}</h2>
@@ -115,7 +115,7 @@ export default async function ContactPage({ params }: PageProps) {
           </article>
         </div>
 
-        <div className={`${wrap} mt-[51px]`}>
+        <div className={`${wrap} mt-5`}>
         <ul className={`reveal grid divide-y divide-line rounded-[22px] md:grid-cols-3 md:divide-x md:divide-y-0 ${lightCard} shadow-[0_18px_50px_rgb(20_13_38/0.05)]`}>
           <QuickFact Icon={Clock} label={t.responseLabel}>{t.responseValue}</QuickFact>
           <QuickFact Icon={Mail} label={t.emailLabel}>
@@ -127,7 +127,7 @@ export default async function ContactPage({ params }: PageProps) {
         </ul>
         </div>
 
-        <section id={FORM_ID} aria-labelledby="contact-form-title" className={`${wrap} grid scroll-mt-24 items-start gap-[30px] pb-20 pt-20 lg:grid-cols-[503fr_787fr] lg:pb-[120px] lg:pt-[115px]`}>
+        <section id={FORM_ID} aria-labelledby="contact-form-title" className={`${wrap} section-y grid scroll-mt-24 items-start gap-5 lg:grid-cols-[503fr_787fr]`}>
           <div className={`reveal rounded-[26px] p-6 sm:p-[45px] ${violetCard}`}>
             <p className="inline-block rounded-full bg-white/[0.13] px-3.5 py-2 text-xs font-medium">{t.formBadge}</p>
             <h2 id="contact-form-title" className="mt-5 text-3xl font-medium leading-[1.08] xl:text-[2.875rem] [&:lang(en)]:tracking-[-0.04em]">{t.formTitle}</h2>
@@ -151,7 +151,7 @@ export default async function ContactPage({ params }: PageProps) {
           </div>
         </section>
 
-        <section aria-labelledby="contact-faq-title" className="px-5 pb-20 lg:pb-[120px] lg:pt-[120px]">
+        <section aria-labelledby="contact-faq-title" className="container-page section-b">
           <LineReveal className="text-center">
             <p data-line-item className="text-[15px] font-medium uppercase text-accent [&:lang(en)]:tracking-[0.15em]">{t.faqEyebrow}</p>
             <h2 id="contact-faq-title" className="mt-2 text-3xl font-medium sm:text-[2.75rem] [&:lang(en)]:tracking-[-0.03em]">
@@ -159,7 +159,7 @@ export default async function ContactPage({ params }: PageProps) {
             </h2>
           </LineReveal>
 
-          <div className="reveal mx-auto mt-10 max-w-[61.5rem] lg:mt-[52px] overflow-hidden rounded-md border border-line bg-white dark:bg-surface">
+          <div className="reveal mt-12 overflow-hidden rounded-md border border-line bg-white dark:bg-surface">
             {t.faqs.map((faq, index) => (
               <details key={faq.question} name="contact-faq" open={index === 0} className="group border-line [&:not(:first-child)]:border-t">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 transition-colors duration-200 group-open:bg-tint group-open:text-accent dark:group-open:bg-tint dark:group-open:text-fg">

@@ -59,7 +59,7 @@ export default async function ProjectPage({ params }: PageProps) {
     <PageShell locale={locale}>
       <PageHero title={project.name} homeHref={`/${locale}`} homeLabel={t.nav.home} crumb={labels.crumb} translateTitle={false} />
 
-      <div className="container-page grid gap-6 py-12 lg:grid-cols-[minmax(0,1fr)_22rem] lg:py-16">
+      <div className="container-page section-y grid gap-5 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <div className="min-w-0 space-y-6">
           <div className="overflow-hidden rounded-2xl bg-white">
             <Image src={project.image} alt={project.name} width={768} height={768} priority sizes="(min-width: 1024px) 768px, 100vw" className="w-full" />

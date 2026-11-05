@@ -18,12 +18,12 @@ export const Testimonials = ({ locale, t, a11y, testimonials }: TestimonialsProp
   const avatars = testimonials.filter((item) => item.avatar).slice(0, 5);
 
   return (
-    <section aria-labelledby="testimonials-title" className="pt-20 lg:pt-24">
+    <section aria-labelledby="testimonials-title" className="pt-[var(--section-space)]">
       <div className="container-page">
         <SectionHeading id="testimonials-title" title={t.title} subtitle={t.subtitle} />
       </div>
 
-      <div className="mt-10 bg-[#f7f7fe] py-10 lg:py-14 dark:bg-surface">
+      <div className="section-y mt-12 bg-[#f7f7fe] dark:bg-surface">
         <div className="container-page">
         <div className="reveal flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
           <div aria-hidden className="flex items-center">

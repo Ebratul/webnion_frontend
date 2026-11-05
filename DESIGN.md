@@ -12,6 +12,8 @@ Section backgrounds follow the client's reference images, and the site opens in 
 - The public site shows at 110% from 768px up, through `zoom` on `.site-zoom`. Phones stay at 100%. Admin is not zoomed.
 - Viewport units are multiplied by the zoom, so anything sized from the screen divides by it: `calc(100svh / var(--page-zoom))`.
 - Header, cards and banners share the `container-page` edges. A box with a border or background goes inside `container-page`, never on it, because its padding would push the box past those edges.
+- **One vertical rhythm:** `--section-space` (72px on phones and tablets, 96px from 1024px up) is the only space between sections, on every page. Use `section-y`, or `section-b` when the section above has the same background. `flush-light` and `flush-dark` drop the top space when backgrounds match in only one theme.
+- **One gap:** cards side by side use `gap-5` (20px). A section heading sits `mt-12` above its content.
 
 ## Homepage hero
 
@@ -28,7 +30,7 @@ Sampled from the client's references. Buttons and accents are brand purple in ev
 | Client Trust | Project mosaic on black, logos on white in flat grey |
 | Customer Problems | Sky to pink |
 | Services, Delivery Stories, Process, Pricing | White |
-| Business Outcomes | Beige `#F7EEE8` |
+| Business Outcomes | Beige `#F7EEE8` rounded card on white |
 | Featured Projects | Title on white, cards on navy `#131620` |
 | Testimonials | Title on white, reviews on lavender `#F7F7FE` |
 | FAQs | Grey `#F6F6F6` with a peach glow |
@@ -59,7 +61,7 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 
 ## Type
 
-- English: Poppins. Bangla: Hind Siliguri. Selected through `:lang()` in `globals.css`; weights 400 to 700.
+- English: Poppins. Bangla: Hind Siliguri, matched to the client's reference. Poppins comes first in the stack on both languages, so Latin words on Bangla pages stay in Poppins and Bengali letters fall through to Hind Siliguri. Weights 400 to 700.
 - Bangla gets zero letter-spacing and taller line-height, because negative tracking breaks conjuncts.
   Never add `tracking-*` to text that can be Bangla without scoping it to `[&:lang(en)]`.
 - Section headings: weight 500 at 44px on desktop. Delivery Stories alone uses semibold uppercase as a deliberate change of pace.
@@ -73,14 +75,17 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 
 - **Buttons:** every button has a `primary` background with white text, including icon buttons and header controls. Exceptions: the green WhatsApp button, and controls that show a state (carousel dots, the pages you are not on in pagination, assistant choices), where only the selected one is solid.
 - **Primary button:** pill with the black arrow circle. Use one per view.
-- **Content cards:** project, case study, product, service, team and technology cards have a 1px `primary` border, `accent` on hover.
-- **Project carousel:** three equal cards on desktop, two on tablet, one on phones.
+- **Content cards:** project, case study, product, team and technology cards have a 1px `primary` border. Service cards have no border at rest and a light `primary/40` one on hover.
+- **Client logos:** full-colour logos on white tiles, in a row that moves right to left.
+- **Project mosaic:** no border and no movement on hover, only the name appearing over the image.
+- **Project carousel:** three equal cards on desktop, two on tablet, one on phones. One card every 2 seconds, right to left. A counter, a thin progress line and the controls sit under it, not dots.
+- **Delivery Stories:** four numbered photo cards with the text over the image. As the page scrolls a line draws across them, the cards rise one after another and each photo drifts inside its card. Scroll-driven photos need `overflow-clip` on the card, because `overflow-hidden` would become their timeline.
 - **Eyebrow chip:** tinted pill with a dot, above section headings.
 - **Highlighted pricing plan:** light grey card with large corners, raised, icon and badge, white inner panel, brand pill button.
 - **Pricing buttons:** `plan-btn` lifts the button, passes a light across it and slides in an arrow on hover and keyboard focus.
 - **Fan of client sites:** on hover a screen straightens, lifts and catches a passing light, and the others dim. The screen moves inside a still card, so the pointer cannot slip off a moving edge.
 - **Footer:** soft brand glow, faint name behind the content, short lines under headings and links, and contact details in cards.
-- **Chat demo:** `ChatDemo` follows the client's reference. Answers are scripted in the dictionaries and nothing leaves the browser, apart from the browser's own speech service if a visitor uses the mic.
+- **Chat demo:** one card with a header, a scrolling conversation (it hands the wheel back to the page at its ends), suggestions that step aside after the first question, and a one-line composer. Answers are scripted in the dictionaries and nothing leaves the browser, apart from the browser's own speech service if a visitor uses the mic.
 
 ## Motion
 

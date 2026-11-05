@@ -59,7 +59,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
     <PageShell locale={locale}>
       <PageBanner titleLines={t.titleLines} subtitle={t.subtitle} homeHref={`/${locale}`} homeLabel={dictionary.nav.home} crumb={t.crumb} />
 
-      <div className="container-page py-14 lg:py-16">
+      <div className="container-page section-y">
         {category && (
           <p className="mb-8 flex flex-wrap items-center gap-3 text-sm">
             <span className="text-muted">{t.showingCategory}:</span>

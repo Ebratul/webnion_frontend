@@ -38,7 +38,6 @@
 
 /* Bengali conjuncts break under negative tracking and need more vertical room than Latin. */
 :root:lang(bn) {
-  --font: var(--font-hind), var(--font-poppins), system-ui, sans-serif;
   --heading-tracking: 0;
   --body-leading: 1.8;
   --heading-leading: 1.28;
@@ -59,6 +58,17 @@
   --color-whatsapp: #25d366;
   --font-sans: var(--font);
   --shadow-soft: var(--shadow);
+}
+
+/* One vertical rhythm for every section on every page. --card-gap is written as gap-5 in the markup. */
+:root {
+  --section-space: 4.5rem;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --section-space: 6rem;
+  }
 }
 
 /* The public site shows at 110% from tablets up, the same as browser zoom. Phones already fill the screen.
@@ -148,11 +158,21 @@
 }
 
 @utility section-y {
-  padding-block: 5rem;
+  padding-block: var(--section-space);
+}
 
-  @media (min-width: 64rem) {
-    padding-block: 7.5rem;
-  }
+/* For a section on the same background as the one above, whose bottom space already separates them. */
+@utility section-b {
+  padding-bottom: var(--section-space);
+}
+
+/* A section whose background matches the one above only in one theme: drop the top space there, so the gap stays one step. */
+[data-theme='light'] .flush-light {
+  padding-top: 0;
+}
+
+:root:not([data-theme='light']) .flush-dark {
+  padding-top: 0;
 }
 
 /* Logos are made for a white background, so this band stays light in both themes. */
@@ -418,9 +438,11 @@
   }
 }
 
-/* Older messages fade out under the header as the conversation scrolls. */
+/* Messages fade at both ends of the conversation, and a thin scrollbar shows there is more to read. */
 .chat-fade {
-  mask-image: linear-gradient(transparent, #000 0.75rem);
+  mask-image: linear-gradient(transparent, #000 0.75rem, #000 calc(100% - 0.75rem), transparent);
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--fg) 20%, transparent) transparent;
 }
 
 .chat-orb {
@@ -683,6 +705,10 @@
   animation-direction: reverse;
 }
 
+.marquee-logos {
+  animation-duration: 55s;
+}
+
 [data-paused='true'] .marquee-track {
   animation-play-state: paused;
 }
@@ -741,6 +767,57 @@
 @keyframes draw-line {
   from {
     stroke-dashoffset: 1;
+  }
+}
+
+/* Delivery Stories: as the page scrolls, a line draws across the four stages, the cards rise after one another,
+   and each photo drifts inside its card. Cards clip rather than hide their overflow: a hidden box is a scroll
+   container, which would become the photo's timeline instead of the page. */
+.story-line {
+  transform-origin: left;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .story-line {
+      animation: story-line linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 62%;
+    }
+
+    .story-card {
+      animation: story-rise linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--i) * 12%) cover calc(24% + var(--i) * 6%);
+    }
+
+    .story-photo {
+      animation: story-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes story-line {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes story-rise {
+  from {
+    opacity: 0;
+    transform: translateY(3.5rem) scale(0.96);
+  }
+}
+
+@keyframes story-drift {
+  from {
+    transform: translateY(-6%) scale(1.14);
+  }
+
+  to {
+    transform: translateY(6%) scale(1.14);
   }
 }
 

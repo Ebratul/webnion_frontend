@@ -42,7 +42,6 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
   }, [open]);
 
   const links = [
-    { href: `/${locale}`, label: nav.home },
     { href: `/${locale}/service`, label: nav.services },
     { href: `/${locale}/project`, label: nav.portfolio },
     { href: `/${locale}/products`, label: nav.products },
@@ -77,7 +76,7 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
           <LanguageSwitch locale={locale} text={nav.switchLanguage} label={nav.switchLanguageLabel} />
           <ThemeToggle label={a11y.toggleTheme} />
           <div className="hidden xl:block">
-            <PrimaryLink size="md" href={`/${locale}/contact`}>{nav.cta}</PrimaryLink>
+            <PrimaryLink size="xs" href={`/${locale}/contact`}>{nav.cta}</PrimaryLink>
           </div>
           <button
             type="button"

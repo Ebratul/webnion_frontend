@@ -37,7 +37,7 @@ export default async function ServicePage({ params }: PageProps) {
     <PageShell locale={locale}>
       <PageBanner titleLines={t.titleLines} subtitle={t.subtitle} homeHref={`/${locale}`} homeLabel={dictionary.nav.home} crumb={t.crumb} />
 
-      <div className="container-page py-14 lg:py-20">
+      <div className="container-page section-y">
         {services.length === 0 ? (
           <p className="py-16 text-center text-muted">{t.empty}</p>
         ) : (

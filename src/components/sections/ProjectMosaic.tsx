@@ -27,7 +27,7 @@ const Row = ({ locale, projects, direction, offset }: { locale: Locale; projects
           aria-hidden={isCopy || undefined}
           // Keyboard users reach these projects in the Portfolio section; focus would make the row jump here
           tabIndex={-1}
-          className={`group relative mr-3 h-36 shrink-0 overflow-hidden rounded-2xl bg-white ring-primary transition-[transform,box-shadow] duration-300 [cursor:inherit] hover:-translate-y-1 hover:ring-2 sm:mr-4 sm:h-56 ${WIDTHS[(index + offset) % WIDTHS.length]}`}
+          className={`group relative mr-5 h-36 shrink-0 overflow-hidden rounded-2xl bg-white [cursor:inherit] sm:h-56 ${WIDTHS[(index + offset) % WIDTHS.length]}`}
         >
           <Image
             src={project.image}
@@ -52,8 +52,8 @@ export const ProjectMosaic = ({ locale, projects, pauseLabel, playLabel }: Proje
   const middle = Math.ceil(projects.length / 2);
 
   return (
-    <PausableMarquee pauseLabel={pauseLabel} playLabel={playLabel} className="band-dark py-3 sm:py-4" buttonClassName="bottom-6 right-5 sm:right-8">
-      <div className="fade-edges flex flex-col gap-3 overflow-hidden py-1 sm:gap-4">
+    <PausableMarquee pauseLabel={pauseLabel} playLabel={playLabel} className="band-dark py-5" buttonClassName="bottom-6 right-5 sm:right-8">
+      <div className="fade-edges flex flex-col gap-5 overflow-hidden">
         <Row locale={locale} projects={projects.slice(0, middle)} offset={0} />
         <Row locale={locale} projects={projects.slice(middle)} direction="reverse" offset={2} />
       </div>

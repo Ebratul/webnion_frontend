@@ -59,7 +59,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     <PageShell locale={locale}>
       <PageBanner titleLines={[service.title]} homeHref={`/${locale}`} homeLabel={dictionary.nav.home} crumb={service.title} />
 
-      <div className="container-page grid items-start gap-8 py-14 lg:grid-cols-[1fr_20rem] lg:gap-10 lg:py-16">
+      <div className="container-page section-y grid items-start gap-5 lg:grid-cols-[1fr_20rem]">
         <div className="min-w-0">
           <Image src={service.image} alt="" width={1400} height={1050} priority sizes="(min-width: 1024px) 800px, 100vw" className="w-full rounded-2xl bg-white" />
 
@@ -68,7 +68,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           </div>
 
           {images.length > 0 && (
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-5 sm:grid-cols-2">
               {images.map((src) => (
                 <Image key={src} src={src} alt="" width={1000} height={600} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="aspect-[16/10] w-full rounded-2xl object-cover" />
               ))}

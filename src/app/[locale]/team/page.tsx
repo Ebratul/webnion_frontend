@@ -56,9 +56,9 @@ export default async function TeamPage({ params }: PageProps) {
     <PageShell locale={locale}>
       <PageBanner titleLines={t.titleLines} subtitle={t.subtitle} homeHref={`/${locale}`} homeLabel={dictionary.nav.home} crumb={t.crumb} />
 
-      <section aria-labelledby="team-page-title" className="team-page py-14 sm:py-[68px] md:py-20 lg:pb-[115px] lg:pt-[105px]">
+      <section aria-labelledby="team-page-title" className="team-page section-y">
         <div className="container-page">
-          <div className="reveal mx-auto mb-9 max-w-3xl text-center md:mb-[52px]">
+          <div className="reveal mx-auto mb-12 max-w-3xl text-center">
             <p className="team-kicker mb-3.5 inline-flex items-center gap-2 text-[13px] font-semibold uppercase leading-none text-accent [&:lang(en)]:tracking-[0.11em]">{t.kicker}</p>
             <h2 id="team-page-title" className="text-[clamp(2rem,4vw,3.25rem)] font-medium leading-[1.12] [&:lang(en)]:tracking-[-0.035em]">{dictionary.team.title}</h2>
             <p className="mx-auto mt-[18px] max-w-[640px] text-[15px] leading-[1.75] text-muted md:text-base">{dictionary.team.subtitle}</p>
@@ -67,7 +67,7 @@ export default async function TeamPage({ params }: PageProps) {
           {team.length === 0 ? (
             <p className="py-16 text-center text-muted">{t.empty}</p>
           ) : (
-            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {team.map((member) => (
                 <li key={member.id} className="reveal">
                   <TeamCard member={member} />

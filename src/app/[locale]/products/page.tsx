@@ -68,7 +68,7 @@ export default async function ProductsPage({ params, searchParams }: PageProps) 
         <p style={{ '--delay': '1100ms' } as CSSProperties} className="hero-fade mx-auto mt-4 max-w-xl text-sm text-muted">{t.subtitle}</p>
       </div>
 
-      <div className="container-page -mt-10 pb-20 lg:-mt-12">
+      <div className="container-page section-b -mt-10 lg:-mt-12">
         {/* Keyed so that "View All Products" also clears what is shown in the fields */}
         <Form
           key={JSON.stringify(filters)}

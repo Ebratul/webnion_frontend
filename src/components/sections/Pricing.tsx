@@ -105,7 +105,7 @@ const HighlightedPlan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary
 );
 
 export const Pricing = ({ locale, t, plans }: PricingProps) => (
-  <section id={SECTION_IDS.pricing} aria-labelledby="pricing-title" className="band-light section-y">
+  <section id={SECTION_IDS.pricing} aria-labelledby="pricing-title" className="band-light section-y flush-light">
     <div className="container-page">
       <div className="[&_h2]:font-semibold [&_h2]:text-[#1a1a1a]">
         <SectionHeading id="pricing-title" title={t.title} />

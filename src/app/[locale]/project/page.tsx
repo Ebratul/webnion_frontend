@@ -50,11 +50,11 @@ export default async function ProjectsPage({ params, searchParams }: PageProps) 
     <PageShell locale={locale}>
       <PageBanner titleLines={t.titleLines} subtitle={t.subtitle} homeHref={`/${locale}`} homeLabel={dictionary.nav.home} crumb={t.crumb} />
 
-      <div className="container-page py-14 lg:py-16">
+      <div className="container-page section-y">
         {projects.length === 0 ? (
           <p className="py-16 text-center text-muted">{t.empty}</p>
         ) : (
-          <ul className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project, index) => {
               const href = `${basePath}/${project.slug}`;
               return (

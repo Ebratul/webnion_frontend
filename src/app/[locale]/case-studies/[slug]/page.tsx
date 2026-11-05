@@ -51,7 +51,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
     <PageShell locale={locale}>
       <PageHero title={study.title} homeHref={`/${locale}`} homeLabel={t.nav.home} crumb={labels.crumb} />
 
-      <div className="container-page max-w-3xl py-12 lg:py-16">
+      <div className="container-page section-y max-w-3xl">
         <Image src={study.image} alt="" width={870} height={570} priority sizes="(min-width: 768px) 768px, 100vw" className="h-auto w-full rounded-2xl" />
 
         <div className="mt-6 flex flex-wrap items-center gap-3 text-xs text-muted">

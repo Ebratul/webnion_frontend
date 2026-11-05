@@ -14,7 +14,7 @@ const DESKTOP_LAYOUT = [
 ];
 
 export const Process = ({ t }: { t: Dictionary['process'] }) => (
-  <section aria-labelledby="process-title" className="section-y dark:bg-surface">
+  <section aria-labelledby="process-title" className="section-b">
     <div className="container-page">
       <SectionHeading id="process-title" eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
       <div className="reveal mt-7 flex justify-center">
@@ -22,7 +22,7 @@ export const Process = ({ t }: { t: Dictionary['process'] }) => (
       </div>
 
       {/* Desktop: the steps sit around one continuous curved line */}
-      <div className="relative mt-14 hidden aspect-[1200/440] lg:block">
+      <div className="relative mt-12 hidden aspect-[1200/440] lg:block">
         <svg aria-hidden viewBox="0 0 1200 440" fill="none" className="absolute inset-0 size-full">
           <path
             pathLength={1}
