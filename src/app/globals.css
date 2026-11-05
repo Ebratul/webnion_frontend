@@ -2,6 +2,40 @@
 
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
+/* Hind Siliguri draws the digit 1 as a thin leaf that reads as a cut-off character, so Bangla digits come from Noto Sans
+   Bengali. Browsers download these only on pages that show a Bangla digit. */
+@font-face {
+  font-family: 'Bangla Digits';
+  src: url('/fonts/bangla-digits-400.woff') format('woff');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+09E6-09EF;
+}
+
+@font-face {
+  font-family: 'Bangla Digits';
+  src: url('/fonts/bangla-digits-500.woff') format('woff');
+  font-weight: 500;
+  font-display: swap;
+  unicode-range: U+09E6-09EF;
+}
+
+@font-face {
+  font-family: 'Bangla Digits';
+  src: url('/fonts/bangla-digits-600.woff') format('woff');
+  font-weight: 600;
+  font-display: swap;
+  unicode-range: U+09E6-09EF;
+}
+
+@font-face {
+  font-family: 'Bangla Digits';
+  src: url('/fonts/bangla-digits-700.woff') format('woff');
+  font-weight: 700;
+  font-display: swap;
+  unicode-range: U+09E6-09EF;
+}
+
 /* Dark is the default: it matches the brand hero and is what renders before the theme script runs. */
 :root {
   color-scheme: dark;
@@ -17,7 +51,7 @@
   --accent: #b78cf5;
   --tint: rgb(130 36 227 / 0.16);
   --shadow: 0 24px 60px -24px rgb(0 0 0 / 0.8);
-  --font: var(--font-poppins), var(--font-hind), system-ui, sans-serif;
+  --font: var(--font-poppins), 'Bangla Digits', var(--font-hind), system-ui, sans-serif;
   --heading-tracking: -0.025em;
   --body-leading: 1.65;
   --heading-leading: 1.14;

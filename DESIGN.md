@@ -65,7 +65,7 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 
 ## Type
 
-- English: Poppins. Bangla: Hind Siliguri, matched to the client's reference. Poppins comes first in the stack on both languages, so Latin words on Bangla pages stay in Poppins and Bengali letters fall through to Hind Siliguri. Weights 400 to 700.
+- English: Poppins. Bangla: Hind Siliguri, matched to the client's reference. Poppins comes first in the stack on both languages, so Latin words on Bangla pages stay in Poppins and Bengali letters fall through to Hind Siliguri. Bangla digits use Noto Sans Bengali (`public/fonts`), because Hind Siliguri's ১ reads as a cut-off character. Weights 400 to 700.
 - Bangla gets zero letter-spacing and taller line-height, because negative tracking breaks conjuncts.
   Never add `tracking-*` to text that can be Bangla without scoping it to `[&:lang(en)]`.
 - Section headings: weight 500 at 44px on desktop. Delivery Stories alone uses semibold uppercase as a deliberate change of pace.

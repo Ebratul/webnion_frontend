@@ -1,0 +1,4 @@
+bangla-digits-*.woff contain only the digits 0-9 of Noto Sans Bengali.
+
+Copyright The Noto Project Authors (https://github.com/notofonts/bengali).
+Licensed under the SIL Open Font License, Version 1.1: https://openfontlicense.org
