@@ -52,8 +52,11 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
   ];
 
   return (
+    <>
+    {/* The header is fixed, so it is out of the page's flow. This keeps its place, and the hero slides up behind it. */}
+    <div aria-hidden className="h-[calc(4.5rem+1px)] xl:h-[calc(5rem+1px)]" />
     <header
-      className={`sticky top-0 z-40 border-b transition-[background-color,border-color] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-40 border-b transition-[background-color,border-color] duration-300 [will-change:transform] ${
         overHero ? 'border-transparent bg-transparent' : 'border-line bg-bg dark:border-transparent dark:bg-black'
       }`}
     >
@@ -92,7 +95,7 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
       </div>
 
       {open && (
-        <nav id="mobile-menu" aria-label={a11y.primaryNav} className="border-t border-line bg-bg xl:hidden">
+        <nav id="mobile-menu" aria-label={a11y.primaryNav} className="max-h-[calc(100svh/var(--page-zoom)-4.5rem)] overflow-y-auto overscroll-contain border-t border-line bg-bg xl:hidden">
           <ul className="container-page flex flex-col py-3">
             {links.map((link) => (
               <li key={link.href}>
@@ -105,5 +108,6 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
         </nav>
       )}
     </header>
+    </>
   );
 };

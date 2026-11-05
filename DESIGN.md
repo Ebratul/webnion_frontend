@@ -15,6 +15,10 @@ Section backgrounds follow the client's reference images, and the site opens in 
 - **One vertical rhythm:** `--section-space` (72px on phones and tablets, 96px from 1024px up) is the only space between sections, on every page. Use `section-y`, or `section-b` when the section above has the same background. `flush-light` and `flush-dark` drop the top space when backgrounds match in only one theme.
 - **One gap:** cards side by side use `gap-5` (20px). A section heading sits `mt-12` above its content.
 
+## Header
+
+Fixed to the top of the screen, with a spacer holding its place in the page. Keep it `fixed`, not `sticky`: the owner saw the sticky header slip up and get cut off while scrolling.
+
 ## Homepage hero
 
 Follows the client's reference: charcoal `#1E1E1E` with a faint warm glow in two corners in dark mode, and a cream gradient from
