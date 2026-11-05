@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { CSSProperties } from 'react';
 import { PageShell } from '@/components/layout/PageShell';
+import { imageCardBodyClass, imageCardClass } from '@/components/ui/imageCard';
 import { isLocale } from '@/i18n/config';
 import { getDictionary } from '@/i18n';
 import { getProducts } from '@/lib/api';
@@ -141,15 +142,15 @@ export default async function ProductsPage({ params, searchParams }: PageProps) 
           <ul className="mt-4 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <li key={product.id} className="reveal">
-                <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary bg-surface">
-                  <div className="relative overflow-hidden bg-surface-2">
-                    <Image src={product.image} alt="" width={800} height={500} sizes="(min-width: 1024px) 370px, (min-width: 768px) 50vw, 100vw" className="aspect-[8/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
-                    <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[0.6875rem] font-semibold text-ink shadow">
+                <article className={imageCardClass}>
+                  <div className="relative bg-white">
+                    <Image src={product.image} alt="" width={800} height={500} sizes="(min-width: 1024px) 420px, (min-width: 768px) 50vw, 100vw" className="aspect-[4/3] w-full object-cover" />
+                    <span className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-[0.6875rem] font-semibold text-ink shadow">
                       {t.types[product.type as keyof typeof t.types] ?? product.type}
                     </span>
                   </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <h3 className="font-medium">{product.name}</h3>
+                  <div className={imageCardBodyClass}>
+                    <h3 className="text-lg font-medium">{product.name}</h3>
                     <p className="mt-2 flex-1 text-sm text-muted">{product.summary}</p>
                     <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                       <p className="font-semibold tabular-nums">{priceLabel(product)}</p>

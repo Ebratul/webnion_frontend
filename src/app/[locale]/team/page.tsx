@@ -26,20 +26,11 @@ export const generateMetadata = async ({ params }: PageProps): Promise<Metadata>
 };
 
 const TeamCard = ({ member }: { member: TeamMember }) => (
-  <article className="team-card h-full overflow-hidden rounded-[18px] border border-primary bg-bg md:rounded-[22px]">
-    <div className="team-photo relative aspect-[4/5] overflow-hidden bg-surface-2">
-      <Image
-        src={member.photo}
-        alt={member.name}
-        width={560}
-        height={700}
-        sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 100vw"
-        className="size-full object-cover object-top"
-      />
-    </div>
-    <div className="team-info relative p-5 md:px-[22px] md:pb-6 md:pt-[22px]">
+  <article className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-transparent bg-surface-2 transition-[border-color] duration-300 hover:border-primary/40">
+    <Image src={member.photo} alt={member.name} fill sizes="(min-width: 1024px) 420px, (min-width: 640px) 50vw, 100vw" className="object-cover object-top" />
+    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-5 pt-20 text-white md:p-6 md:pt-24">
       <h3 className="text-lg font-medium leading-snug md:text-xl [&:lang(en)]:tracking-[-0.02em]">{member.name}</h3>
-      <p className="mt-1.5 text-sm leading-relaxed text-muted">{member.role}</p>
+      <p className="mt-1 text-sm leading-relaxed text-white/80">{member.role}</p>
     </div>
   </article>
 );

@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
 import { Pagination } from '@/components/ui/Pagination';
+import { imageCardBodyClass, imageCardClass } from '@/components/ui/imageCard';
 import { isLocale } from '@/i18n/config';
 import { getDictionary } from '@/i18n';
 import { getCaseStudies } from '@/lib/api';
@@ -77,33 +78,33 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
               const date = study.publishedAt ? formatDayMonth(study.publishedAt, locale) : null;
               return (
                 <li key={study.id} className="reveal">
-                  <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-primary bg-surface">
+                  <article className={`group ${imageCardClass}`}>
                     <div className="relative">
-                      <Link href={href} tabIndex={-1} aria-hidden className="block overflow-hidden">
+                      <Link href={href} tabIndex={-1} aria-hidden className="block">
                         <Image
                           src={study.image}
                           alt=""
                           width={900}
                           height={580}
                           priority={index < 3}
-                          sizes="(min-width: 1024px) 370px, (min-width: 768px) 50vw, 100vw"
-                          className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                          sizes="(min-width: 1024px) 420px, (min-width: 768px) 50vw, 100vw"
+                          className="aspect-[3/2] w-full object-cover"
                         />
                       </Link>
                       {date && (
-                        <p className="absolute left-3 top-3 rounded-xl bg-black/70 px-3 py-1.5 text-center text-white backdrop-blur">
+                        <p className="absolute left-4 top-4 rounded-xl bg-black/70 px-3 py-1.5 text-center text-white backdrop-blur">
                           <span className="block text-lg font-semibold leading-none">{date.day}</span>
                           <span className="mt-1 block text-[0.625rem] font-medium uppercase leading-none">{date.month}</span>
                         </p>
                       )}
+                    </div>
+                    <div className={imageCardBodyClass}>
                       <Link
                         href={`${basePath}?category=${encodeURIComponent(study.category)}`}
-                        className="absolute bottom-3 right-3 max-w-[85%] truncate rounded-full bg-primary px-3 py-1 text-[0.6875rem] font-semibold text-white shadow transition-colors duration-200 hover:bg-primary-hover"
+                        className="mb-2 flex min-h-7 max-w-full items-center self-start text-xs font-medium text-accent underline-offset-4 hover:underline"
                       >
                         {study.category}
                       </Link>
-                    </div>
-                    <div className="flex flex-1 flex-col p-5">
                       <p className="flex items-center gap-4 text-xs text-muted">
                         <span className="inline-flex items-center gap-1.5">
                           <Image src="/icon.svg" alt="" width={18} height={18} unoptimized className="size-[1.125rem] rounded" />

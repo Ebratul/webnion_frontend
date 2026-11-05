@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Locale } from '@/i18n/config';
 import type { Service } from '@/lib/types';
+import { imageCardBodyClass, imageCardClass } from './imageCard';
 import { ServiceLink } from './ServiceLink';
 
 interface ServiceCardProps {
@@ -16,18 +17,11 @@ export const ServiceCard = ({ locale, service, cta, heading: Heading }: ServiceC
   const href = `/${locale}/services/${service.slug}`;
 
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-transparent bg-surface p-2.5 shadow-soft transition-[border-color] duration-300 hover:border-primary/40">
-      <Link href={href} tabIndex={-1} aria-hidden className="block overflow-hidden rounded-xl bg-tint">
-        <Image
-          src={service.image}
-          alt=""
-          width={1400}
-          height={1050}
-          sizes="(min-width: 1024px) 370px, (min-width: 768px) 50vw, 100vw"
-          className="aspect-[8/5] w-full object-cover"
-        />
+    <article className={imageCardClass}>
+      <Link href={href} tabIndex={-1} aria-hidden className="block bg-white">
+        <Image src={service.image} alt="" width={1400} height={1050} sizes="(min-width: 1024px) 420px, (min-width: 768px) 50vw, 100vw" className="aspect-[4/3] w-full object-cover" />
       </Link>
-      <div className="flex flex-1 flex-col p-2.5 pt-4">
+      <div className={imageCardBodyClass}>
         <Heading className="text-lg font-medium">
           <Link href={href} className="transition-colors duration-200 hover:text-accent">{service.title}</Link>
         </Heading>
