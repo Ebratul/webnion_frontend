@@ -90,7 +90,7 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 - **Pricing plans:** white cards with 16px corners and the standard `gap-5`, all with the same rows, which line up across the cards. The highlighted plan adds an icon and badge above those rows, with a `primary` border and ring and a brand glow outside it. Use a ring for the highlight, because it takes no room and the inner spacing stays equal.
 - **Pricing buttons:** `plan-btn` lifts the button, passes a light across it and slides in an arrow on hover and keyboard focus.
 - **Fan of client sites:** solid screens that run straight into the footer, with no fade. On hover a screen straightens, lifts and catches a passing light, and the others dim. The screen moves inside a still card, so the pointer cannot slip off a moving edge.
-- **Footer:** flat background with no gradients, faint name behind the content, short lines under headings and links, and contact details in cards.
+- **Footer:** flat background with no gradients and no cards. Brand and links on top, a contact row under a hairline, the name faintly across the full width in its own band so it never runs behind content, then the copyright and Privacy Policy on the left, clear of the WhatsApp button.
 - **Chat demo:** one card with a header, a scrolling conversation (it hands the wheel back to the page at its ends), suggestions that step aside after the first question, and a one-line composer. Answers are scripted in the dictionaries and nothing leaves the browser, apart from the browser's own speech service if a visitor uses the mic.
 
 ## Motion

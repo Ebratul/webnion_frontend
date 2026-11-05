@@ -429,7 +429,6 @@ export const bn: Dictionary = {
     italyAddress: 'Via Benedetto Bordoni, 24, 00176 Roma RM, Italy',
     bangladesh: 'বাংলাদেশ',
     bangladeshAddress: 'উত্তরা ১০, রোড ৫, ঢাকা, বাংলাদেশ',
-    location: 'ঠিকানা',
     callUs: 'কল করুন',
     email: 'ইমেইল',
     rights: 'Webnion™। সর্বস্বত্ব সংরক্ষিত।',

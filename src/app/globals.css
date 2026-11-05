@@ -594,49 +594,28 @@
   }
 }
 
-/* Footer: a flat background with the name faintly behind the content. */
-.site-footer {
-  position: relative;
-  isolation: isolate;
+/* Footer: the name fills the width of the page in its own band, so it never runs behind the content. */
+.footer-mark-box {
+  container-type: inline-size;
+  margin-bottom: 1.5rem;
   overflow: hidden;
+  user-select: none;
+  pointer-events: none;
 }
 
+/* The word is 4.25em wide in Poppins SemiBold with this tracking, and the margins trim the empty space above and below the letters. */
 .footer-mark {
-  position: absolute;
-  inset: auto 0 -0.42em;
-  z-index: -1;
-  font-size: clamp(5rem, 18vw, 19rem);
+  display: block;
+  margin-block: -0.05em -0.13em;
+  font-size: 23.4cqw;
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.04em;
   text-align: center;
   white-space: nowrap;
   color: transparent;
-  background-color: color-mix(in srgb, var(--fg) 3%, transparent);
+  background-color: color-mix(in srgb, var(--fg) 4%, transparent);
   background-clip: text;
-  user-select: none;
-  pointer-events: none;
-}
-
-.footer-heading {
-  position: relative;
-  padding-bottom: 0.75rem;
-}
-
-.footer-heading::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 1.75rem;
-  height: 2px;
-  border-radius: 9999px;
-  background: var(--accent);
-  transition: width 0.3s ease;
-}
-
-.footer-column:hover .footer-heading::after {
-  width: 3rem;
 }
 
 /* A short line grows in front of the link, which pushes the text along. */
