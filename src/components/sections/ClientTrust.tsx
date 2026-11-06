@@ -16,9 +16,9 @@ interface ClientTrustProps {
 const LogoList = ({ clients, hidden }: { clients: ClientLogo[]; hidden?: boolean }) => (
   <ul aria-hidden={hidden || undefined} className="flex">
     {clients.map((client) => (
-      <li key={client.id} className="mr-5 flex h-20 w-52 shrink-0 items-center justify-center rounded-2xl border border-line bg-white px-6 sm:h-24 sm:w-64">
+      <li key={client.id} className="mr-5 flex h-16 w-40 shrink-0 items-center justify-center rounded-2xl border border-line bg-white px-5 sm:h-24 sm:w-64 sm:px-6">
         <span className="relative block size-full">
-          <Image src={client.logo} alt={hidden ? '' : client.name} fill sizes="208px" draggable={false} className="object-contain py-5" />
+          <Image src={client.logo} alt={hidden ? '' : client.name} fill sizes="(min-width: 640px) 208px, 160px" draggable={false} className="object-contain py-4 sm:py-5" />
         </span>
       </li>
     ))}

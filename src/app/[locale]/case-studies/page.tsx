@@ -94,7 +94,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
                       {date && (
                         <p className="absolute left-4 top-4 rounded-xl bg-black/70 px-3 py-1.5 text-center text-white backdrop-blur">
                           <span className="block text-lg font-semibold leading-none">{date.day}</span>
-                          <span className="mt-1 block text-[0.625rem] font-medium uppercase leading-none">{date.month}</span>
+                          <span className="mt-1 block text-[0.6875rem] font-medium uppercase leading-none">{date.month}</span>
                         </p>
                       )}
                     </div>
@@ -116,7 +116,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
                         </span>
                       </p>
                       <h2 className="mt-3 text-base font-medium leading-snug">
-                        <Link href={href} className="transition-colors duration-200 hover:text-accent">{study.title}</Link>
+                        <Link href={href} className="block py-0.5 transition-colors duration-200 hover:text-accent">{study.title}</Link>
                       </h2>
                       <p className="mt-3 line-clamp-4 flex-1 text-sm text-muted">{study.excerpt}</p>
                       <Link href={href} aria-label={`${t.readMore}: ${study.title}`} className="mt-4 inline-flex items-center gap-1.5 self-start py-0.5 text-sm font-semibold transition-colors duration-200 hover:text-accent">

@@ -155,7 +155,7 @@ export const ChatDemo = ({ t }: { t: Copy }) => {
         <span aria-hidden className="chat-orb size-9 shrink-0 rounded-full" />
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold leading-tight">{t.chatTitle}</p>
-          <p className="mt-0.5 truncate text-xs leading-tight text-muted">{t.demoNote}</p>
+          <p className="mt-0.5 text-xs leading-snug text-muted">{t.demoNote}</p>
         </div>
         <button type="button" aria-label={t.newChat} onClick={reset} className={iconButton}>
           <Plus aria-hidden className="size-4" />

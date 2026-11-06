@@ -29,8 +29,8 @@ export const ProjectCard = ({ project, href, viewLabel, sizes, heading: Heading,
     />
     <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-[#0d0f18] from-55% via-[#0d0f18]/85 via-75% to-transparent p-5 pt-24 text-white">
       <div className="min-w-0">
-        <p className="truncate text-xs font-medium text-[#b78cf5]">{project.category}</p>
-        <Heading translate="no" className="mt-1 truncate text-lg font-medium">{project.name}</Heading>
+        <p className="text-xs font-medium text-[#b78cf5]">{project.category}</p>
+        <Heading translate="no" className="mt-1 text-lg font-medium leading-snug [overflow-wrap:anywhere]">{project.name}</Heading>
       </div>
       {/* The link stretches over the whole card, so clicking the image or the name opens the project too */}
       <Link

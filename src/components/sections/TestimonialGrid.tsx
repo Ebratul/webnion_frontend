@@ -18,7 +18,7 @@ const Identity = ({ item }: { item: Testimonial }) => (
       <Image src={item.avatar} alt="" width={36} height={36} sizes="36px" className="size-9 shrink-0 rounded-full bg-white object-cover" />
     )}
     <span className="min-w-0">
-      <span translate="no" className="block truncate text-base font-medium">{item.name}</span>
+      <span translate="no" className="line-clamp-2 block text-base font-medium leading-snug [overflow-wrap:anywhere]">{item.name}</span>
       <span className="block truncate text-xs text-white/75">{item.role}</span>
     </span>
   </div>
@@ -38,9 +38,9 @@ export const TestimonialGrid = ({ testimonials, t, a11y }: TestimonialGridProps)
 
   return (
     <>
-      <ul className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain px-5 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0">
+      <ul className="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain px-5 md:-mx-8 md:px-8 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
         {testimonials.map((item) => (
-          <li key={item.id} className="relative aspect-[3/4] w-[76%] shrink-0 snap-center overflow-hidden rounded-3xl bg-surface-2 sm:w-[42%] md:w-auto">
+          <li key={item.id} className="relative aspect-[3/4] w-[76%] shrink-0 snap-center overflow-hidden rounded-3xl bg-surface-2 sm:w-[42%] md:w-[40%] lg:w-auto">
             {item.kind === 'VIDEO' && playingId === item.id && item.videoUrl ? (
               <video src={item.videoUrl} poster={item.image} controls autoPlay playsInline className="size-full bg-black object-contain">
                 {t.videoUnsupported}
@@ -53,9 +53,9 @@ export const TestimonialGrid = ({ testimonials, t, a11y }: TestimonialGridProps)
               >
                 {/* Visible text stays part of the button's name, so voice control users can say what they see */}
                 <span className="sr-only">{item.kind === 'VIDEO' ? a11y.playVideo : a11y.viewResult} </span>
-                <Image src={item.image} alt="" fill sizes="(min-width: 768px) 280px, 68vw" className="object-cover object-top" />
+                <Image src={item.image} alt="" fill sizes="(min-width: 1024px) 280px, (min-width: 640px) 42vw, 76vw" className="object-cover object-top" />
                 {item.kind === 'VIDEO' ? (
-                  <span className="absolute left-1/2 top-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white/20 text-white backdrop-blur-md transition-colors duration-200 group-hover:bg-primary">
+                  <span className="absolute left-1/2 top-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white transition-colors lg:bg-white/20 lg:backdrop-blur-md duration-200 group-hover:bg-primary">
                     <Play aria-hidden className="ml-0.5 size-6 fill-current" />
                   </span>
                 ) : (

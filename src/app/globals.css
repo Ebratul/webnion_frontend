@@ -105,13 +105,14 @@
   }
 }
 
-/* The public site shows at 110% from tablets up, the same as browser zoom. Phones already fill the screen.
+/* The public site shows at 110% from tablets up, the same as browser zoom. Phones already fill the screen, and so do
+   phones held sideways: they are wide enough for the tablet layout but too short to show it any larger.
    Viewport units are multiplied by zoom too, so anything sized from the screen divides by --page-zoom. */
 :root {
   --page-zoom: 1;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 48rem) and (min-height: 32rem) {
   .site-zoom {
     --page-zoom: 1.1;
     zoom: var(--page-zoom);
@@ -402,25 +403,28 @@
   }
 }
 
+/* Entrance animations set only their starting frame and fill backwards: once they end, the element is back to its
+   normal style and the browser frees the GPU layer it used. Filling "both" kept every animated word on its own layer,
+   which phones felt as heavy scrolling. */
 @media (prefers-reduced-motion: no-preference) {
   .hero-line > span {
-    animation: hero-line-rise 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: hero-line-rise 1100ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
     animation-delay: var(--delay);
   }
 
   .hero-fade {
-    animation: hero-fade-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: hero-fade-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
     animation-delay: var(--delay);
   }
 
   .planet-rise {
-    animation: hero-planet-rise 1800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: hero-planet-rise 1800ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
   }
 
   /* Below this width the paragraph wraps freely, so it fades in as one block rather than line by line. */
   @media (min-width: 40rem) {
     .hero-subline {
-      animation: hero-fade-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: hero-fade-rise 900ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
       animation-delay: var(--delay);
     }
 
@@ -463,12 +467,12 @@
   }
 
   [data-reveal='in'] .line-word {
-    animation: line-word-in 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: line-word-in 850ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
     animation-delay: calc(var(--line, 0) * 140ms);
   }
 
   [data-reveal='in'] [data-line-item] {
-    animation: hero-fade-rise 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: hero-fade-rise 850ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
     animation-delay: calc(var(--line, 0) * 140ms);
   }
 }
@@ -680,8 +684,30 @@
   }
 }
 
+/* The ends of moving rows fade into the background. Two gradients in the section's colour lie over the row; a mask
+   would do the same, but masking moving content is slow to draw on phones, Safari above all. */
 .fade-edges {
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  position: relative;
+}
+
+.fade-edges::before,
+.fade-edges::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  z-index: 1;
+  width: 6%;
+  background: linear-gradient(90deg, var(--fade-to, var(--bg)), transparent);
+  pointer-events: none;
+}
+
+.fade-edges::before {
+  left: 0;
+}
+
+.fade-edges::after {
+  right: 0;
+  transform: scaleX(-1);
 }
 
 .no-scrollbar {
@@ -696,7 +722,7 @@
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
-      animation: reveal linear both;
+      animation: reveal linear backwards;
       animation-timeline: view();
       animation-range: entry 0% entry 26%;
     }
@@ -718,7 +744,7 @@
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .process-line {
-      animation: draw-line linear both;
+      animation: draw-line linear backwards;
       animation-timeline: view();
       animation-range: entry 15% cover 45%;
     }
@@ -728,27 +754,6 @@
 @keyframes draw-line {
   from {
     stroke-dashoffset: 1;
-  }
-}
-
-/* Delivery Stories: each photo drifts inside its card as the page scrolls. Cards clip rather than hide their overflow:
-   a hidden box is a scroll container, which would become the photo's timeline instead of the page. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .story-photo {
-      animation: story-drift linear both;
-      animation-timeline: view();
-    }
-  }
-}
-
-@keyframes story-drift {
-  from {
-    transform: translateY(-6%) scale(1.14);
-  }
-
-  to {
-    transform: translateY(6%) scale(1.14);
   }
 }
 
@@ -793,7 +798,7 @@
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .outcome-item {
-      animation: outcome-rise linear both;
+      animation: outcome-rise linear backwards;
       animation-timeline: view();
       animation-range: entry 0% entry 55%;
     }
@@ -843,7 +848,9 @@
   user-select: none;
 }
 
-[data-dragging='true'] .marquee-track {
+[data-dragging='true'] .marquee-track,
+[data-offscreen] .marquee-track,
+[data-offscreen] .hero-media-image {
   animation-play-state: paused;
 }
 
@@ -879,6 +886,11 @@
     flex-wrap: wrap;
     justify-content: center;
     row-gap: 0.75rem;
+  }
+
+  .marquee-wrap.fade-edges::before,
+  .marquee-wrap.fade-edges::after {
+    display: none;
   }
 
   .marquee-wrap .marquee-track > ul > [aria-hidden='true'],

@@ -4,6 +4,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import type { Locale } from '@/i18n/config';
+import { useOffscreen } from '@/lib/useOffscreen';
 import type { Dictionary } from '@/i18n';
 import type { Project } from '@/lib/types';
 import { ProjectCard } from '../ui/ProjectCard';
@@ -39,6 +40,10 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, exploreLabel, a11
   const [still, setStill] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [focused, setFocused] = useState(false);
+  // Sliding the row costs work on every frame, so it waits while the row is off screen
+  const [offscreen, setOffscreen] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+  useOffscreen(box, setOffscreen);
 
   const slideWidth = () => {
     const list = scroller.current;
@@ -132,7 +137,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, exploreLabel, a11
   };
 
   useEffect(() => {
-    if (still || hovering || focused || maxPosition === 0) return;
+    if (still || hovering || focused || offscreen || maxPosition === 0) return;
     const timer = setInterval(() => {
       // Cards travel right to left, which means scrolling forward through the row
       if (!document.hidden) move(1);
@@ -140,7 +145,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, exploreLabel, a11
     return () => clearInterval(timer);
     // move only reads refs and values that are also dependencies here
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [still, hovering, focused, maxPosition, count]);
+  }, [still, hovering, focused, offscreen, maxPosition, count]);
 
   const onScroll = () => {
     const list = scroller.current;
@@ -165,6 +170,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, exploreLabel, a11
 
   return (
     <div
+      ref={box}
       onPointerEnter={() => setHovering(true)}
       onPointerLeave={() => setHovering(false)}
       onFocus={(event) => setFocused(event.target.matches(':focus-visible'))}

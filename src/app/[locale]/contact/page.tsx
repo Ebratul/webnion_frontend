@@ -85,7 +85,7 @@ export default async function ContactPage({ params }: PageProps) {
           <p style={delay(800)} className="hero-fade mx-auto mt-[31px] max-w-[45rem] leading-[1.75] text-white/70 sm:text-lg">{t.subtitle}</p>
           <nav style={delay(950)} aria-label={t.crumb} className="hero-fade mt-[26px]">
             <ol className="flex flex-wrap items-center justify-center gap-2 text-[13px] text-white/70">
-              <li><Link href={`/${locale}`} className="underline-offset-2 hover:text-white hover:underline">{dictionary.nav.home}</Link></li>
+              <li><Link href={`/${locale}`} className="inline-flex min-h-6 min-w-6 items-center underline-offset-2 hover:text-white hover:underline">{dictionary.nav.home}</Link></li>
               <li aria-hidden>/</li>
               <li aria-current="page" className="text-white">{t.crumb}</li>
             </ol>
@@ -119,10 +119,10 @@ export default async function ContactPage({ params }: PageProps) {
         <ul className={`reveal grid divide-y divide-line rounded-[22px] md:grid-cols-3 md:divide-x md:divide-y-0 ${lightCard} shadow-[0_18px_50px_rgb(20_13_38/0.05)]`}>
           <QuickFact Icon={Clock} label={t.responseLabel}>{t.responseValue}</QuickFact>
           <QuickFact Icon={Mail} label={t.emailLabel}>
-            <a href={`mailto:${CONTACT.email}`} className="transition-colors duration-200 hover:text-accent">{CONTACT.email}</a>
+            <a href={`mailto:${CONTACT.email}`} className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-accent">{CONTACT.email}</a>
           </QuickFact>
           <QuickFact Icon={Phone} label={t.callLabel}>
-            <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="transition-colors duration-200 hover:text-accent">{CONTACT.phoneLocal}</a>
+            <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-accent">{CONTACT.phoneLocal}</a>
           </QuickFact>
         </ul>
         </div>
@@ -135,13 +135,13 @@ export default async function ContactPage({ params }: PageProps) {
             <ul className="mt-6 [&>li:last-child]:pb-0">
               <InfoRow Icon={MapPin} label={t.locationLabel}>{t.locationValue}</InfoRow>
               <InfoRow Icon={Mail} label={t.emailRowLabel}>
-                <a href={`mailto:${CONTACT.email}`} className="underline-offset-2 hover:underline">{CONTACT.email}</a>
+                <a href={`mailto:${CONTACT.email}`} className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{CONTACT.email}</a>
               </InfoRow>
               <InfoRow Icon={Phone} label={t.callRowLabel}>
-                <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="underline-offset-2 hover:underline">{CONTACT.phoneLocal}</a>
+                <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{CONTACT.phoneLocal}</a>
               </InfoRow>
               <InfoRow Icon={MessageCircle} label={t.whatsappRowLabel}>
-                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" dir="ltr" className="underline-offset-2 hover:underline">{CONTACT.phoneBdLabel}</a>
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" dir="ltr" className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{CONTACT.phoneBdLabel}</a>
               </InfoRow>
             </ul>
           </div>

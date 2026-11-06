@@ -1,5 +1,6 @@
 'use client';
 
+import { useOffscreen } from '@/lib/useOffscreen';
 import { useRef, type MouseEvent, type PointerEvent, type ReactNode } from 'react';
 
 interface DraggableMarqueeProps {
@@ -23,6 +24,8 @@ const pageZoom = () => parseFloat(getComputedStyle(document.documentElement).zoo
 // Moving rows with no pause button, by the owner's choice. They stop under the mouse, can be dragged by hand,
 // and stand still for anyone who asks their system for reduced motion.
 export const DraggableMarquee = ({ className = '', children }: DraggableMarqueeProps) => {
+  const box = useRef<HTMLDivElement>(null);
+  useOffscreen(box);
   const drag = useRef<Drag | null>(null);
   const dragged = useRef(false);
 
@@ -78,6 +81,7 @@ export const DraggableMarquee = ({ className = '', children }: DraggableMarqueeP
 
   return (
     <div
+      ref={box}
       data-marquee
       className={`relative ${className}`}
       onPointerDown={onPointerDown}

@@ -9,7 +9,7 @@ Section backgrounds follow the client's reference images, and the site opens in 
 
 ## Size and alignment
 
-- The public site shows at 110% from 768px up, through `zoom` on `.site-zoom`. Phones stay at 100%. Admin is not zoomed.
+- The public site shows at 110% from 768px up, through `zoom` on `.site-zoom`, on screens at least 512px tall. Phones stay at 100%, held sideways too. Admin is not zoomed.
 - Viewport units are multiplied by the zoom, so anything sized from the screen divides by it: `calc(100svh / var(--page-zoom))`.
 - Header, cards and banners share the `container-page` edges. A box with a border or background goes inside `container-page`, never on it, because its padding would push the box past those edges.
 - **One vertical rhythm:** `--section-space` (72px on phones and tablets, 96px from 1024px up) is the only space between sections, on every page. Use `section-y`, or `section-b` when the section above has the same background. `flush-light` and `flush-dark` drop the top space when backgrounds match in only one theme.
@@ -99,6 +99,7 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 
 - Scroll reveals use CSS view timelines; unsupported browsers just show content.
 - Animate `transform` and `opacity` only. Always name transition properties; never use `transition: all`.
+- **Smooth on phones.** Entrance and reveal animations set only their `from` frame and fill `backwards`, so the GPU layer is freed once they end; `both` kept every animated word on a layer of its own. Moving rows, the carousel and the hero drift pause off screen (`useOffscreen`). The ends of moving rows fade with gradient overlays in the section colour (`.fade-edges`), never `mask-image`, which is slow over moving content. No scroll-driven animation inside a moving row, and no `backdrop-filter` below desktop sizes. Check with the layer count: the homepage drew 173 layers before this and about 50 after.
 - Everything respects `prefers-reduced-motion`: moving rows stand still and wrap, and the carousel stops.
 - **No pause buttons**, by the owner's choice. Moving rows stop under the mouse and can be dragged (`DraggableMarquee`); the carousel stops on hover and keyboard focus.
 

@@ -11,7 +11,7 @@ export const Services = ({ locale, t, services }: { locale: Locale; t: Dictionar
     <div className="container-page">
       <SectionHeading id="services-title" title={t.title} />
 
-      <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3 md:max-lg:[&>li:last-child:nth-child(odd)]:col-span-2 md:max-lg:[&>li:last-child:nth-child(odd)]:mx-auto md:max-lg:[&>li:last-child:nth-child(odd)]:w-[calc(50%-0.625rem)]">
         {services.map((service) => (
           <li key={service.id} className="reveal">
             <ServiceCard locale={locale} service={service} cta={t.cta} heading="h3" />

@@ -46,14 +46,14 @@ export const FinalInquiry = ({ locale, t, closeLabel, services, plans }: FinalIn
               <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={badgeClass}>
                 <WhatsAppIcon className="size-6 text-whatsapp" />
                 <span>
-                  <span className="block text-[0.625rem] leading-tight text-white/75">{t.whatsappSmall}</span>
+                  <span className="block text-[0.6875rem] leading-tight text-white/75">{t.whatsappSmall}</span>
                   <span className="block text-sm font-semibold leading-tight">{t.whatsappBig}</span>
                 </span>
               </a>
               <InquiryButton className={badgeClass}>
                 <Send aria-hidden className="size-6 text-accent" />
                 <span>
-                  <span className="block text-[0.625rem] leading-tight text-white/75">{t.inquirySmall}</span>
+                  <span className="block text-[0.6875rem] leading-tight text-white/75">{t.inquirySmall}</span>
                   <span className="block text-sm font-semibold leading-tight">{t.inquiryBig}</span>
                 </span>
               </InquiryButton>

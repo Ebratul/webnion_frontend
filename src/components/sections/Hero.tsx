@@ -1,8 +1,8 @@
-import Image from 'next/image';
 import type { CSSProperties } from 'react';
 import type { Dictionary } from '@/i18n';
 import { SECTION_IDS } from '@/lib/site';
 import { PrimaryLink } from '../ui/Button';
+import { HeroMedia } from './HeroMedia';
 
 // Entrance order in milliseconds: eyebrow, then each heading line, the text and the button.
 const EYEBROW_AT = 150;
@@ -19,12 +19,7 @@ export const Hero = ({ t, background }: { t: Dictionary['hero']; background: str
 
   return (
     <section id="top" className="hero-sky hero-screen relative isolate flex flex-col justify-center overflow-hidden">
-      {background && (
-        // Under a veil in the theme's colour, clearer at the edges than behind the heading, fading into the page below
-        <div aria-hidden className="hero-media absolute inset-0 -z-10">
-          <Image src={background} alt="" fill priority sizes="100vw" className="hero-media-image object-cover" />
-        </div>
-      )}
+      {background && <HeroMedia src={background} />}
       <div className="container-page flex flex-col items-center pb-16 pt-28 text-center sm:pt-32">
         <p style={delay(EYEBROW_AT)} className="hero-fade rounded-full border border-fg/20 bg-fg/[0.06] px-4 py-1.5 text-[13px] font-medium">
           {t.eyebrow}

@@ -21,7 +21,7 @@ const SECONDS_PER_CARD = 5;
 const StoryCard = ({ story, copy }: { story: DeliveryStory; copy: boolean }) => (
   <li aria-hidden={copy || undefined} className="mr-5 w-64 shrink-0 sm:w-72 lg:w-80">
     <article className="relative aspect-[4/5] overflow-clip rounded-3xl bg-surface-2">
-      <Image src={story.image} alt={copy ? '' : story.title} fill sizes="320px" draggable={false} className="story-photo object-cover" />
+      <Image src={story.image} alt={copy ? '' : story.title} fill sizes="320px" draggable={false} className="object-cover" />
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent p-5 pt-20 text-white">
         <h3 className="text-base font-medium tracking-normal">{story.title}</h3>
         <p className="mt-0.5 text-xs text-white/80">{story.caption}</p>
