@@ -310,7 +310,7 @@ export const RESOURCES: Resource[] = [
     key: 'hero-backgrounds',
     label: 'Hero Background',
     singular: 'Background',
-    description: 'The image behind the first screen of the homepage. The first visible one is shown; hide them all for the plain background.',
+    description: 'Optional. With none, the homepage shows its plain background. Upload an image to show it behind the first screen; the first visible one is used.',
     apiPath: '/hero-backgrounds',
     listPath: '/hero-backgrounds/all',
     group: 'Website',

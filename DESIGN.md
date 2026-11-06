@@ -24,7 +24,7 @@ Fixed to the top of the screen, with a spacer holding its place in the page. Kee
 Follows the client's reference: charcoal `#1E1E1E` with a faint warm glow in two corners in dark mode, and a cream gradient from
 `#FFF3E9` in light mode. One primary button and a two-line subtitle. The header sits on the hero's background until the page scrolls.
 
-Admins can set a background image under **Hero Background**; the first visible one is shown. It sits under a veil in the theme's colour (`.hero-media::after`), thicker behind the heading and solid at the foot so the image fades into the page, and drifts very slowly. The default is a tilted wall of client websites, `public/images/hero/work-wall.webp`. With no visible image the hero falls back to the gradient.
+**By default the hero has no image**, only the gradient above: the owner wants it simple. Admins can upload a background under **Hero Background**; the first visible one is shown, under a veil in the theme's colour (`.hero-media::after`), thicker behind the heading and solid at the foot so the image fades into the page, drifting very slowly. Hiding or deleting every background brings the gradient back.
 
 ## Light mode section colours
 
