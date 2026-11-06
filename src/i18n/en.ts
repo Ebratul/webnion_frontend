@@ -14,8 +14,6 @@ export const en = {
     whatsapp: 'Chat with Webnion on WhatsApp',
     previous: 'Previous',
     next: 'Next',
-    pauseMotion: 'Pause moving images',
-    playMotion: 'Play moving images',
     playVideo: 'Play video from',
     viewResult: 'View',
     close: 'Close',
@@ -119,6 +117,7 @@ export const en = {
     title: 'A Look At Some Of Our Recent Websites',
     subtitle: 'Explore some of the websites we have designed and developed to help businesses grow online.',
     viewProject: 'View project',
+    explore: 'Explore More Portfolio',
   },
   projectDetail: {
     crumb: 'Project Details',
@@ -343,11 +342,8 @@ export const en = {
   },
   pricing: {
     title: 'Choose The Right Solution For Your Business',
-    starting: 'starting',
-    included: "What's Included",
     cta: 'Book A Meeting',
     note: 'Project-based service. Final cost depends on features, pages, design quality, and business requirements.',
-    askPlan: 'Ask About This Plan',
   },
   team: {
     title: 'The People Behind Webnion',
@@ -356,8 +352,6 @@ export const en = {
   },
   technologies: {
     title: 'Powerful Technologies Behind Every Website',
-    pause: 'Pause moving technology cards',
-    play: 'Play moving technology cards',
     items: [
       { name: 'Laravel', logo: 'laravel', description: 'Powerful PHP framework for building secure and scalable web applications.' },
       { name: 'React.js', logo: 'react', description: 'Modern JavaScript library for creating fast and interactive user interfaces.' },
@@ -433,6 +427,7 @@ export const en = {
     callUs: 'Call Us',
     email: 'Email',
     rights: 'Webnion™. All rights reserved.',
+    madeIn: 'Crafted in Dhaka & Rome',
     serviceLinks: [
       { slug: 'custom-website-design', label: 'Custom Website Design' },
       { slug: 'ecommerce-development', label: 'E-commerce Development' },

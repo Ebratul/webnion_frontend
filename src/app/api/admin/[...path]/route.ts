@@ -9,6 +9,7 @@ const ALLOWED_RESOURCES = new Set([
   'testimonials',
   'services',
   'pricing-plans',
+  'hero-backgrounds',
   'faqs',
   'team',
   'clients',

@@ -1,6 +1,4 @@
 import { Send } from 'lucide-react';
-import Image from 'next/image';
-import type { CSSProperties } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
 import { CONTACT, SECTION_IDS } from '@/lib/site';
@@ -18,17 +16,8 @@ interface FinalInquiryProps {
   plans: PricingPlan[];
 }
 
-// Live mobile screens of client sites. Sizes are in --u, about 1% of the screen width, so the fan scales as one piece.
-const FAN = [
-  { image: 'tasin', width: 14, x: -34, y: 11, rotate: -4, opacity: 1, z: 1 },
-  { image: 'saltfoodmart', width: 18, x: -19, y: 5, rotate: -7, opacity: 1, z: 2 },
-  { image: 'sabazarshop', width: 22, x: 0, y: 0, rotate: 0, opacity: 1, z: 3 },
-  { image: 'neqvix', width: 18, x: 19, y: 5, rotate: 7, opacity: 1, z: 2 },
-  { image: 'gigaloy', width: 14, x: 34, y: 11, rotate: 4, opacity: 1, z: 1 },
-];
-
 const badgeClass =
-  'flex min-h-12 items-center gap-2.5 rounded-xl border border-white/15 bg-ink px-4 py-1.5 text-left text-white transition-colors duration-200 hover:border-accent';
+  'flex min-h-12 items-center gap-2.5 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-1.5 text-left text-white backdrop-blur-sm transition-colors duration-200 hover:border-accent hover:bg-white/10';
 
 export const inquiryOptions = (services: Service[], plans: PricingPlan[]) => [
   ...services.map((service) => ({ slug: service.slug, label: service.title })),
@@ -37,57 +26,41 @@ export const inquiryOptions = (services: Service[], plans: PricingPlan[]) => [
 
 export const FinalInquiry = ({ locale, t, closeLabel, services, plans }: FinalInquiryProps) => {
   return (
-    <section id={SECTION_IDS.contact} aria-labelledby="inquiry-title" className="flush-dark overflow-hidden bg-[#faf2e6] pt-[var(--section-space)] dark:bg-surface">
-      <LineReveal className="container-page text-center">
-        <h2 id="inquiry-title" className="mx-auto max-w-3xl text-3xl font-medium sm:text-4xl lg:text-[2.75rem]">
-          <LineText text={t.title} />
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-sm text-fg/80 sm:text-base">
-          <LineText text={t.subtitle} />
-        </p>
+    <section id={SECTION_IDS.contact} aria-labelledby="inquiry-title" className="section-y flush-dark bg-[#faf2e6] dark:bg-surface">
+      <div className="container-page">
+        {/* A dark panel in both themes, lit by two curved purple lines rising from its lower corners and a short line at the top */}
+        <div className="inquiry-panel band-dark relative isolate overflow-hidden rounded-[2rem] px-5 py-20 text-center sm:px-10 lg:py-28">
+          <span aria-hidden className="inquiry-arc inquiry-arc-left" />
+          <span aria-hidden className="inquiry-arc inquiry-arc-right" />
+          <span aria-hidden className="absolute left-1/2 top-0 h-0.5 w-20 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_24px_4px_rgb(130_36_227/0.7)]" />
 
-        <div data-line-item className="mt-7 flex flex-wrap justify-center gap-3">
-          <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={badgeClass}>
-            <WhatsAppIcon className="size-6 text-whatsapp" />
-            <span>
-              <span className="block text-[0.625rem] leading-tight text-white/75">{t.whatsappSmall}</span>
-              <span className="block text-sm font-semibold leading-tight">{t.whatsappBig}</span>
-            </span>
-          </a>
-          <InquiryButton className={badgeClass}>
-            <Send aria-hidden className="size-6 text-accent" />
-            <span>
-              <span className="block text-[0.625rem] leading-tight text-white/75">{t.inquirySmall}</span>
-              <span className="block text-sm font-semibold leading-tight">{t.inquiryBig}</span>
-            </span>
-          </InquiryButton>
-        </div>
+          <LineReveal>
+            <h2 id="inquiry-title" className="mx-auto max-w-3xl text-3xl font-medium text-white sm:text-4xl lg:text-[2.75rem]">
+              <LineText text={t.title} />
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm text-white/75 sm:text-base">
+              <LineText text={t.subtitle} />
+            </p>
 
-        <div data-line-item aria-hidden className="fan relative left-1/2 mt-12 -translate-x-1/2 lg:mt-16">
-          <div className="fan-stage">
-            {FAN.map((card) => (
-              <div
-                key={card.image}
-                className="fan-card"
-                style={
-                  {
-                    width: `calc(var(--u) * ${card.width})`,
-                    marginLeft: `calc(var(--u) * ${card.width / -2})`,
-                    transform: `translate(calc(var(--u) * ${card.x}), calc(var(--u) * ${card.y})) rotate(${card.rotate}deg)`,
-                    zIndex: card.z,
-                    '--rotate': `${card.rotate}deg`,
-                    '--opacity': card.opacity,
-                  } as CSSProperties
-                }
-              >
-                <div className="fan-screen overflow-hidden rounded-t-[1.75rem] bg-white shadow-soft">
-                  <Image src={`/images/fan/${card.image}.webp`} alt="" width={660} height={880} sizes="(min-width: 1024px) 320px, 30vw" className="w-full" />
-                </div>
-              </div>
-            ))}
-          </div>
+            <div data-line-item className="mt-8 flex flex-wrap justify-center gap-3">
+              <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={badgeClass}>
+                <WhatsAppIcon className="size-6 text-whatsapp" />
+                <span>
+                  <span className="block text-[0.625rem] leading-tight text-white/75">{t.whatsappSmall}</span>
+                  <span className="block text-sm font-semibold leading-tight">{t.whatsappBig}</span>
+                </span>
+              </a>
+              <InquiryButton className={badgeClass}>
+                <Send aria-hidden className="size-6 text-accent" />
+                <span>
+                  <span className="block text-[0.625rem] leading-tight text-white/75">{t.inquirySmall}</span>
+                  <span className="block text-sm font-semibold leading-tight">{t.inquiryBig}</span>
+                </span>
+              </InquiryButton>
+            </div>
+          </LineReveal>
         </div>
-      </LineReveal>
+      </div>
 
       <InquiryDialog locale={locale} t={t} closeLabel={closeLabel} options={inquiryOptions(services, plans)} />
     </section>

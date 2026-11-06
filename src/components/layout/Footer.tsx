@@ -14,7 +14,8 @@ interface FooterProps {
   label: string;
 }
 
-const linkClass = 'inline-flex min-h-6 min-w-6 items-center text-sm text-muted transition-colors duration-200 hover:text-accent';
+// A little stronger than the muted grey, and full white (or full ink in light mode) under the pointer
+const linkClass = 'inline-flex min-h-6 min-w-6 items-center text-sm text-fg/75 transition-colors duration-200 hover:text-fg';
 const navLinkClass = `footer-link ${linkClass} py-0.5`;
 const headingClass = 'text-sm font-semibold text-fg';
 
@@ -25,7 +26,7 @@ const ContactItem = ({ Icon, label, children }: { Icon: LucideIcon; label: strin
     </span>
     <div className="min-w-0">
       <p className={headingClass}>{label}</p>
-      <div className="mt-1 text-sm leading-6 text-muted">{children}</div>
+      <div className="mt-1 text-sm leading-6 text-fg/75">{children}</div>
     </div>
   </li>
 );
@@ -42,7 +43,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
         <div className="grid gap-10 pt-14 pb-10 md:grid-cols-2 lg:grid-cols-[1.35fr_1.15fr_1fr] lg:gap-x-12">
           <div className="md:col-span-2 lg:col-span-1">
             <Logo locale={locale} />
-            <p className="mt-5 max-w-xs text-sm text-muted">{t.about}</p>
+            <p className="mt-5 max-w-xs text-sm text-fg/75">{t.about}</p>
             <ul className="mt-6 flex gap-2.5">
               {socials.map(({ href, name, Icon }) => (
                 <li key={name}>
@@ -109,9 +110,10 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
           <span className="footer-mark">Webnion</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-line py-6 pr-16 text-xs text-muted xl:pr-0">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-line py-6 pr-16 text-xs text-fg/70 xl:pr-0">
           <p>© {new Intl.NumberFormat(locale === 'bn' ? 'bn-BD' : 'en-US', { useGrouping: false }).format(2026)} {t.rights}</p>
-          <a href={CONTACT.privacy} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-accent">{t.privacy}</a>
+          <a href={CONTACT.privacy} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-fg">{t.privacy}</a>
+          <p>{t.madeIn}</p>
         </div>
       </div>
     </footer>

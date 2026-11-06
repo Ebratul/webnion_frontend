@@ -21,9 +21,10 @@ export const FeaturedProjects = ({ locale, t, a11y, projects }: FeaturedProjects
         <SectionHeading id="projects-title" title={t.title} subtitle={t.subtitle} />
       </div>
 
-      <div className="band-dark section-y mt-12 bg-[#131620]!">
+      {/* A soft purple light above the cards and a faint grid that fades out, on the navy of the client's reference */}
+      <div className="projects-band band-dark section-y relative isolate mt-12 overflow-hidden bg-[#131620]!">
         <div className="container-page">
-          <ProjectCarousel locale={locale} projects={featured} viewLabel={t.viewProject} a11y={a11y} />
+          <ProjectCarousel locale={locale} projects={featured} viewLabel={t.viewProject} exploreLabel={t.explore} a11y={a11y} />
         </div>
       </div>
     </section>

@@ -43,15 +43,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
       <PageShell locale={locale}>
-        <Hero t={t.hero} />
-        <ClientTrust locale={locale} t={t.trust} a11y={t.a11y} projects={data.projects} clients={data.clients} />
+        <Hero t={t.hero} background={data.heroBackground} />
+        <ClientTrust locale={locale} t={t.trust} projects={data.projects} clients={data.clients} />
         <Problems t={t.problems} />
         <Services locale={locale} t={t.services} services={data.services} />
         <Outcomes t={t.outcomes} />
         <FeaturedProjects locale={locale} t={t.projects} a11y={t.a11y} projects={data.projects} />
         <OutcomeCards locale={locale} t={t.outcomeCards} cards={data.outcomeCards} />
         <Testimonials locale={locale} t={t.testimonials} a11y={t.a11y} testimonials={data.testimonials} />
-        <DeliveryStories locale={locale} t={t.delivery} stories={data.deliveryStories} />
+        <DeliveryStories t={t.delivery} stories={data.deliveryStories} />
         <Process t={t.process} />
         <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} />
         <Technologies t={t.technologies} />

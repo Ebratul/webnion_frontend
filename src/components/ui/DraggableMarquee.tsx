@@ -1,13 +1,9 @@
 'use client';
 
-import { Pause, Play } from 'lucide-react';
-import { useRef, useState, type MouseEvent, type PointerEvent, type ReactNode } from 'react';
+import { useRef, type MouseEvent, type PointerEvent, type ReactNode } from 'react';
 
-interface PausableMarqueeProps {
-  pauseLabel: string;
-  playLabel: string;
+interface DraggableMarqueeProps {
   className?: string;
-  buttonClassName: string;
   children: ReactNode;
 }
 
@@ -24,8 +20,9 @@ const DRAG_THRESHOLD = 5;
 // offsetWidth ignores the page's CSS zoom, so it is converted to compare with pointer positions
 const pageZoom = () => parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
 
-export const PausableMarquee = ({ pauseLabel, playLabel, className = '', buttonClassName, children }: PausableMarqueeProps) => {
-  const [paused, setPaused] = useState(false);
+// Moving rows with no pause button, by the owner's choice. They stop under the mouse, can be dragged by hand,
+// and stand still for anyone who asks their system for reduced motion.
+export const DraggableMarquee = ({ className = '', children }: DraggableMarqueeProps) => {
   const drag = useRef<Drag | null>(null);
   const dragged = useRef(false);
 
@@ -82,7 +79,6 @@ export const PausableMarquee = ({ pauseLabel, playLabel, className = '', buttonC
   return (
     <div
       data-marquee
-      data-paused={paused}
       className={`relative ${className}`}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -91,14 +87,6 @@ export const PausableMarquee = ({ pauseLabel, playLabel, className = '', buttonC
       onClickCapture={onClickCapture}
     >
       {children}
-      <button
-        type="button"
-        onClick={() => setPaused((value) => !value)}
-        aria-label={paused ? playLabel : pauseLabel}
-        className={`marquee-pause absolute grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover ${buttonClassName}`}
-      >
-        {paused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
-      </button>
     </div>
   );
 };

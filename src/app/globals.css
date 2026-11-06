@@ -251,6 +251,99 @@
   background: linear-gradient(180deg, #fff3e9 0%, #fff8f2 55%, #fffefa 100%);
 }
 
+/* Hero background chosen in the admin panel. A veil in the theme's colour keeps the heading clear: thicker in the
+   middle where the text sits, thinner at the sides so the image shows, and solid at the foot so it fades into the page.
+   The image drifts very slowly to give the first screen some life. */
+.hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(30 30 30 / 0.55) 0%, rgb(30 30 30 / 0) 22%, rgb(30 30 30 / 0) 70%, #1e1e1e 100%),
+    radial-gradient(60% 55% at 50% 50%, rgb(22 22 24 / 0.9), rgb(22 22 24 / 0.72) 100%);
+}
+
+[data-theme='light'] .hero-media::after {
+  background:
+    linear-gradient(180deg, rgb(255 243 233 / 0.6) 0%, rgb(255 243 233 / 0) 22%, rgb(255 250 245 / 0) 70%, #fffefa 100%),
+    radial-gradient(60% 55% at 50% 50%, rgb(255 247 240 / 0.93), rgb(255 247 240 / 0.8) 100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-media-image {
+    animation: hero-drift 40s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale(1.12) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+/* Featured Projects: a soft purple light above the cards and a faint grid that fades away from the centre. */
+.projects-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(50% 45% at 50% 0%, rgb(130 36 227 / 0.24), transparent 100%),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px) 0 0 / 56px 56px;
+  mask-image: radial-gradient(75% 85% at 50% 30%, #000 30%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Closing panel: after the client's Revilo reference, two curved lines of purple light rise from the lower corners. */
+.inquiry-panel {
+  background:
+    radial-gradient(55% 60% at 50% 0%, rgb(130 36 227 / 0.22), transparent 100%),
+    #0c0a12;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+.inquiry-arc {
+  position: absolute;
+  z-index: -1;
+  bottom: -62%;
+  width: 62%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1.5px rgb(183 140 245 / 0.55),
+    inset 0 0 60px 0 rgb(130 36 227 / 0.35),
+    0 0 70px 6px rgb(130 36 227 / 0.28);
+  pointer-events: none;
+}
+
+.inquiry-arc-left {
+  left: -36%;
+}
+
+.inquiry-arc-right {
+  right: -36%;
+}
+
+@media (max-width: 40rem) {
+  .inquiry-arc {
+    bottom: -30%;
+    width: 110%;
+  }
+
+  .inquiry-arc-left {
+    left: -85%;
+  }
+
+  .inquiry-arc-right {
+    right: -85%;
+  }
+}
+
 /* The hero fills the first screen, and starts behind the transparent header. */
 .hero-screen {
   min-height: calc(100svh / var(--page-zoom));
@@ -524,76 +617,6 @@
   color: var(--accent);
 }
 
-/* Fan of phone screens in the final section. */
-.fan {
-  --u: clamp(5px, 1vw, 14.4px);
-  width: calc(var(--u) * 88);
-  height: calc(var(--u) * 26);
-}
-
-/* The screens run straight into the footer, which cuts them off along a clean line. */
-.fan-stage {
-  --headroom: calc(var(--u) * 3);
-  position: absolute;
-  inset: calc(var(--headroom) * -1) 0 0;
-}
-
-/* The card holds still and its screen moves, so the pointer never slips off a moving edge. */
-.fan-card {
-  position: absolute;
-  left: 50%;
-  top: var(--headroom);
-}
-
-.fan-screen {
-  position: relative;
-  opacity: var(--opacity);
-  transition:
-    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-    opacity 0.35s ease,
-    box-shadow 0.4s ease,
-    filter 0.35s ease;
-}
-
-.fan-screen::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 0.3) 50%, transparent 65%);
-  transform: translateX(-110%);
-  pointer-events: none;
-}
-
-@media (hover: hover) {
-  .fan-card:hover {
-    z-index: 10 !important;
-  }
-
-  .fan-card:hover .fan-screen {
-    opacity: 1;
-    box-shadow:
-      0 0 0 1px rgb(255 255 255 / 0.28),
-      0 28px 60px -18px rgb(0 0 0 / 0.55),
-      0 0 52px -12px rgb(130 36 227 / 0.6);
-  }
-
-  .fan:has(.fan-card:hover) .fan-card:not(:hover) .fan-screen {
-    opacity: calc(var(--opacity) * 0.55);
-    filter: saturate(0.75);
-  }
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .fan-card:hover .fan-screen {
-    transform: translateY(calc(var(--u) * -1.8)) rotate(calc(var(--rotate) * -1)) scale(1.05);
-  }
-
-  .fan-card:hover .fan-screen::after {
-    transform: translateX(110%);
-    transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-}
-
 /* Footer: the name fills the width of the page in its own band, so it never runs behind the content. */
 .footer-mark-box {
   container-type: inline-size;
@@ -649,10 +672,6 @@
 
 .marquee-logos {
   animation-duration: 55s;
-}
-
-[data-paused='true'] .marquee-track {
-  animation-play-state: paused;
 }
 
 @keyframes marquee {
@@ -712,44 +731,14 @@
   }
 }
 
-/* Delivery Stories: as the page scrolls, a line draws across the four stages, the cards rise after one another,
-   and each photo drifts inside its card. Cards clip rather than hide their overflow: a hidden box is a scroll
-   container, which would become the photo's timeline instead of the page. */
-.story-line {
-  transform-origin: left;
-}
-
+/* Delivery Stories: each photo drifts inside its card as the page scrolls. Cards clip rather than hide their overflow:
+   a hidden box is a scroll container, which would become the photo's timeline instead of the page. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .story-line {
-      animation: story-line linear both;
-      animation-timeline: view();
-      animation-range: entry 100% cover 62%;
-    }
-
-    .story-card {
-      animation: story-rise linear both;
-      animation-timeline: view();
-      animation-range: entry calc(var(--i) * 12%) cover calc(24% + var(--i) * 6%);
-    }
-
     .story-photo {
       animation: story-drift linear both;
       animation-timeline: view();
     }
-  }
-}
-
-@keyframes story-line {
-  from {
-    transform: scaleX(0);
-  }
-}
-
-@keyframes story-rise {
-  from {
-    opacity: 0;
-    transform: translateY(3.5rem) scale(0.96);
   }
 }
 
@@ -875,10 +864,6 @@
     animation-play-state: paused;
   }
 
-  .marquee-pause {
-    display: none;
-  }
-
   /* Without motion nothing would bring hidden cards into view, so they wrap instead. */
   .marquee-wrap {
     mask-image: none;
@@ -896,6 +881,7 @@
     row-gap: 0.75rem;
   }
 
+  .marquee-wrap .marquee-track > ul > [aria-hidden='true'],
   .marquee-wrap .marquee-track > [aria-hidden='true'] {
     display: none;
   }

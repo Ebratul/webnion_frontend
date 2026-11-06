@@ -1,8 +1,7 @@
-import { ArrowDown, ArrowRight, Check, Zap } from 'lucide-react';
-import type { CSSProperties } from 'react';
+import { ArrowRight, Check } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { formatPrice } from '@/lib/format';
+import { formatPriceParts } from '@/lib/format';
 import { SECTION_IDS } from '@/lib/site';
 import type { PricingPlan } from '@/lib/types';
 import { SectionHeading } from '../ui/SectionHeading';
@@ -14,9 +13,6 @@ interface PricingProps {
   plans: PricingPlan[];
 }
 
-// Colours follow the client's image and stay the same in both themes.
-const monoLabel = 'uppercase text-[#666] [&:lang(en)]:font-mono';
-
 // Slides in beside the label on hover and on keyboard focus
 const ButtonArrow = () => (
   <ArrowRight
@@ -25,55 +21,58 @@ const ButtonArrow = () => (
   />
 );
 
-// Every plan has the same rows, so they line up across the cards. The highlighted plan adds its icon and badge above them.
-// Its highlight is a ring, which takes no room, so every card keeps the same inner spacing.
+const Price = ({ plan, locale }: { plan: PricingPlan; locale: Locale }) => {
+  const { symbol, amount, symbolFirst } = formatPriceParts(plan.price, plan.currency, locale);
+  const sign = <span className="self-start pt-1 text-xl font-medium text-[#555]">{symbol}</span>;
+
+  return (
+    <p className="mt-7 flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
+      <span className="inline-flex items-baseline gap-0.5">
+        {symbolFirst && sign}
+        <span className="text-5xl font-medium leading-none tabular-nums text-[#111]">{amount}</span>
+        {!symbolFirst && sign}
+      </span>
+      {plan.priceLabel && <span className="ml-1 text-sm text-[#6f6f6f]">{plan.priceLabel}</span>}
+    </p>
+  );
+};
+
+// Laid out like the reference: name and badge, tagline, price, the button, what the plan offers, and an optional note
+// at the foot. Every card has the same rows, so they line up, and the highlighted plan stands out through colour alone.
 const Plan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale }) => (
   <li
-    className={`flex flex-col rounded-2xl border bg-white p-6 lg:p-7 ${
-      plan.isFeatured ? 'border-primary shadow-[0_24px_56px_-18px_rgb(130_36_227/0.5)] ring-1 ring-primary xl:-mb-5 xl:-mt-[4.25rem]' : 'border-[#ececec] shadow-[0_14px_40px_-24px_rgb(0_0_0/0.2)]'
+    className={`flex flex-col rounded-3xl border p-7 lg:p-8 ${
+      plan.isFeatured ? 'border-primary bg-[#faf6ff] shadow-[0_24px_56px_-24px_rgb(130_36_227/0.45)] ring-1 ring-primary' : 'border-[#e8e8e8] bg-white shadow-[0_14px_40px_-28px_rgb(0_0_0/0.25)]'
     }`}
   >
-    {plan.isFeatured && (
-      <div className="mb-5 flex h-12 items-center justify-between gap-3">
-        <span className="grid size-12 place-items-center rounded-full border border-[#dedede] text-accent">
-          <Zap aria-hidden className="size-6 fill-current" strokeWidth={1.5} />
-        </span>
-        {plan.badge && <span className="whitespace-nowrap rounded-full border border-primary/30 bg-tint px-3 py-1 text-[13px] font-medium text-accent">{plan.badge}</span>}
-      </div>
-    )}
+    <div className="flex min-h-8 items-center justify-between gap-3">
+      <h3 className="text-xl font-semibold text-[#1a1a1a]">{plan.name}</h3>
+      {plan.badge && <span className="whitespace-nowrap rounded-full border border-primary/30 bg-tint px-3 py-1 text-xs font-medium text-accent">{plan.badge}</span>}
+    </div>
+    <p className="mt-2 text-sm leading-snug text-[#6f6f6f] lg:min-h-10">{plan.tagline}</p>
 
-    <h3 className="text-[1.375rem] font-medium text-[#2b2b2b]">{plan.name}</h3>
-    <p className="mt-2 text-sm leading-snug text-[#6f6f6f] xl:min-h-[3.5rem]">{plan.tagline}</p>
-
-    <p className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1">
-      <span className="text-[2.5rem] font-medium leading-none tabular-nums text-[#111]">{formatPrice(plan.price, plan.currency, locale)}</span>
-      {plan.price > 0 && <span className={`text-[11px] ${monoLabel}`}>{t.starting}</span>}
-    </p>
+    <Price plan={plan} locale={locale} />
 
     <ServiceLink
       slug={plan.slug}
-      className="plan-btn group mt-5 flex min-h-12 items-center justify-center rounded-lg bg-primary text-[0.9375rem] font-medium text-white hover:bg-primary-hover hover:shadow-[0_12px_24px_-10px_var(--primary)] focus-visible:bg-primary-hover"
+      className="plan-btn group mt-7 flex min-h-12 items-center justify-center rounded-full bg-primary px-5 text-[0.9375rem] font-medium text-white hover:bg-primary-hover hover:shadow-[0_12px_24px_-10px_var(--primary)] focus-visible:bg-primary-hover"
     >
-      {t.cta}
+      {plan.buttonLabel ?? t.cta}
       <ButtonArrow />
     </ServiceLink>
 
-    <div className="mt-8 flex-1">
-      <p className={`text-xs ${monoLabel}`}>{t.included}</p>
-      <ul className="mt-4 space-y-3.5">
-        {plan.features.map((feature) => (
-          <li key={feature} className="flex items-start gap-2.5 text-[0.9375rem] leading-snug text-[#444]">
-            <Check aria-hidden className={`mt-0.5 size-4 shrink-0 ${plan.isFeatured ? 'text-accent' : 'text-[#9a9a9a]'}`} strokeWidth={plan.isFeatured ? 2.5 : 1.75} />
-            {feature}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="mt-8 flex-1 space-y-3.5 border-t border-[#ececec] pt-7">
+      {plan.features.map((feature) => (
+        <li key={feature} className="flex items-start gap-3 text-[0.9375rem] leading-snug text-[#3d3d3d]">
+          <span aria-hidden className={`mt-px grid size-5 shrink-0 place-items-center rounded-full ${plan.isFeatured ? 'bg-primary text-white' : 'bg-tint text-accent'}`}>
+            <Check className="size-3" strokeWidth={3} />
+          </span>
+          {feature}
+        </li>
+      ))}
+    </ul>
 
-    <ServiceLink slug={plan.slug} className="group mt-9 inline-flex items-center gap-2 self-start py-1 text-[13px] text-[#6f6f6f] transition-colors duration-200 hover:text-accent">
-      <ArrowDown aria-hidden className="size-4 transition-transform duration-200 group-hover:translate-y-0.5" strokeWidth={1.75} />
-      {t.askPlan}
-    </ServiceLink>
+    {plan.note && <p className="mt-8 text-xs leading-relaxed text-[#6f6f6f]">{plan.note}</p>}
   </li>
 );
 
@@ -84,16 +83,13 @@ export const Pricing = ({ locale, t, plans }: PricingProps) => (
         <SectionHeading id="pricing-title" title={t.title} />
       </div>
 
-      {/* Separate cards with one gap. The highlighted plan reaches above the others by the height of its icon row, which this margin allows for. */}
-      <div className="reveal mt-12 xl:mt-[7.25rem]">
-        <ul style={{ '--plan-count': plans.length } as CSSProperties} className="grid gap-5 sm:grid-cols-2 xl:grid-cols-[repeat(var(--plan-count),minmax(0,1fr))]">
-          {plans.map((plan) => (
-            <Plan key={plan.id} plan={plan} t={t} locale={locale} />
-          ))}
-        </ul>
-      </div>
+      <ul className="reveal mx-auto mt-12 grid max-w-xl gap-5 lg:max-w-none lg:grid-cols-3">
+        {plans.map((plan) => (
+          <Plan key={plan.id} plan={plan} t={t} locale={locale} />
+        ))}
+      </ul>
 
-      <p className="reveal mx-auto mt-12 max-w-2xl text-center xl:mt-[4.25rem] text-xs leading-relaxed text-[#6f6f6f]">{t.note}</p>
+      <p className="reveal mx-auto mt-12 max-w-2xl text-center text-xs leading-relaxed text-[#6f6f6f]">{t.note}</p>
     </div>
   </section>
 );

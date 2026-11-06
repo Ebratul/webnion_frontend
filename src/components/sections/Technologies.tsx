@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import type { Dictionary } from '@/i18n';
-import { PausableMarquee } from '../ui/PausableMarquee';
+import { DraggableMarquee } from '../ui/DraggableMarquee';
 import { SectionHeading } from '../ui/SectionHeading';
 
 type Technology = Dictionary['technologies']['items'][number];
@@ -37,12 +37,12 @@ export const Technologies = ({ t }: { t: Dictionary['technologies'] }) => {
       <div className="container-page">
         <SectionHeading id="technologies-title" title={t.title} />
 
-        <PausableMarquee pauseLabel={t.pause} playLabel={t.play} className="mt-12 pb-16" buttonClassName="bottom-0 left-1/2 -translate-x-1/2">
+        <DraggableMarquee className="mt-12">
           <div className="marquee-wrap fade-edges flex flex-col gap-5 overflow-hidden">
             <Row items={t.items.slice(0, middle)} />
             <Row items={t.items.slice(middle)} direction="reverse" />
           </div>
-        </PausableMarquee>
+        </DraggableMarquee>
       </div>
     </section>
   );

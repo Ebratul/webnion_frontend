@@ -10,7 +10,7 @@ export const CONTACT = {
   whatsapp: 'https://wa.me/8801774029768',
   facebook: 'https://www.facebook.com/meetwebnion',
   instagram: 'https://www.instagram.com/meetwebnion/',
-  privacy: 'https://webnion.net/p/privacy-policy',
+  privacy: 'https://webnion.com/p/privacy-policy',
 };
 
 // Section links carry the locale path so they also work from project and case study pages

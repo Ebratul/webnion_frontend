@@ -113,6 +113,9 @@ export interface PricingPlan {
   price: number;
   currency: string;
   features: string[];
+  priceLabel: string | null;
+  buttonLabel: string | null;
+  note: string | null;
   isFeatured: boolean;
 }
 
@@ -137,6 +140,7 @@ export interface ClientLogo {
 }
 
 export interface HomeData {
+  heroBackground: string | null;
   services: Service[];
   projects: Project[];
   caseStudies: CaseStudy[];

@@ -1,10 +1,10 @@
 'use client';
 
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { formatCounter } from '@/lib/format';
 import type { Project } from '@/lib/types';
 import { ProjectCard } from '../ui/ProjectCard';
 
@@ -20,10 +20,11 @@ interface ProjectCarouselProps {
   locale: Locale;
   projects: Project[];
   viewLabel: string;
+  exploreLabel: string;
   a11y: Dictionary['a11y'];
 }
 
-export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCarouselProps) => {
+export const ProjectCarousel = ({ locale, projects, viewLabel, exploreLabel, a11y }: ProjectCarouselProps) => {
   const count = projects.length;
   const loops = count > MAX_VISIBLE;
   const scroller = useRef<HTMLUListElement>(null);
@@ -33,7 +34,9 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
   const settle = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [position, setPosition] = useState(0);
   const [maxPosition, setMaxPosition] = useState(Math.max(count - MAX_VISIBLE, 0));
-  const [paused, setPaused] = useState(false);
+  // Rows run on their own unless the visitor asks for reduced motion. There is no pause button, by the owner's choice:
+  // the row also stops under the mouse and while a card has keyboard focus.
+  const [still, setStill] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [focused, setFocused] = useState(false);
 
@@ -61,7 +64,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
   }, []);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setPaused(true);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setStill(true);
     return () => {
       if (frame.current !== null) cancelAnimationFrame(frame.current);
       if (settle.current) clearTimeout(settle.current);
@@ -129,7 +132,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
   };
 
   useEffect(() => {
-    if (paused || hovering || focused || maxPosition === 0) return;
+    if (still || hovering || focused || maxPosition === 0) return;
     const timer = setInterval(() => {
       // Cards travel right to left, which means scrolling forward through the row
       if (!document.hidden) move(1);
@@ -137,7 +140,7 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
     return () => clearInterval(timer);
     // move only reads refs and values that are also dependencies here
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paused, hovering, focused, maxPosition, count]);
+  }, [still, hovering, focused, maxPosition, count]);
 
   const onScroll = () => {
     const list = scroller.current;
@@ -159,7 +162,6 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
 
   // The copy is decoration for the loop, so it is hidden from screen readers and the keyboard
   const cards = loops ? [...projects.map((project) => ({ project, copy: false })), ...projects.map((project) => ({ project, copy: true }))] : projects.map((project) => ({ project, copy: false }));
-  const stops = loops ? count : maxPosition + 1;
 
   return (
     <div
@@ -191,44 +193,35 @@ export const ProjectCarousel = ({ locale, projects, viewLabel, a11y }: ProjectCa
         ))}
       </ul>
 
-      {/* Where the row is: a counter and a thin line, with the controls at the far edge */}
-      <div className="mt-8 flex items-center gap-4 sm:gap-5">
-        <p className="shrink-0 text-sm font-medium tabular-nums">
-          {formatCounter(position + 1, locale)}
-          <span className="text-muted"> / {formatCounter(stops, locale)}</span>
-        </p>
-        <div aria-hidden className="h-0.5 min-w-0 flex-1 overflow-hidden rounded-full bg-white/15">
-          <div
-            className="h-full origin-left rounded-full bg-primary transition-transform duration-500 ease-out"
-            style={{ transform: `scaleX(${(position + 1) / Math.max(stops, 1)})` }}
-          />
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
+      {/* A link to every project on the left and the arrows on the right, on one line under the cards */}
+      <div className="mt-10 flex items-center justify-between gap-4 border-t border-white/10 pt-6">
+        <Link
+          href={`/${locale}/project`}
+          className="group inline-flex min-h-11 items-center gap-3 text-[0.9375rem] font-medium text-white transition-colors duration-200 hover:text-accent"
+        >
+          {exploreLabel}
+          <span aria-hidden className="grid size-9 place-items-center rounded-full border border-white/20 transition-[background-color,border-color,transform] duration-300 group-hover:translate-x-1 group-hover:border-primary group-hover:bg-primary group-hover:text-white motion-reduce:group-hover:translate-x-0">
+            <ArrowRight className="size-4" />
+          </span>
+        </Link>
+        <div className="flex shrink-0 items-center gap-2.5">
           <button
             type="button"
             onClick={() => move(-1)}
             disabled={!loops && position === 0}
             aria-label={a11y.previous}
-            className="grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover disabled:opacity-40"
+            className="grid size-11 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover disabled:opacity-40"
           >
-            <ChevronLeft aria-hidden className="size-4" />
+            <ChevronLeft aria-hidden className="size-5" />
           </button>
           <button
             type="button"
             onClick={() => move(1)}
             disabled={!loops && position >= maxPosition}
             aria-label={a11y.next}
-            className="grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover disabled:opacity-40"
+            className="grid size-11 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover disabled:opacity-40"
           >
-            <ChevronRight aria-hidden className="size-4" />
-          </button>
-          <button
-            type="button"
-            onClick={() => setPaused((value) => !value)}
-            aria-label={paused ? a11y.playMotion : a11y.pauseMotion}
-            className="grid size-10 place-items-center rounded-full bg-primary text-white transition-colors duration-200 hover:bg-primary-hover disabled:opacity-40"
-          >
-            {paused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
+            <ChevronRight aria-hidden className="size-5" />
           </button>
         </div>
       </div>

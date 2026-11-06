@@ -2,13 +2,12 @@ import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
 import type { ClientLogo, Project } from '@/lib/types';
-import { PausableMarquee } from '../ui/PausableMarquee';
+import { DraggableMarquee } from '../ui/DraggableMarquee';
 import { ProjectMosaic } from './ProjectMosaic';
 
 interface ClientTrustProps {
   locale: Locale;
   t: Dictionary['trust'];
-  a11y: Dictionary['a11y'];
   projects: Project[];
   clients: ClientLogo[];
 }
@@ -26,16 +25,16 @@ const LogoList = ({ clients, hidden }: { clients: ClientLogo[]; hidden?: boolean
   </ul>
 );
 
-export const ClientTrust = ({ locale, t, a11y, projects, clients }: ClientTrustProps) => (
+export const ClientTrust = ({ locale, t, projects, clients }: ClientTrustProps) => (
   <section aria-label={t.label}>
-    {projects.length > 0 && <ProjectMosaic locale={locale} projects={projects} pauseLabel={a11y.pauseMotion} playLabel={a11y.playMotion} />}
+    {projects.length > 0 && <ProjectMosaic locale={locale} projects={projects} />}
 
     {clients.length > 0 && (
       <div className="section-y">
         <div className="container-page text-center">
           <h2 className="inline-block rounded-full border border-line px-6 py-1.5 text-sm font-medium tracking-normal">{t.label}</h2>
         </div>
-        <PausableMarquee pauseLabel={a11y.pauseMotion} playLabel={a11y.playMotion} className="mt-8" buttonClassName="right-5 top-1/2 -translate-y-1/2 sm:right-8">
+        <DraggableMarquee className="mt-8">
           <div className="marquee-wrap fade-edges overflow-hidden">
             <div className="marquee-track marquee-logos">
               <LogoList clients={clients} />
@@ -44,7 +43,7 @@ export const ClientTrust = ({ locale, t, a11y, projects, clients }: ClientTrustP
               <LogoList clients={clients} hidden />
             </div>
           </div>
-        </PausableMarquee>
+        </DraggableMarquee>
       </div>
     )}
   </section>

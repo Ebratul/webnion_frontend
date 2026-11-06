@@ -16,8 +16,6 @@ export const bn: Dictionary = {
     whatsapp: 'WhatsApp-এ Webnion-এর সাথে কথা বলুন',
     previous: 'আগের',
     next: 'পরের',
-    pauseMotion: 'চলমান ছবি থামান',
-    playMotion: 'চলমান ছবি চালু করুন',
     playVideo: 'ভিডিও চালান:',
     viewResult: 'দেখুন:',
     close: 'বন্ধ করুন',
@@ -120,6 +118,7 @@ export const bn: Dictionary = {
     title: 'আমাদের সাম্প্রতিক কিছু ওয়েবসাইট',
     subtitle: 'ব্যবসাকে অনলাইনে এগিয়ে নিতে আমাদের ডিজাইন ও ডেভেলপ করা কিছু ওয়েবসাইট দেখে নিন।',
     viewProject: 'প্রজেক্ট দেখুন',
+    explore: 'আরও পোর্টফোলিও দেখুন',
   },
   projectDetail: {
     crumb: 'প্রজেক্টের বিস্তারিত',
@@ -344,11 +343,8 @@ export const bn: Dictionary = {
   },
   pricing: {
     title: 'আপনার ব্যবসার জন্য সঠিক সলিউশন বেছে নিন',
-    starting: 'থেকে শুরু',
-    included: 'যা যা থাকছে',
     cta: 'মিটিং বুক করুন',
     note: 'প্রজেক্টভিত্তিক সার্ভিস। চূড়ান্ত খরচ ফিচার, পেজ, ডিজাইনের মান ও ব্যবসার চাহিদার উপর নির্ভর করে।',
-    askPlan: 'এই প্ল্যান নিয়ে জানুন',
   },
   team: {
     title: 'Webnion-এর পেছনের মানুষেরা',
@@ -356,8 +352,6 @@ export const bn: Dictionary = {
   },
   technologies: {
     title: 'প্রতিটি ওয়েবসাইটের পেছনের শক্তিশালী প্রযুক্তি',
-    pause: 'চলমান প্রযুক্তি কার্ড থামান',
-    play: 'চলমান প্রযুক্তি কার্ড চালু করুন',
     items: [
       { name: 'Laravel', logo: 'laravel', description: 'নিরাপদ ও স্কেলযোগ্য ওয়েব অ্যাপ্লিকেশন তৈরির শক্তিশালী PHP ফ্রেমওয়ার্ক।' },
       { name: 'React.js', logo: 'react', description: 'দ্রুত ও ইন্টারঅ্যাকটিভ ইউজার ইন্টারফেস তৈরির আধুনিক JavaScript লাইব্রেরি।' },
@@ -432,6 +426,7 @@ export const bn: Dictionary = {
     callUs: 'কল করুন',
     email: 'ইমেইল',
     rights: 'Webnion™। সর্বস্বত্ব সংরক্ষিত।',
+    madeIn: 'ঢাকা ও রোমে তৈরি',
     serviceLinks: [
       { slug: 'custom-website-design', label: 'কাস্টম ওয়েবসাইট ডিজাইন' },
       { slug: 'ecommerce-development', label: 'ই-কমার্স ডেভেলপমেন্ট' },
