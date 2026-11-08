@@ -1,7 +1,8 @@
 import { Send } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { CONTACT, SECTION_IDS } from '@/lib/site';
+import { SECTION_IDS } from '@/lib/site';
+import { getContact } from '@/lib/siteSettings';
 import type { PricingPlan, Service } from '@/lib/types';
 import { WhatsAppIcon } from '../ui/BrandIcons';
 import { LineReveal } from '../ui/LineReveal';
@@ -24,7 +25,9 @@ export const inquiryOptions = (services: Service[], plans: PricingPlan[]) => [
   ...plans.map((plan) => ({ slug: plan.slug, label: plan.name })),
 ];
 
-export const FinalInquiry = ({ locale, t, closeLabel, services, plans }: FinalInquiryProps) => {
+export const FinalInquiry = async ({ locale, t, closeLabel, services, plans }: FinalInquiryProps) => {
+  const contact = await getContact();
+
   return (
     <section id={SECTION_IDS.contact} aria-labelledby="inquiry-title" className="section-y flush-dark bg-[#faf2e6] dark:bg-surface">
       <div className="container-page">
@@ -43,7 +46,7 @@ export const FinalInquiry = ({ locale, t, closeLabel, services, plans }: FinalIn
             </p>
 
             <div data-line-item className="mt-8 flex flex-wrap justify-center gap-3">
-              <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={badgeClass}>
+              <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className={badgeClass}>
                 <WhatsAppIcon className="size-6 text-whatsapp" />
                 <span>
                   <span className="block text-[0.6875rem] leading-tight text-white/75">{t.whatsappSmall}</span>

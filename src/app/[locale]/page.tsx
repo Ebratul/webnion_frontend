@@ -15,9 +15,9 @@ import { Services } from '@/components/sections/Services';
 import { Technologies } from '@/components/sections/Technologies';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getHomeData } from '@/lib/api';
-import { CONTACT, SITE_URL } from '@/lib/site';
+import { SITE_URL } from '@/lib/site';
+import { getContact, getSiteDictionary } from '@/lib/siteSettings';
 
 export const dynamicParams = false;
 export const revalidate = 60;
@@ -26,22 +26,23 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const t = getDictionary(locale);
+  const t = await getSiteDictionary(locale);
   const data = await getHomeData(locale);
+  const contact = await getContact();
 
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Webnion',
     url: SITE_URL,
-    email: CONTACT.email,
-    telephone: CONTACT.phoneBd,
-    sameAs: [CONTACT.facebook, CONTACT.instagram],
+    email: contact.email,
+    telephone: contact.phoneBd,
+    sameAs: [contact.facebook, contact.instagram],
   };
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization).replace(/</g, '\\u003c') }} />
       <PageShell locale={locale}>
         <Hero t={t.hero} background={data.heroBackground} />
         <ClientTrust locale={locale} t={t.trust} projects={data.projects} clients={data.clients} />
@@ -54,7 +55,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <DeliveryStories t={t.delivery} stories={data.deliveryStories} />
         <Process t={t.process} />
         <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} />
-        <Technologies t={t.technologies} />
+        <Technologies t={t.technologies} items={data.technologies} />
         <Faqs t={t.faq} faqs={data.faqs} founder={data.team[0]} />
         <FinalInquiry locale={locale} t={t.inquiry} closeLabel={t.a11y.close} services={data.services} plans={data.pricingPlans} />
       </PageShell>

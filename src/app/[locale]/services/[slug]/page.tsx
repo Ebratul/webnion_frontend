@@ -7,9 +7,8 @@ import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
 import { ContentBlocks } from '@/components/ui/ContentBlocks';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getHomeData, getService } from '@/lib/api';
-import { CONTACT } from '@/lib/site';
+import { getContact, getSiteDictionary } from '@/lib/siteSettings';
 
 export const revalidate = 60;
 
@@ -42,7 +41,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const [service, { services }] = await Promise.all([getService(slug, locale), getHomeData(locale)]);
   if (!service) notFound();
 
-  const dictionary = getDictionary(locale);
+  const dictionary = await getSiteDictionary(locale);
+  const contact = await getContact();
   const t = dictionary.serviceDetail;
 
   // Images in the content sit side by side after the text, instead of one under another inside it
@@ -134,9 +134,9 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/85 to-transparent p-5 pt-16">
               <p translate="no" className="text-lg font-semibold">Webnion</p>
               <p className="text-sm">{t.tagline}</p>
-              <a href={`tel:${CONTACT.phoneBd}`} dir="ltr" className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-hover">
+              <a href={`tel:${contact.phoneBd}`} dir="ltr" className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-hover">
                 <Phone aria-hidden className="size-4" />
-                {CONTACT.phoneBdLabel}
+                {contact.phoneBdLabel}
               </a>
             </div>
           </div>

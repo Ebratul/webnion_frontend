@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react';
 import Image from 'next/image';
 import type { Dictionary } from '@/i18n';
-import { CONTACT } from '@/lib/site';
+import { getContact } from '@/lib/siteSettings';
 import type { Faq, TeamMember } from '@/lib/types';
 import { LineReveal } from '../ui/LineReveal';
 import { LineText } from '../ui/LineText';
@@ -12,7 +12,10 @@ interface FaqsProps {
   founder?: TeamMember;
 }
 
-export const Faqs = ({ t, faqs, founder }: FaqsProps) => (
+export const Faqs = async ({ t, faqs, founder }: FaqsProps) => {
+  const contact = await getContact();
+
+  return (
   <section aria-labelledby="faq-title" className="section-y relative isolate overflow-hidden bg-[#f6f6f6] dark:bg-surface">
     <div aria-hidden className="absolute -right-24 top-10 -z-10 size-96 rounded-full bg-[#ffd9d0]/60 blur-3xl dark:bg-primary/10" />
     <div aria-hidden className="absolute -left-24 top-1/4 -z-10 size-80 rounded-full bg-[#ffd9d0]/60 blur-3xl dark:bg-primary/10" />
@@ -32,7 +35,7 @@ export const Faqs = ({ t, faqs, founder }: FaqsProps) => (
           <h3 className="mt-4 text-2xl font-medium">{t.cardTitle}</h3>
           <p className="mt-2 text-sm text-muted">{t.cardText}</p>
           <a
-            href={CONTACT.whatsapp}
+            href={contact.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 flex min-h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white shadow-[0_12px_28px_-10px_var(--primary)] transition-colors duration-200 hover:bg-primary-hover"
@@ -56,3 +59,4 @@ export const Faqs = ({ t, faqs, founder }: FaqsProps) => (
     </div>
   </section>
 );
+};

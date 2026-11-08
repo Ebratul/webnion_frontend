@@ -8,8 +8,7 @@ import { ContactForm } from '@/components/sections/ContactForm';
 import { LineReveal } from '@/components/ui/LineReveal';
 import { LineText } from '@/components/ui/LineText';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
-import { CONTACT } from '@/lib/site';
+import { getContact, getSiteDictionary } from '@/lib/siteSettings';
 
 const FORM_ID = 'project-form';
 
@@ -26,7 +25,7 @@ const softShadow = 'shadow-[0_28px_85px_rgb(20_13_38/0.12)]';
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale).contactPage;
+  const t = (await getSiteDictionary(locale)).contactPage;
 
   return {
     title: t.metaTitle,
@@ -62,9 +61,10 @@ export default async function ContactPage({ params }: PageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const dictionary = getDictionary(locale);
+  const dictionary = await getSiteDictionary(locale);
   const t = dictionary.contactPage;
-  const whatsappHref = `${CONTACT.whatsapp}?text=${encodeURIComponent(t.chat.message)}`;
+  const contact = await getContact();
+  const whatsappHref = `${contact.whatsapp}?text=${encodeURIComponent(t.chat.message)}`;
 
   return (
     <PageShell locale={locale}>
@@ -119,10 +119,10 @@ export default async function ContactPage({ params }: PageProps) {
         <ul className={`reveal grid divide-y divide-line rounded-[22px] md:grid-cols-3 md:divide-x md:divide-y-0 ${lightCard} shadow-[0_18px_50px_rgb(20_13_38/0.05)]`}>
           <QuickFact Icon={Clock} label={t.responseLabel}>{t.responseValue}</QuickFact>
           <QuickFact Icon={Mail} label={t.emailLabel}>
-            <a href={`mailto:${CONTACT.email}`} className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-accent">{CONTACT.email}</a>
+            <a href={`mailto:${contact.email}`} className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-accent">{contact.email}</a>
           </QuickFact>
           <QuickFact Icon={Phone} label={t.callLabel}>
-            <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-accent">{CONTACT.phoneLocal}</a>
+            <a href={`tel:${contact.phoneLocal}`} dir="ltr" className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-accent">{contact.phoneLocal}</a>
           </QuickFact>
         </ul>
         </div>
@@ -135,13 +135,13 @@ export default async function ContactPage({ params }: PageProps) {
             <ul className="mt-6 [&>li:last-child]:pb-0">
               <InfoRow Icon={MapPin} label={t.locationLabel}>{t.locationValue}</InfoRow>
               <InfoRow Icon={Mail} label={t.emailRowLabel}>
-                <a href={`mailto:${CONTACT.email}`} className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{CONTACT.email}</a>
+                <a href={`mailto:${contact.email}`} className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{contact.email}</a>
               </InfoRow>
               <InfoRow Icon={Phone} label={t.callRowLabel}>
-                <a href={`tel:${CONTACT.phoneLocal}`} dir="ltr" className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{CONTACT.phoneLocal}</a>
+                <a href={`tel:${contact.phoneLocal}`} dir="ltr" className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{contact.phoneLocal}</a>
               </InfoRow>
               <InfoRow Icon={MessageCircle} label={t.whatsappRowLabel}>
-                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" dir="ltr" className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{CONTACT.phoneBdLabel}</a>
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" dir="ltr" className="inline-flex min-h-6 items-center underline-offset-2 hover:underline">{contact.phoneBdLabel}</a>
               </InfoRow>
             </ul>
           </div>

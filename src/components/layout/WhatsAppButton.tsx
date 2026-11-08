@@ -1,10 +1,9 @@
-import { CONTACT } from '@/lib/site';
 import { WhatsAppIcon } from '../ui/BrandIcons';
 
-export const WhatsAppButton = ({ label }: { label: string }) => (
+export const WhatsAppButton = ({ label, href }: { label: string; href: string }) => (
   <aside aria-label={label}>
     <a
-      href={CONTACT.whatsapp}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}

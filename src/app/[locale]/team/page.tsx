@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getHomeData } from '@/lib/api';
 import type { TeamMember } from '@/lib/types';
+import { getSiteDictionary } from '@/lib/siteSettings';
 
 export const revalidate = 60;
 
@@ -15,7 +15,7 @@ type PageProps = { params: Promise<{ locale: string }> };
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale).teamPage;
+  const t = (await getSiteDictionary(locale)).teamPage;
 
   return {
     title: t.metaTitle,
@@ -39,7 +39,7 @@ export default async function TeamPage({ params }: PageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const dictionary = getDictionary(locale);
+  const dictionary = await getSiteDictionary(locale);
   const t = dictionary.teamPage;
   const { team } = await getHomeData(locale);
 

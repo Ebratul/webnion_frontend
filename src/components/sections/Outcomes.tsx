@@ -2,13 +2,17 @@ import { Check } from 'lucide-react';
 import Image from 'next/image';
 import type { Dictionary } from '@/i18n';
 import { SECTION_IDS } from '@/lib/site';
+import { getSiteImages } from '@/lib/siteSettings';
 import { PrimaryLink } from '../ui/Button';
 import { LineReveal } from '../ui/LineReveal';
 import { LineText } from '../ui/LineText';
 
 const photoClass = 'rounded-2xl object-cover';
 
-export const Outcomes = ({ t }: { t: Dictionary['outcomes'] }) => (
+export const Outcomes = async ({ t }: { t: Dictionary['outcomes'] }) => {
+  const images = await getSiteImages();
+
+  return (
   <section aria-labelledby="outcomes-title" className="section-b">
     <div className="container-page">
       <div className="rounded-[2rem] bg-[#f7eee8] p-6 sm:p-10 lg:p-14 dark:bg-surface">
@@ -24,13 +28,13 @@ export const Outcomes = ({ t }: { t: Dictionary['outcomes'] }) => (
             </LineReveal>
 
             <div className="reveal grid grid-cols-2 gap-5">
-              <Image src="/images/outcomes/founder.webp" alt={t.photoFounder} width={560} height={644} sizes="(min-width: 768px) 260px, 45vw" className={`aspect-[5/6] w-full object-top ${photoClass}`} />
-              <Image src="/images/outcomes/client-handover.webp" alt={t.photoHandover} width={560} height={644} sizes="(min-width: 768px) 260px, 45vw" className={`aspect-[5/6] w-full ${photoClass}`} />
+              <Image src={images.outcomeFounder} alt={t.photoFounder} width={560} height={644} sizes="(min-width: 768px) 260px, 45vw" className={`aspect-[5/6] w-full object-top ${photoClass}`} />
+              <Image src={images.outcomeHandover} alt={t.photoHandover} width={560} height={644} sizes="(min-width: 768px) 260px, 45vw" className={`aspect-[5/6] w-full ${photoClass}`} />
             </div>
           </div>
 
           <div className="reveal relative aspect-[5/6] md:aspect-auto md:min-h-[36rem]">
-            <Image src="/images/outcomes/team-at-work.webp" alt={t.photoTeam} fill sizes="(min-width: 768px) 520px, 100vw" className={photoClass} />
+            <Image src={images.outcomeTeam} alt={t.photoTeam} fill sizes="(min-width: 768px) 520px, 100vw" className={photoClass} />
           </div>
         </div>
 
@@ -48,3 +52,4 @@ export const Outcomes = ({ t }: { t: Dictionary['outcomes'] }) => (
     </div>
   </section>
 );
+};

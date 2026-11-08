@@ -3,17 +3,15 @@
 import { ArrowDown, ArrowUp, Heading2, ImagePlus, List, Pilcrow, Plus, Trash2, Upload, X } from 'lucide-react';
 import { useId, useRef, useState } from 'react';
 import type { Block, LocalizedValue } from '@/lib/admin/resources';
+import { inputClass } from './ui';
 
-export const inputClass =
-  'w-full rounded-xl border border-line bg-surface-2 px-3.5 py-2.5 text-sm text-fg transition-[border-color] duration-200 placeholder:text-muted/60 hover:border-white/20 focus:border-accent focus:outline-none';
-
-export const labelClass = 'block text-sm font-medium';
+export { inputClass, labelClass } from './ui';
 
 const iconButton =
-  'grid size-8 shrink-0 place-items-center rounded-lg text-muted transition-colors duration-200 hover:bg-white/5 hover:text-fg disabled:opacity-30 disabled:hover:bg-transparent';
+  'grid size-10 shrink-0 place-items-center rounded-lg text-muted transition-colors duration-200 hover:bg-white/[0.06] hover:text-white disabled:opacity-30 disabled:hover:bg-transparent';
 
 const quietButton =
-  'inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-xs font-medium text-fg transition-[border-color,color] duration-200 hover:border-accent hover:text-accent disabled:opacity-50';
+  'inline-flex min-h-10 items-center gap-2 rounded-full border border-line px-4 text-xs font-medium text-fg transition-[border-color,color,background-color] duration-200 hover:border-accent/60 hover:bg-tint hover:text-white disabled:opacity-50';
 
 // Uses XMLHttpRequest because fetch cannot report upload progress, which matters for large videos
 const uploadFile = (file: File, onProgress: (percent: number) => void) =>
@@ -29,6 +27,7 @@ const uploadFile = (file: File, onProgress: (percent: number) => void) =>
     request.onload = () => {
       const response = request.response as { message?: string; data?: { path: string } } | null;
       if (request.status === 201 && response?.data) resolve(response.data.path);
+      else if (request.status === 413) reject(new Error('This file is too large. Keep it under 4 MB, or compress it first.'));
       else reject(new Error(response?.message ?? 'Upload failed. Please try again.'));
     };
     request.onerror = () => reject(new Error('Upload failed. Check your connection and try again.'));
@@ -69,7 +68,7 @@ export const ImageField = ({ value, onChange, id }: ValueProps<string> & { id: s
   return (
     <div>
       <div className="flex items-center gap-4">
-        <div className="grid size-24 shrink-0 place-items-center overflow-hidden rounded-xl border border-line bg-white/5">
+        <div className="grid size-28 shrink-0 place-items-center overflow-hidden rounded-2xl border border-line bg-surface-2">
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={value} alt="" className="size-full object-cover" />
@@ -147,13 +146,13 @@ export const LocalizedField = ({ value, onChange, multiline, id }: ValueProps<Lo
   const extra = multiline ? { rows: 4 } : {};
 
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
+    <div className="grid gap-4 sm:grid-cols-2">
       <div>
-        <label htmlFor={`${id}-en`} className="mb-1 block text-xs text-muted">English</label>
+        <label htmlFor={`${id}-en`} className="mb-1.5 block text-xs text-muted">English</label>
         <Control id={`${id}-en`} value={value.en} onChange={(event) => onChange({ ...value, en: event.target.value })} className={inputClass} {...extra} />
       </div>
       <div>
-        <label htmlFor={`${id}-bn`} className="mb-1 block text-xs text-muted">বাংলা</label>
+        <label htmlFor={`${id}-bn`} className="mb-1.5 block text-xs text-muted">বাংলা</label>
         <Control
           id={`${id}-bn`}
           lang="bn"
@@ -179,7 +178,7 @@ export const FeaturesField = ({ value, onChange }: ValueProps<LocalizedValue[]>)
           <div className="min-w-0 flex-1">
             <LocalizedField id={`${baseId}-${index}`} value={row} onChange={(next) => update(index, next)} />
           </div>
-          <button type="button" onClick={() => onChange(value.filter((_, itemIndex) => itemIndex !== index))} aria-label="Remove feature" className={`${iconButton} mt-5`}>
+          <button type="button" onClick={() => onChange(value.filter((_, itemIndex) => itemIndex !== index))} aria-label="Remove feature" className={`${iconButton} mt-[1.625rem]`}>
             <Trash2 aria-hidden className="size-4" />
           </button>
         </div>

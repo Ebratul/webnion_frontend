@@ -5,8 +5,8 @@ import { PageShell } from '@/components/layout/PageShell';
 import { Pagination } from '@/components/ui/Pagination';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getHomeData } from '@/lib/api';
+import { getSiteDictionary } from '@/lib/siteSettings';
 
 const PAGE_SIZE = 12;
 
@@ -18,7 +18,7 @@ type PageProps = {
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale).projectPage;
+  const t = (await getSiteDictionary(locale)).projectPage;
 
   return {
     title: t.metaTitle,
@@ -33,7 +33,7 @@ export default async function ProjectsPage({ params, searchParams }: PageProps) 
   if (!isLocale(locale)) notFound();
 
   const { page: pageParam } = await searchParams;
-  const dictionary = getDictionary(locale);
+  const dictionary = await getSiteDictionary(locale);
   const t = dictionary.projectPage;
   const labels = dictionary.caseStudiesPage;
   const basePath = `/${locale}/project`;

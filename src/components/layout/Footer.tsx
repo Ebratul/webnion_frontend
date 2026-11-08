@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { CONTACT, SECTION_IDS, sectionHref } from '@/lib/site';
+import { SECTION_IDS, sectionHref, type Contact } from '@/lib/site';
 import { FacebookIcon, InstagramIcon } from '../ui/BrandIcons';
 import { Logo } from './Logo';
 
@@ -12,10 +12,13 @@ interface FooterProps {
   t: Dictionary['footer'];
   nav: Dictionary['nav'];
   label: string;
+  contact: Contact;
 }
 
-// A little stronger than the muted grey, and full white (or full ink in light mode) under the pointer
-const linkClass = 'inline-flex min-h-6 min-w-6 items-center text-sm text-fg/75 transition-colors duration-200 hover:text-fg';
+// Bright in both themes. Under the pointer: pure white in dark mode, the full brand purple in light mode.
+const textClass = 'text-fg/85 dark:text-white/85';
+const linkHover = 'hover:text-primary dark:hover:text-white';
+const linkClass = `inline-flex min-h-6 min-w-6 items-center text-sm ${textClass} transition-colors duration-200 ${linkHover}`;
 const navLinkClass = `footer-link ${linkClass} py-0.5`;
 const headingClass = 'text-sm font-semibold text-fg';
 
@@ -26,15 +29,15 @@ const ContactItem = ({ Icon, label, children }: { Icon: LucideIcon; label: strin
     </span>
     <div className="min-w-0">
       <p className={headingClass}>{label}</p>
-      <div className="mt-1 text-sm leading-6 text-fg/75">{children}</div>
+      <div className={`mt-1 text-sm leading-6 ${textClass}`}>{children}</div>
     </div>
   </li>
 );
 
-export const Footer = ({ locale, t, nav, label }: FooterProps) => {
+export const Footer = ({ locale, t, nav, label, contact }: FooterProps) => {
   const socials = [
-    { href: CONTACT.facebook, name: 'Facebook', Icon: FacebookIcon },
-    { href: CONTACT.instagram, name: 'Instagram', Icon: InstagramIcon },
+    { href: contact.facebook, name: 'Facebook', Icon: FacebookIcon },
+    { href: contact.instagram, name: 'Instagram', Icon: InstagramIcon },
   ];
 
   return (
@@ -43,7 +46,7 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
         <div className="grid gap-10 pt-14 pb-10 md:grid-cols-2 lg:grid-cols-[1.35fr_1.15fr_1fr] lg:gap-x-12">
           <div className="md:col-span-2 lg:col-span-1">
             <Logo locale={locale} />
-            <p className="mt-5 max-w-xs text-sm text-fg/75">{t.about}</p>
+            <p className={`mt-5 max-w-xs text-sm ${textClass}`}>{t.about}</p>
             <ul className="mt-6 flex gap-2.5">
               {socials.map(({ href, name, Icon }) => (
                 <li key={name}>
@@ -95,12 +98,12 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
               </ContactItem>
               <ContactItem Icon={Phone} label={t.callUs}>
                 <span className="flex flex-col items-start">
-                  <a href={`tel:${CONTACT.phoneBd}`} dir="ltr" className={linkClass}>{CONTACT.phoneBdLabel}</a>
-                  <a href={`tel:${CONTACT.phoneIt}`} dir="ltr" className={linkClass}>{CONTACT.phoneItLabel}</a>
+                  <a href={`tel:${contact.phoneBd}`} dir="ltr" className={linkClass}>{contact.phoneBdLabel}</a>
+                  <a href={`tel:${contact.phoneIt}`} dir="ltr" className={linkClass}>{contact.phoneItLabel}</a>
                 </span>
               </ContactItem>
               <ContactItem Icon={Mail} label={t.email}>
-                <a href={`mailto:${CONTACT.email}`} className={`${linkClass} [overflow-wrap:anywhere]`}>{CONTACT.email}</a>
+                <a href={`mailto:${contact.email}`} className={`${linkClass} [overflow-wrap:anywhere]`}>{contact.email}</a>
               </ContactItem>
             </ul>
           </address>
@@ -110,9 +113,9 @@ export const Footer = ({ locale, t, nav, label }: FooterProps) => {
           <span className="footer-mark">Webnion</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-line py-6 pr-16 text-xs text-fg/70 xl:pr-0">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-line py-6 pr-16 text-xs text-fg/80 xl:pr-0 dark:text-white/80">
           <p>© {new Intl.NumberFormat(locale === 'bn' ? 'bn-BD' : 'en-US', { useGrouping: false }).format(2026)} {t.rights}</p>
-          <a href={CONTACT.privacy} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-6 items-center transition-colors duration-200 hover:text-fg">{t.privacy}</a>
+          <a href={contact.privacy} target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-6 items-center transition-colors duration-200 ${linkHover}`}>{t.privacy}</a>
           <p>{t.madeIn}</p>
         </div>
       </div>

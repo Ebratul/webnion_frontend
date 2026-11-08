@@ -307,6 +307,32 @@ export const RESOURCES: Resource[] = [
     ],
   },
   {
+    key: 'technologies',
+    label: 'Technologies',
+    singular: 'Technology',
+    description: 'The moving technology cards on the homepage. Add, remove, hide or reorder them.',
+    apiPath: '/technologies',
+    listPath: '/technologies/all',
+    group: 'Website',
+    sortable: true,
+    canCreate: true,
+    canDelete: true,
+    rowTitle: (row) => text(row.name),
+    rowSubtitle: (row) => en(row.description),
+    rowImage: (row) => text(row.logo),
+    sections: [
+      {
+        title: 'Technology',
+        fields: [
+          { name: 'name', label: 'Name', type: 'text', required: true },
+          { name: 'description', label: 'Short description', type: 'localizedTextarea', required: true },
+          { name: 'logo', label: 'Logo', type: 'image', required: true, hint: 'Square, on a transparent or white background.' },
+        ],
+      },
+      { title: 'Visibility', fields: [visibility] },
+    ],
+  },
+  {
     key: 'hero-backgrounds',
     label: 'Hero Background',
     singular: 'Background',

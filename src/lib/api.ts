@@ -3,6 +3,7 @@ import type { Locale } from '@/i18n/config';
 import type { CaseStudy, CaseStudyDetail, HomeData, ProductSearchResult, ProjectDetail, ServiceDetail } from './types';
 
 const EMPTY_HOME: HomeData = {
+  technologies: [],
   heroBackground: null,
   services: [],
   projects: [],

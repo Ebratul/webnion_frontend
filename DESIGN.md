@@ -92,7 +92,7 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 - **Pricing plans:** three plans (Free, Starter, Enterprise), laid out after the client's ChatGPT reference: name and badge, tagline, price with a small symbol and an optional label beside it, a full-width pill button, a hairline, ticked features, and an optional note at the foot. Cards have 24px corners and the standard `gap-5`, and all line up. The highlighted plan stands out through colour only: a lavender fill, `primary` border and ring, filled ticks and a brand glow. The label, button text, features and note are set per plan in the admin panel.
 - **Pricing buttons:** `plan-btn` lifts the button, passes a light across it and slides in an arrow on hover and keyboard focus.
 - **Final Inquiry:** a dark panel with 32px corners inside `container-page`, in both themes, after the client's Revilo reference: two curved lines of purple light rising from the lower corners, a short glowing line at the top, and glass buttons. It has the normal section space above and below.
-- **Footer:** flat background with no gradients and no cards. Brand and links on top, a contact row under a hairline, the name faintly across the full width in its own band so it never runs behind content, then the copyright, Privacy Policy and Crafted in Dhaka & Rome on the left, clear of the WhatsApp button. Text is `fg/75`, a step stronger than `muted`, and links turn full `fg` (white in dark mode) on hover.
+- **Footer:** flat background with no gradients and no cards. Brand and links on top, a contact row under a hairline, the name faintly across the full width in its own band so it never runs behind content, then the copyright, Privacy Policy and Crafted in Dhaka & Rome on the left, clear of the WhatsApp button. Text is `fg/85` (`white/85` in dark mode), brighter than `muted`, and links turn pure white on hover in dark mode and the full brand purple `primary` in light mode.
 - **Chat demo:** one card with a header, a scrolling conversation (it hands the wheel back to the page at its ends), suggestions that step aside after the first question, and a one-line composer. Answers are scripted in the dictionaries and nothing leaves the browser, apart from the browser's own speech service if a visitor uses the mic.
 
 ## Motion
@@ -108,3 +108,11 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 - All copy lives in `src/i18n/en.ts` and `bn.ts`, or in the database as `{ en, bn }`. No hardcoded strings in components.
 - Use real client names and work. Never invent testimonials, metrics or logos.
 - English headings and buttons use Title Case. Format numbers and prices with `Intl` through `src/lib/format.ts`.
+
+## Admin panel
+
+Always dark. All measurements come from `components/admin/ui.tsx`, so screens line up: cards `gap-5` apart with `p-6 sm:p-7` inside, page blocks `mt-8` apart, list rows `px-5 py-4`, controls at least 40px tall. Cards answer hover with an `accent/50` border and a lighter fill; rows with a faint fill. Use `PageHeader`, `SaveBar` and `EmptyState` on any new screen. Forms stay `max-w-4xl`; lists and the dashboard use the full `max-w-6xl`.
+
+What admins can change: the record lists in `lib/admin/resources.ts`, every built-in sentence under Website Text (`lib/siteText.ts`, stored as overrides by dictionary path), and contact details, links and section photos under Contact & Links. Public server code reads text through `getSiteDictionary`, not `getDictionary`, or admin edits will not show.
+
+New content sections must be added to `ALLOWED_RESOURCES` in the admin proxy, and to `TRACKED` in the API's `activityTrail` so they appear in the Activity Log.

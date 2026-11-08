@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ResourceList } from '@/components/admin/ResourceList';
+import { PageHeader } from '@/components/admin/ui';
 import { getResource } from '@/lib/admin/resources';
 import { adminFetch, getAdminUser } from '@/lib/admin/session';
 
@@ -20,10 +21,7 @@ export default async function AdminResourcePage({ params }: PageProps) {
 
   return (
     <>
-      <header className="mb-8">
-        <h1 className="text-2xl font-semibold sm:text-3xl">{resource.label}</h1>
-        <p className="mt-1 text-sm text-muted">{resource.description}</p>
-      </header>
+      <PageHeader title={resource.label} description={resource.description} count={rows.length} />
       <ResourceList resourceKey={resource.key} rows={rows} />
     </>
   );

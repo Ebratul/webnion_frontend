@@ -7,10 +7,10 @@ import { PageHero } from '@/components/layout/PageHero';
 import { PageShell } from '@/components/layout/PageShell';
 import { ContentBlocks } from '@/components/ui/ContentBlocks';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getCaseStudy } from '@/lib/api';
 import { formatDate } from '@/lib/format';
 import { SECTION_IDS, sectionHref } from '@/lib/site';
+import { getSiteDictionary } from '@/lib/siteSettings';
 
 export const revalidate = 60;
 
@@ -44,7 +44,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
   const study = await getCaseStudy(slug, locale);
   if (!study) notFound();
 
-  const t = getDictionary(locale);
+  const t = await getSiteDictionary(locale);
   const labels = t.caseStudyDetail;
 
   return (

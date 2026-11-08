@@ -5,8 +5,8 @@ import { PageShell } from '@/components/layout/PageShell';
 import { ClosingCard } from '@/components/sections/ClosingCard';
 import { ServiceCard } from '@/components/ui/ServiceCard';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getHomeData } from '@/lib/api';
+import { getSiteDictionary } from '@/lib/siteSettings';
 
 export const revalidate = 60;
 
@@ -15,7 +15,7 @@ type PageProps = { params: Promise<{ locale: string }> };
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale).servicePage;
+  const t = (await getSiteDictionary(locale)).servicePage;
 
   return {
     title: t.metaTitle,
@@ -29,7 +29,7 @@ export default async function ServicePage({ params }: PageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const dictionary = getDictionary(locale);
+  const dictionary = await getSiteDictionary(locale);
   const t = dictionary.servicePage;
   const { services, pricingPlans } = await getHomeData(locale);
 

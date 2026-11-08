@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'webnion.com', pathname: '/public/uploads/**' },
       // Admin uploads, once Cloudinary keys are set on the API
       { protocol: 'https', hostname: 'res.cloudinary.com' },
+      // Admin uploads while there are no Cloudinary keys
+      { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
     ],
   },
   // Files uploaded from the admin panel live on the API server but are served from this site's address,

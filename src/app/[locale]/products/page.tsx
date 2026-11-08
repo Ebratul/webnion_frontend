@@ -7,11 +7,11 @@ import type { CSSProperties } from 'react';
 import { PageShell } from '@/components/layout/PageShell';
 import { imageCardBodyClass, imageCardClass } from '@/components/ui/imageCard';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getProducts } from '@/lib/api';
 import { formatNumber, formatPrice } from '@/lib/format';
 import { SECTION_IDS, sectionHref } from '@/lib/site';
 import type { Product } from '@/lib/types';
+import { getContact, getSiteDictionary } from '@/lib/siteSettings';
 
 type Filters = { q?: string; type?: string; category?: string; pricing?: string; sort?: string };
 
@@ -26,7 +26,7 @@ const fieldClass =
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale).productsPage;
+  const t = (await getSiteDictionary(locale)).productsPage;
 
   return {
     title: t.metaTitle,
@@ -41,7 +41,7 @@ export default async function ProductsPage({ params, searchParams }: PageProps) 
   if (!isLocale(locale)) notFound();
 
   const filters = await searchParams;
-  const t = getDictionary(locale).productsPage;
+  const t = (await getSiteDictionary(locale)).productsPage;
   const { products, typeCounts, categoryCounts } = await getProducts(locale, filters);
   const basePath = `/${locale}/products`;
 

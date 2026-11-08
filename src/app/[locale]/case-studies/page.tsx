@@ -8,9 +8,9 @@ import { PageShell } from '@/components/layout/PageShell';
 import { Pagination } from '@/components/ui/Pagination';
 import { imageCardBodyClass, imageCardClass } from '@/components/ui/imageCard';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getCaseStudies } from '@/lib/api';
 import { formatDayMonth } from '@/lib/format';
+import { getSiteDictionary } from '@/lib/siteSettings';
 
 const PAGE_SIZE = 6;
 
@@ -22,7 +22,7 @@ type PageProps = {
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale).caseStudiesPage;
+  const t = (await getSiteDictionary(locale)).caseStudiesPage;
 
   return {
     title: t.metaTitle,
@@ -37,7 +37,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
   if (!isLocale(locale)) notFound();
 
   const { page: pageParam, category } = await searchParams;
-  const dictionary = getDictionary(locale);
+  const dictionary = await getSiteDictionary(locale);
   const t = dictionary.caseStudiesPage;
   const basePath = `/${locale}/case-studies`;
 

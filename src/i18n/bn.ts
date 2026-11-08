@@ -352,20 +352,6 @@ export const bn: Dictionary = {
   },
   technologies: {
     title: 'প্রতিটি ওয়েবসাইটের পেছনের শক্তিশালী প্রযুক্তি',
-    items: [
-      { name: 'Laravel', logo: 'laravel', description: 'নিরাপদ ও স্কেলযোগ্য ওয়েব অ্যাপ্লিকেশন তৈরির শক্তিশালী PHP ফ্রেমওয়ার্ক।' },
-      { name: 'React.js', logo: 'react', description: 'দ্রুত ও ইন্টারঅ্যাকটিভ ইউজার ইন্টারফেস তৈরির আধুনিক JavaScript লাইব্রেরি।' },
-      { name: 'Next.js', logo: 'nextjs', description: 'SEO-বান্ধব ও স্কেলযোগ্য ওয়েবসাইটের জন্য হাই-পারফরম্যান্স React ফ্রেমওয়ার্ক।' },
-      { name: 'Node.js', logo: 'nodejs', description: 'দ্রুত ও স্কেলযোগ্য অ্যাপ্লিকেশন তৈরির কার্যকর ব্যাকএন্ড রানটাইম।' },
-      { name: 'MySQL', logo: 'mysql', description: 'গোছানো ডেটা সংরক্ষণের নির্ভরযোগ্য ডেটাবেস সিস্টেম।' },
-      { name: 'MongoDB', logo: 'mongodb', description: 'আধুনিক ওয়েব অ্যাপ্লিকেশনের জন্য উপযোগী নমনীয় NoSQL ডেটাবেস।' },
-      { name: 'PHP', logo: 'php', description: 'ডায়নামিক ওয়েবসাইট ডেভেলপমেন্টে বহুল ব্যবহৃত সার্ভার-সাইড ল্যাঙ্গুয়েজ।' },
-      { name: 'WordPress', logo: 'wordpress', description: 'নমনীয় ও সহজে পরিচালনাযোগ্য ওয়েবসাইট তৈরির জনপ্রিয় CMS।' },
-      { name: 'Shopify', logo: 'shopify', description: 'শক্তিশালী অনলাইন স্টোর তৈরির ই-কমার্স প্ল্যাটফর্ম।' },
-      { name: 'WooCommerce', logo: 'woocommerce', description: 'WordPress-এর উপর তৈরি কাস্টমাইজযোগ্য ই-কমার্স সলিউশন।' },
-      { name: 'Webflow', logo: 'webflow', description: 'আধুনিক রেসপন্সিভ ওয়েবসাইট তৈরির ভিজ্যুয়াল ডেভেলপমেন্ট প্ল্যাটফর্ম।' },
-      { name: 'Git & GitHub', logo: 'github', description: 'কোড পরিচালনা ও একসাথে কাজ করার ভার্সন কন্ট্রোল টুল।' },
-    ],
   },
   faq: {
     eyebrow: 'সাধারণ প্রশ্ন',

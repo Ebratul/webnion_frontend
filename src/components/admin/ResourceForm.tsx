@@ -1,6 +1,5 @@
 'use client';
 
-import { Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import {
@@ -14,6 +13,7 @@ import {
 } from '@/lib/admin/resources';
 import { ADMIN_LOGIN_PATH } from '@/lib/admin/constants';
 import { BlocksField, FeaturesField, ImageField, LocalizedField, VideoField, inputClass, labelClass } from './fields';
+import { cardClass, cardPadding, SaveBar } from './ui';
 
 type Row = Record<string, unknown>;
 
@@ -197,33 +197,16 @@ export const ResourceForm = ({ resourceKey, row, nextSortOrder }: ResourceFormPr
   };
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-5 pb-24">
+    <form onSubmit={onSubmit} noValidate className="max-w-4xl space-y-5 pb-24">
       {resource.sections.map((section) => (
-        <section key={section.title} className="rounded-3xl border border-line bg-surface p-6 sm:p-7">
+        <section key={section.title} className={`${cardClass} ${cardPadding}`}>
           <h2 className="text-base font-semibold">{section.title}</h2>
           {section.description && <p className="mt-1 text-sm text-muted">{section.description}</p>}
-          <div className="mt-5 space-y-5">{section.fields.map(renderField)}</div>
+          <div className="mt-6 space-y-6">{section.fields.map(renderField)}</div>
         </section>
       ))}
 
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-bg/85 backdrop-blur-xl lg:left-64">
-        <div className="mx-auto flex max-w-4xl items-center justify-end gap-4 px-5 py-3 sm:px-8">
-          {formError && <p role="alert" className="mr-auto text-xs text-red-400">{formError}</p>}
-          {saved && (
-            <p role="status" className="mr-auto inline-flex items-center gap-1.5 text-xs text-muted">
-              <Check aria-hidden className="size-3.5 text-accent" />
-              Saved. The website is updated.
-            </p>
-          )}
-          <button
-            type="submit"
-            disabled={saving}
-            className="rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-white transition-[background-color] duration-200 hover:bg-primary-hover disabled:opacity-60"
-          >
-            {saving ? 'Saving…' : isNew ? `Create ${resource.singular}` : 'Save Changes'}
-          </button>
-        </div>
-      </div>
+      <SaveBar saving={saving} saved={saved} error={formError} label={isNew ? `Create ${resource.singular}` : 'Save Changes'} />
     </form>
   );
 };

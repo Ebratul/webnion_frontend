@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { inputClass, labelClass } from './fields';
+import { primaryButton } from './ui';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -35,7 +36,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} className="space-y-5">
       <div>
         <label htmlFor="email" className={`${labelClass} mb-1.5`}>Email</label>
         <input id="email" name="email" type="email" required autoComplete="username" spellCheck={false} className={inputClass} />
@@ -48,7 +49,7 @@ export const LoginForm = () => {
       <button
         type="submit"
         disabled={busy}
-        className="w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-[background-color] duration-200 hover:bg-primary-hover disabled:opacity-60"
+        className={`${primaryButton} w-full`}
       >
         {busy ? 'Logging In…' : 'Log In'}
       </button>

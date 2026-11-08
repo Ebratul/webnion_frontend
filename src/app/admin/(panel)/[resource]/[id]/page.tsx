@@ -1,8 +1,7 @@
-import { ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ResourceForm } from '@/components/admin/ResourceForm';
+import { PageHeader } from '@/components/admin/ui';
 import { getResource } from '@/lib/admin/resources';
 import { adminFetch, getAdminUser } from '@/lib/admin/session';
 
@@ -26,13 +25,7 @@ export default async function AdminEditPage({ params }: PageProps) {
 
   return (
     <>
-      <header className="mb-8">
-        <Link href={`/admin/${resource.key}`} className="inline-flex items-center gap-1.5 text-xs text-muted transition-colors duration-200 hover:text-fg">
-          <ArrowLeft aria-hidden className="size-3.5" />
-          {resource.label}
-        </Link>
-        <h1 className="mt-3 text-2xl font-semibold sm:text-3xl">{resource.rowTitle(row)}</h1>
-      </header>
+      <PageHeader title={resource.rowTitle(row)} back={{ href: `/admin/${resource.key}`, label: resource.label }} />
       <ResourceForm key={row.id} resourceKey={resource.key} row={row} />
     </>
   );

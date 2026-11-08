@@ -139,7 +139,15 @@ export interface ClientLogo {
   url: string | null;
 }
 
+export interface Technology {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+}
+
 export interface HomeData {
+  technologies: Technology[];
   heroBackground: string | null;
   services: Service[];
   projects: Project[];

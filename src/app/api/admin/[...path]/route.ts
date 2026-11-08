@@ -10,6 +10,9 @@ const ALLOWED_RESOURCES = new Set([
   'services',
   'pricing-plans',
   'hero-backgrounds',
+  'technologies',
+  'site-settings',
+  'activity-logs',
   'faqs',
   'team',
   'clients',
@@ -22,7 +25,7 @@ const ALLOWED_RESOURCES = new Set([
 
 // An edit shows on the public site straight away instead of after the next 60 second refresh
 const refreshPublicPages = () => {
-  for (const tag of ['home', 'projects', 'case-studies']) revalidateTag(tag, { expire: 0 });
+  for (const tag of ['home', 'site', 'projects', 'case-studies']) revalidateTag(tag, { expire: 0 });
   revalidatePath('/[locale]', 'layout');
 };
 

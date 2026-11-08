@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { CONTACT, SECTION_IDS } from '@/lib/site';
+import { SECTION_IDS } from '@/lib/site';
+import { getContact } from '@/lib/siteSettings';
 import type { PricingPlan, Service } from '@/lib/types';
 import { LineReveal } from '../ui/LineReveal';
 import { LineText } from '../ui/LineText';
@@ -20,7 +21,10 @@ interface ClosingCardProps {
 const buttonClass = 'inline-flex min-h-11 items-center justify-center rounded-full px-5 text-sm font-semibold transition-colors duration-200';
 
 // A light card on a dark band in both themes, as the preview image is made for a light background
-export const ClosingCard = ({ locale, t, inquiry, closeLabel, services, plans }: ClosingCardProps) => (
+export const ClosingCard = async ({ locale, t, inquiry, closeLabel, services, plans }: ClosingCardProps) => {
+  const contact = await getContact();
+
+  return (
   <section id={SECTION_IDS.contact} aria-labelledby="closing-title" className="band-dark px-4 pt-10">
     <div className="band-light mx-auto max-w-5xl overflow-hidden rounded-t-2xl">
       <div className="bg-gradient-to-b from-[#ececec] to-white px-5 pt-10 text-center sm:pt-12">
@@ -34,7 +38,7 @@ export const ClosingCard = ({ locale, t, inquiry, closeLabel, services, plans }:
           </p>
           <div data-line-item className="mt-6 flex flex-wrap justify-center gap-3">
             <InquiryButton className={`${buttonClass} bg-primary text-white shadow-[0_10px_24px_-10px_var(--primary)] hover:bg-primary-hover`}>{t.book}</InquiryButton>
-            <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className={`${buttonClass} bg-primary text-white hover:bg-primary-hover`}>
+            <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className={`${buttonClass} bg-primary text-white hover:bg-primary-hover`}>
               {t.whatsapp}
             </a>
           </div>
@@ -45,3 +49,4 @@ export const ClosingCard = ({ locale, t, inquiry, closeLabel, services, plans }:
     <InquiryDialog locale={locale} t={inquiry} closeLabel={closeLabel} options={inquiryOptions(services, plans)} />
   </section>
 );
+};

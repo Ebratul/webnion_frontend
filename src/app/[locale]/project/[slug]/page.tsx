@@ -8,10 +8,10 @@ import { PageShell } from '@/components/layout/PageShell';
 import { SecondaryLink } from '@/components/ui/Button';
 import { ContentBlocks } from '@/components/ui/ContentBlocks';
 import { isLocale } from '@/i18n/config';
-import { getDictionary } from '@/i18n';
 import { getProject } from '@/lib/api';
 import { formatDate } from '@/lib/format';
 import { SECTION_IDS, sectionHref } from '@/lib/site';
+import { getSiteDictionary } from '@/lib/siteSettings';
 
 export const revalidate = 60;
 
@@ -45,7 +45,7 @@ export default async function ProjectPage({ params }: PageProps) {
   const project = await getProject(slug, locale);
   if (!project) notFound();
 
-  const t = getDictionary(locale);
+  const t = await getSiteDictionary(locale);
   const labels = t.projectDetail;
   const info = [
     { label: labels.client, value: project.client, Icon: User },

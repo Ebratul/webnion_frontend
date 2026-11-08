@@ -6,11 +6,12 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState, useTransition } from 'react';
 import { getResource } from '@/lib/admin/resources';
 import { inputClass } from './fields';
+import { cardClass, EmptyState, primaryButton } from './ui';
 
 type Row = Record<string, unknown> & { id: string };
 
 const rowAction =
-  'grid size-9 place-items-center rounded-lg text-muted transition-colors duration-200 hover:bg-white/5 hover:text-fg disabled:opacity-30 disabled:hover:bg-transparent';
+  'grid size-10 place-items-center rounded-xl text-muted transition-colors duration-200 hover:bg-white/[0.06] hover:text-white disabled:opacity-30 disabled:hover:bg-transparent';
 
 export const ResourceList = ({ resourceKey, rows }: { resourceKey: string; rows: Row[] }) => {
   const resource = getResource(resourceKey)!;
@@ -60,7 +61,7 @@ export const ResourceList = ({ resourceKey, rows }: { resourceKey: string; rows:
 
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
         <div className="relative min-w-56 flex-1 sm:max-w-sm">
           <Search aria-hidden className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted" />
           <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={`Search ${resource.label.toLowerCase()}`} aria-label={`Search ${resource.label}`} className={`${inputClass} pl-10`} />
@@ -68,7 +69,7 @@ export const ResourceList = ({ resourceKey, rows }: { resourceKey: string; rows:
         {resource.canCreate && (
           <Link
             href={`/admin/${resource.key}/new`}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-[background-color] duration-200 hover:bg-primary-hover"
+            className={primaryButton}
           >
             <Plus aria-hidden className="size-4" />
             New {resource.singular}
@@ -79,11 +80,9 @@ export const ResourceList = ({ resourceKey, rows }: { resourceKey: string; rows:
       {error && <p role="alert" className="mb-4 rounded-xl border border-red-400/30 bg-red-400/10 px-4 py-2.5 text-sm text-red-300">{error}</p>}
 
       {visible.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-line px-6 py-16 text-center text-sm text-muted">
-          {query ? 'Nothing matches your search.' : `No ${resource.label.toLowerCase()} yet.`}
-        </div>
+        <EmptyState>{query ? 'Nothing matches your search.' : `No ${resource.label.toLowerCase()} yet.`}</EmptyState>
       ) : (
-        <ul className="divide-y divide-line overflow-hidden rounded-3xl border border-line bg-surface">
+        <ul className={`divide-y divide-line overflow-hidden ${cardClass}`}>
           {visible.map((row) => {
             const index = rows.indexOf(row);
             const hidden = row.isActive === false;
@@ -92,26 +91,27 @@ export const ResourceList = ({ resourceKey, rows }: { resourceKey: string; rows:
             const canReorder = resource.sortable && !query;
 
             return (
-              <li key={row.id} className="flex items-center gap-4 px-4 py-3 sm:px-5">
+              <li key={row.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 px-5 py-4 transition-colors duration-200 hover:bg-white/[0.025] sm:flex-nowrap">
                 {resource.rowImage && (
-                  <div className={`size-12 shrink-0 overflow-hidden rounded-xl bg-white/5 ${hidden ? 'opacity-40' : ''}`}>
+                  <div className={`size-14 shrink-0 overflow-hidden rounded-xl bg-surface-2 ${hidden ? 'opacity-40' : ''}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     {image && <img src={image} alt="" loading="lazy" className="size-full object-cover" />}
                   </div>
                 )}
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <Link href={`/admin/${resource.key}/${row.id}`} className="truncate text-sm font-medium transition-colors duration-200 hover:text-accent">
+                {/* On phones the name takes the whole line, and the buttons drop to the line below it */}
+                <div className="min-w-0 flex-1 basis-40 sm:basis-0">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <Link href={`/admin/${resource.key}/${row.id}`} className="max-w-full truncate py-0.5 text-sm font-medium transition-colors duration-200 hover:text-accent">
                       {resource.rowTitle(row)}
                     </Link>
-                    {badge && <span className="shrink-0 rounded-full border border-line bg-tint px-2 py-0.5 text-[0.625rem] font-medium text-accent">{badge}</span>}
-                    {hidden && <span className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[0.625rem] text-muted">Hidden</span>}
+                    {badge && <span className="shrink-0 rounded-full border border-line bg-tint px-2 py-0.5 text-[0.6875rem] font-medium text-accent">{badge}</span>}
+                    {hidden && <span className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[0.6875rem] text-muted">Hidden</span>}
                   </div>
                   <p className="mt-0.5 truncate text-xs text-muted">{resource.rowSubtitle(row)}</p>
                 </div>
 
                 {confirming === row.id ? (
-                  <div className="flex shrink-0 items-center gap-2 text-xs">
+                  <div className="ml-auto flex shrink-0 items-center gap-2 text-xs">
                     <span className="hidden text-muted sm:inline">Delete permanently?</span>
                     <button
                       type="button"
@@ -120,16 +120,16 @@ export const ResourceList = ({ resourceKey, rows }: { resourceKey: string; rows:
                         setConfirming(null);
                         run(() => send(row.id, 'DELETE'));
                       }}
-                      className="rounded-full bg-red-500 px-3 py-1.5 font-semibold text-white transition-opacity duration-200 hover:opacity-90"
+                      className="min-h-9 rounded-full bg-red-500 px-4 font-semibold text-white transition-opacity duration-200 hover:opacity-90"
                     >
                       Delete
                     </button>
-                    <button type="button" onClick={() => setConfirming(null)} className="rounded-full border border-line px-3 py-1.5 transition-colors duration-200 hover:border-accent">
+                    <button type="button" onClick={() => setConfirming(null)} className="min-h-9 rounded-full border border-line px-4 transition-colors duration-200 hover:border-accent">
                       Keep
                     </button>
                   </div>
                 ) : (
-                  <div className="flex shrink-0 items-center">
+                  <div className="ml-auto flex shrink-0 items-center">
                     {canReorder && (
                       <span className="hidden sm:contents">
                         <button type="button" disabled={busy || index === 0} onClick={() => move(index, -1)} aria-label={`Move ${resource.rowTitle(row)} up`} className={rowAction}>
