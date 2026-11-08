@@ -1,12 +1,13 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { clientIpHeader } from '@/lib/admin/clientIp';
 import { ADMIN_COOKIE, ADMIN_SESSION_SECONDS } from '@/lib/admin/constants';
 
 export const POST = async (request: Request) => {
   const forwardedFor = request.headers.get('x-forwarded-for');
   const upstream = await fetch(`${process.env.API_URL}/auth/login`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...(forwardedFor ? { 'X-Forwarded-For': forwardedFor } : {}) },
+    headers: { 'Content-Type': 'application/json', ...(forwardedFor ? { 'X-Forwarded-For': forwardedFor } : {}), ...clientIpHeader(request) },
     body: await request.text(),
     cache: 'no-store',
   });

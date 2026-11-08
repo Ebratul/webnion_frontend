@@ -1,6 +1,7 @@
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { NextResponse, type NextRequest } from 'next/server';
+import { clientIpHeader } from '@/lib/admin/clientIp';
 import { ADMIN_COOKIE } from '@/lib/admin/constants';
 
 const ALLOWED_RESOURCES = new Set([
@@ -41,7 +42,7 @@ const forward = async (request: NextRequest, { params }: RouteContext) => {
   const token = store.get(ADMIN_COOKIE)?.value;
   if (!token) return NextResponse.json({ success: false, message: 'Please log in again' }, { status: 401 });
 
-  const headers = new Headers({ Authorization: `Bearer ${token}` });
+  const headers = new Headers({ Authorization: `Bearer ${token}`, ...clientIpHeader(request) });
   for (const name of ['content-type', 'content-length', 'x-forwarded-for']) {
     const value = request.headers.get(name);
     if (value) headers.set(name, value);

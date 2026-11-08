@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { clientIpHeader } from '@/lib/admin/clientIp';
 import { ADMIN_COOKIE } from '@/lib/admin/constants';
 
 export const POST = async (request: Request) => {
@@ -11,7 +12,7 @@ export const POST = async (request: Request) => {
   if (token) {
     await fetch(`${process.env.API_URL}/auth/logout`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${token}`, ...(forwardedFor ? { 'X-Forwarded-For': forwardedFor } : {}) },
+      headers: { Authorization: `Bearer ${token}`, ...(forwardedFor ? { 'X-Forwarded-For': forwardedFor } : {}), ...clientIpHeader(request) },
       cache: 'no-store',
     }).catch(() => undefined);
   }
