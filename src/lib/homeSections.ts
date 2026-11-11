@@ -22,6 +22,7 @@ export const HOME_SECTIONS: HomeSection[] = [
   { key: 'process', label: 'Process', description: 'The three steps.', textGroup: 'process', canHide: true },
   { key: 'pricing', label: 'Pricing', description: 'Plans and prices. The Pricing link in the menu leads here.', textGroup: 'pricing', manage: { href: '/admin/pricing-plans', label: 'Plans' }, canHide: true },
   { key: 'technologies', label: 'Technologies', description: 'The moving technology cards.', textGroup: 'technologies', manage: { href: '/admin/technologies', label: 'Technologies' }, canHide: true },
+  { key: 'blog', label: 'Blog', description: 'The three newest published posts, with a link to the blog.', textGroup: 'blog', manage: { href: '/admin/blog-posts', label: 'Posts' }, canHide: true },
   { key: 'faq', label: 'FAQ', description: 'Questions and the call card.', textGroup: 'faq', manage: { href: '/admin/faqs', label: 'Questions' }, canHide: true },
   { key: 'contact', label: 'Contact', description: 'The closing panel with the WhatsApp and inquiry buttons.', textGroup: 'inquiry', manage: { href: '/admin/settings', label: 'Contact Details' }, canHide: false },
 ];

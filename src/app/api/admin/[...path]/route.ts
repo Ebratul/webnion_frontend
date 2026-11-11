@@ -22,11 +22,16 @@ const ALLOWED_RESOURCES = new Set([
   'inquiries',
   'users',
   'uploads',
+  'blog-posts',
+  'ai',
 ]);
+
+// AI Studio writes a long article in one streamed request
+export const maxDuration = 300;
 
 // An edit shows on the public site straight away instead of after the next 60 second refresh
 const refreshPublicPages = () => {
-  for (const tag of ['home', 'site', 'projects', 'case-studies']) revalidateTag(tag, { expire: 0 });
+  for (const tag of ['home', 'site', 'projects', 'case-studies', 'blog', 'blog-posts']) revalidateTag(tag, { expire: 0 });
   revalidatePath('/[locale]', 'layout');
 };
 
@@ -57,7 +62,9 @@ const forward = async (request: NextRequest, { params }: RouteContext) => {
   } as RequestInit);
 
   if (upstream.status === 401) store.delete(ADMIN_COOKIE);
-  if (hasBody && upstream.ok && path[0] !== 'uploads') refreshPublicPages();
+  // Chats, tests and searches change nothing on the public site. AI settings do: they turn the chat button on or off.
+  const changesSite = path[0] === 'ai' ? path[1] === 'settings' && path.length === 2 : path[0] !== 'uploads';
+  if (hasBody && upstream.ok && changesSite) refreshPublicPages();
 
   return new Response(upstream.body, {
     status: upstream.status,

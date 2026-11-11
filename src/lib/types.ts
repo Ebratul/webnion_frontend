@@ -28,7 +28,7 @@ export type ContentBlock =
   | { type: 'heading'; text: string }
   | { type: 'paragraph'; text: string }
   | { type: 'list'; items: string[] }
-  | { type: 'image'; src: string };
+  | { type: 'image'; src: string; alt?: string };
 
 export interface ProjectDetail extends Project {
   client: string | null;
@@ -159,4 +159,36 @@ export interface HomeData {
   faqs: Faq[];
   team: TeamMember[];
   clients: ClientLogo[];
+  blogPosts: BlogPostSummary[];
+}
+
+export interface BlogPostSummary {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  cover: string | null;
+  coverAlt: string;
+  tags: string[];
+  publishedAt: string | null;
+  authorName: string | null;
+  readingMinutes: number;
+}
+
+export interface BlogPostDetail extends BlogPostSummary {
+  content: ContentBlock[];
+  contentLocale: Locale;
+  seoTitle: string;
+  seoDescription: string;
+  updatedAt: string;
+  hasBangla: boolean;
+  related: BlogPostSummary[];
+}
+
+export interface AiPublicConfig {
+  available: boolean;
+  inquiry: boolean;
+  name: string;
+  greeting: string;
+  suggestions: string[];
 }

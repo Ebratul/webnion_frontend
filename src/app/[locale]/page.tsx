@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { PageShell } from '@/components/layout/PageShell';
+import { BlogSection } from '@/components/sections/BlogSection';
 import { ClientTrust } from '@/components/sections/ClientTrust';
 import { DeliveryStories } from '@/components/sections/DeliveryStories';
 import { Faqs } from '@/components/sections/Faqs';
@@ -57,6 +58,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         {show('process') && <Process t={t.process} />}
         {show('pricing') && <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} />}
         {show('technologies') && <Technologies t={t.technologies} items={data.technologies} />}
+        {show('blog') && <BlogSection locale={locale} t={t.blog} posts={data.blogPosts} />}
         {show('faq') && <Faqs t={t.faq} faqs={data.faqs} founder={data.team[0]} />}
         <FinalInquiry locale={locale} t={t.inquiry} closeLabel={t.a11y.close} services={data.services} plans={data.pricingPlans} />
       </PageShell>

@@ -28,6 +28,8 @@ export const TEXT_GROUPS: { key: string; label: string; hint: string }[] = [
   { key: 'teamPage', label: 'Team Page', hint: 'The top of the team page.' },
   { key: 'team', label: 'Team Page Section', hint: 'The heading above the team cards.' },
   { key: 'contactPage', label: 'Contact Page', hint: 'Everything on the contact page, with its address.' },
+  { key: 'blog', label: 'Blog', hint: 'The blog pages and the Blog section on the homepage.' },
+  { key: 'chat', label: 'Chat Assistant', hint: 'Buttons and messages in the chat window. Its greeting and suggestions are under AI Settings.' },
   { key: 'error', label: 'Error Pages', hint: 'Shown when a page is missing or fails.' },
 ];
 

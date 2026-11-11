@@ -42,6 +42,16 @@ src/lib                 API client, types, formatters and contact details
   during a build.
 - The theme is set on `<html data-theme>` by an inline script before paint. Changing locale remounts `<html>`, so
   `ThemeToggle` restores it in a layout effect.
+- Blog: `/[locale]/blog` (tag filter in the address) and `/[locale]/blog/[slug]` with BlogPosting JSON-LD, from
+  `getBlogPosts` and `getBlogPost`. The homepage Blog section (key `blog`) shows the three newest posts.
+- Chat assistant (`components/chat`): `PageShell` shows `ChatWidget` when `getAiPublicConfig` says so. It calls the API's
+  `/ai/chat` directly and reads Server-Sent Events. Answers are rendered by `ChatMarkdown` as React elements, never HTML,
+  with links kept only for site paths and https. An inquiry the assistant proposes is shown in `InquiryCard` and sent
+  only when the visitor presses Send. The admin panel has its own chat through `/api/admin/ai/chat/admin`.
+- Admin AI screens: AI Settings (`AiSettingsForm`, keys are typed but never shown back), AI Studio (`AiStudio`: outline,
+  draft, pictures, Bangla), AI Usage, and the Blog resource. The admin proxy allows `ai` and `blog-posts` and has a
+  five-minute limit for AI Studio. AI Settings sends the built-in site text (`lib/admin/siteTextDocuments.ts`) to the API
+  so the assistant can answer from it.
 - The inquiry form lives in a dialog (`InquiryDialog`). Links that preselect a service use `ServiceLink`, which opens it.
 
 ## Git

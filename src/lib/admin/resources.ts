@@ -7,7 +7,7 @@ export type Block =
   | { type: 'heading'; text: string }
   | { type: 'paragraph'; text: string }
   | { type: 'list'; items: string[] }
-  | { type: 'image'; src: string };
+  | { type: 'image'; src: string; alt?: string };
 
 type Row = Record<string, unknown>;
 
@@ -189,6 +189,63 @@ export const RESOURCES: Resource[] = [
       },
       { title: 'Article', fields: [{ name: 'content', label: 'Content', type: 'blocks', required: true }] },
       { title: 'Visibility', fields: [visibility] },
+    ],
+  },
+  {
+    key: 'blog-posts',
+    label: 'Blog',
+    singular: 'Post',
+    description: 'Articles for the Blog pages. Drafts written in AI Studio land here for review. Only published posts appear on the website.',
+    apiPath: '/blog-posts',
+    listPath: '/blog-posts/all',
+    group: 'Content',
+    sortable: false,
+    canCreate: true,
+    canDelete: true,
+    rowTitle: (row) => en(row.title),
+    rowSubtitle: (row) => [row.status === 'PUBLISHED' ? 'Published' : 'Draft', row.aiGenerated ? 'Written with AI' : '', text(row.tags)].filter(Boolean).join(' · '),
+    rowImage: (row) => text(row.cover) || null,
+    rowBadge: (row) => (row.status === 'PUBLISHED' ? null : 'Draft'),
+    publicHref: (row) => `/en/blog/${text(row.slug)}`,
+    sections: [
+      {
+        title: 'Basics',
+        description: 'Bangla is optional. Without it, Bangla readers see the English text.',
+        fields: [
+          { name: 'title', label: 'Title', type: 'localized', required: true },
+          { name: 'slug', label: 'Page address', type: 'slug', from: 'title', required: true, hint: 'Used in the link: /blog/this-text' },
+          { name: 'excerpt', label: 'Short summary', type: 'localizedTextarea', hint: 'Shown on the blog list. One or two sentences.' },
+          { name: 'cover', label: 'Cover picture', type: 'image', hint: 'Wide, at least 1200 × 675 px.' },
+          { name: 'coverAlt', label: 'Cover picture description', type: 'localized', hint: 'For screen readers and search engines. Describe what the picture shows.' },
+          { name: 'tags', label: 'Topics', type: 'text', hint: 'Separated by commas, for example: website, seo, speed' },
+        ],
+      },
+      { title: 'Article', fields: [{ name: 'content', label: 'Content', type: 'blocks', required: true }] },
+      {
+        title: 'Search Engines',
+        description: 'Leave empty to use the title and the short summary.',
+        fields: [
+          { name: 'seoTitle', label: 'Search title', type: 'localized', hint: 'At most about 60 characters.' },
+          { name: 'seoDescription', label: 'Search description', type: 'localizedTextarea', hint: 'At most about 155 characters.' },
+        ],
+      },
+      {
+        title: 'Publishing',
+        fields: [
+          {
+            name: 'status',
+            label: 'Status',
+            type: 'select',
+            required: true,
+            options: [
+              { value: 'DRAFT', label: 'Draft: only visible here' },
+              { value: 'PUBLISHED', label: 'Published: visible on the website' },
+            ],
+          },
+          { name: 'publishedAt', label: 'Publish date', type: 'date', hint: 'Empty means today when you publish. A future date keeps the post hidden until then.' },
+          { name: 'authorName', label: 'Author', type: 'text' },
+        ],
+      },
     ],
   },
   {

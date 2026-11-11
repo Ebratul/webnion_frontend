@@ -2,6 +2,10 @@
 
 import {
   BadgeDollarSign,
+  BarChart3,
+  Bot,
+  Newspaper,
+  Sparkles,
   Building2,
   Camera,
   CircleHelp,
@@ -51,6 +55,7 @@ const ICONS: Record<string, LucideIcon> = {
   'delivery-stories': Camera,
   technologies: Cpu,
   inquiries: Inbox,
+  'blog-posts': Newspaper,
   users: UserCog,
 };
 
@@ -61,6 +66,9 @@ const EXTRA_LINKS: { group: Resource['group']; href: string; label: string; Icon
   { group: 'Website', href: '/admin/navigation', label: 'Menu & Footer', Icon: PanelsTopLeft },
   { group: 'Website', href: '/admin/website-text', label: 'Website Text', Icon: Type },
   { group: 'Website', href: '/admin/settings', label: 'Contact & Links', Icon: SlidersHorizontal },
+  { group: 'Content', href: '/admin/ai-studio', label: 'AI Studio', Icon: Sparkles },
+  { group: 'Settings', href: '/admin/ai-settings', label: 'AI Settings', Icon: Bot, adminOnly: true },
+  { group: 'Settings', href: '/admin/ai-usage', label: 'AI Usage', Icon: BarChart3, adminOnly: true },
   { group: 'Settings', href: '/admin/activity', label: 'Activity Log', Icon: History, adminOnly: true },
 ];
 

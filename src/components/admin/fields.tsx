@@ -207,7 +207,20 @@ const emptyBlock = (type: Block['type']): Block => {
 
 const BlockBody = ({ block, onChange, id, lang }: { block: Block; onChange: (block: Block) => void; id: string; lang: 'en' | 'bn' }) => {
   if (block.type === 'image') {
-    return <ImageField id={id} value={block.src} onChange={(src) => onChange({ type: 'image', src })} />;
+    return (
+      <div className="space-y-2">
+        <ImageField id={id} value={block.src} onChange={(src) => onChange({ ...block, src })} />
+        <input
+          lang={lang}
+          aria-label="Picture description"
+          value={block.alt ?? ''}
+          maxLength={300}
+          onChange={(event) => onChange({ ...block, alt: event.target.value })}
+          placeholder="Describe the picture for screen readers (optional)"
+          className={inputClass}
+        />
+      </div>
+    );
   }
   if (block.type === 'list') {
     return (

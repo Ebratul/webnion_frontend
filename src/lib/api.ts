@@ -1,6 +1,6 @@
 import { PHASE_PRODUCTION_BUILD } from 'next/constants';
 import type { Locale } from '@/i18n/config';
-import type { CaseStudy, CaseStudyDetail, HomeData, ProductSearchResult, ProjectDetail, ServiceDetail } from './types';
+import type { AiPublicConfig, BlogPostDetail, BlogPostSummary, CaseStudy, CaseStudyDetail, HomeData, ProductSearchResult, ProjectDetail, ServiceDetail } from './types';
 
 const EMPTY_HOME: HomeData = {
   technologies: [],
@@ -15,6 +15,7 @@ const EMPTY_HOME: HomeData = {
   faqs: [],
   team: [],
   clients: [],
+  blogPosts: [],
 };
 
 export const REVALIDATE_SECONDS = 60;
@@ -66,4 +67,23 @@ export const getProducts = (locale: Locale, filters: Record<string, string | und
   const query = new URLSearchParams({ locale });
   for (const [key, value] of Object.entries(filters)) if (value) query.set(key, value);
   return getJson<ProductSearchResult>(`/products?${query}`, 'products');
+};
+
+export const getBlogPosts = (locale: Locale, tag?: string) =>
+  getJson<BlogPostSummary[]>(`/blog-posts?${new URLSearchParams({ locale, ...(tag ? { tag } : {}) })}`, 'blog');
+
+export const getBlogPost = (slug: string, locale: Locale) => getBySlug<BlogPostDetail>('blog-posts', slug, locale);
+
+const NO_ASSISTANT: AiPublicConfig = { available: false, inquiry: false, name: '', greeting: '', suggestions: [] };
+
+// Whether to show the chat button. The site works the same without it, so any failure just hides the button.
+export const getAiPublicConfig = async (locale: Locale): Promise<AiPublicConfig> => {
+  try {
+    const response = await fetch(`${process.env.API_URL}/ai/public-config?locale=${locale}`, { next: { revalidate: REVALIDATE_SECONDS, tags: ['site'] } });
+    if (!response.ok) return NO_ASSISTANT;
+    const body: { data: AiPublicConfig } = await response.json();
+    return body.data;
+  } catch {
+    return NO_ASSISTANT;
+  }
 };

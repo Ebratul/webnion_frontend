@@ -18,7 +18,7 @@ export const ContentBlocks = ({ blocks, locale }: { blocks: ContentBlock[]; loca
             </ul>
           );
         case 'image':
-          return <Image key={index} src={block.src} alt="" width={1050} height={600} sizes="(min-width: 1024px) 768px, 100vw" className="mt-6 h-auto w-full rounded-xl" />;
+          return <Image key={index} src={block.src} alt={block.alt ?? ''} width={1050} height={600} sizes="(min-width: 1024px) 768px, 100vw" className="mt-6 h-auto w-full rounded-xl" />;
       }
     })}
   </div>
