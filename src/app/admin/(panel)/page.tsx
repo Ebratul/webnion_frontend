@@ -1,4 +1,4 @@
-import { ArrowUpRight, FileText, House, Palette, FolderKanban, History, Inbox, Layers, MessageSquareQuote, Package, Plus, SlidersHorizontal, Type, type LucideIcon } from 'lucide-react';
+import { ArrowUpRight, FileText, House, Palette, PanelsTopLeft, FolderKanban, History, Inbox, Layers, MessageSquareQuote, Package, Plus, SlidersHorizontal, Type, type LucideIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ActivityRow, formatWhen, type ActivityEntry } from '@/components/admin/ActivityRow';
@@ -20,7 +20,7 @@ const SHORTCUTS: { href: string; label: string; text: string; Icon: LucideIcon }
   { href: '/admin/homepage', label: 'Homepage', text: 'Every section in order: show, hide or edit it.', Icon: House },
   { href: '/admin/brand', label: 'Brand', text: 'Name, logo, colour and browser tab icon.', Icon: Palette },
   { href: '/admin/website-text', label: 'Website Text', text: 'Any heading or sentence, in both languages.', Icon: Type },
-  { href: '/admin/settings', label: 'Contact & Links', text: 'Phones, email, social links and photos.', Icon: SlidersHorizontal },
+  { href: '/admin/navigation', label: 'Menu & Footer', text: 'Menu links, footer links, social links, offices.', Icon: PanelsTopLeft },
 ];
 
 const greetingHour = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Dhaka', hour: 'numeric', hour12: false });

@@ -76,6 +76,8 @@ export const BrandForm = ({ initial }: { initial: BrandSettings }) => {
       logoOnDark: brand.logoOnDark || DEFAULT_BRAND.logoOnDark,
       logoOnLight: brand.logoOnLight || DEFAULT_BRAND.logoOnLight,
       favicon: brand.favicon || null,
+      shareImage: brand.shareImage || null,
+      defaultTheme: brand.defaultTheme,
     };
     try {
       const response = await fetch('/api/admin/site-settings', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ brand: payload }) });
@@ -159,6 +161,29 @@ export const BrandForm = ({ initial }: { initial: BrandSettings }) => {
               <p className="mt-1.5 text-xs text-muted">{hint}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className={`${cardClass} ${cardPadding}`}>
+        <h2 className="text-base font-semibold">First Look</h2>
+        <p className="mt-1 text-sm text-muted">Whether a first-time visitor sees the site dark or light. Visitors can still switch, and the site remembers their choice.</p>
+        <fieldset className="mt-5 flex flex-wrap gap-3">
+          <legend className="sr-only">Theme for new visitors</legend>
+          {(['dark', 'light'] as const).map((theme) => (
+            <label key={theme} className={`flex min-h-11 cursor-pointer items-center gap-2.5 rounded-xl border px-4 text-sm font-medium transition-colors duration-200 ${brand.defaultTheme === theme ? 'border-primary bg-tint text-white' : 'border-line text-muted hover:border-accent/60'}`}>
+              <input type="radio" name="defaultTheme" value={theme} checked={brand.defaultTheme === theme} onChange={() => set('defaultTheme', theme)} className="size-4 accent-primary" />
+              {theme === 'dark' ? 'Dark' : 'Light'}
+            </label>
+          ))}
+        </fieldset>
+      </section>
+
+      <section className={`${cardClass} ${cardPadding}`}>
+        <h2 className="text-base font-semibold">Share Picture</h2>
+        <p className="mt-1 text-sm text-muted">Optional. The picture shown when a link to the site is shared on Facebook, WhatsApp, LinkedIn or X. 1200 × 630 px works best.</p>
+        <div className="mt-6">
+          <label htmlFor="shareImage" className={`${labelClass} mb-1.5`}>Picture</label>
+          <ImageField id="shareImage" value={brand.shareImage ?? ''} onChange={(value) => set('shareImage', value || null)} />
         </div>
       </section>
 

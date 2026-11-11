@@ -16,6 +16,8 @@ export const DEFAULT_IMAGES = {
   outcomeFounder: '/images/outcomes/founder.webp',
   outcomeHandover: '/images/outcomes/client-handover.webp',
   outcomeTeam: '/images/outcomes/team-at-work.webp',
+  serviceContactCard: '/images/services/contact-card.webp',
+  servicesClosingPreview: '/images/fan/preview.webp',
 };
 
 // Name, logos and colour, set under Brand in the admin panel. The logo for dark backgrounds is the white one.
@@ -25,6 +27,9 @@ export const DEFAULT_BRAND = {
   logoOnDark: '/images/brand/logo-white.png',
   logoOnLight: '/images/brand/logo-dark.png',
   favicon: null as string | null,
+  // The picture shown when a page is shared on Facebook, WhatsApp or LinkedIn
+  shareImage: null as string | null,
+  defaultTheme: 'dark' as 'dark' | 'light',
 };
 
 export type BrandSettings = typeof DEFAULT_BRAND;
@@ -38,7 +43,7 @@ const telephone = (label: string) => label.replace(/[\s-]/g, '');
 export const buildContact = (settings: ContactSettings) => ({
   ...settings,
   phoneBd: telephone(settings.phoneBdLabel),
-  phoneIt: telephone(settings.phoneItLabel),
+  phoneIt: settings.phoneItLabel ? telephone(settings.phoneItLabel) : '',
   whatsapp: `https://wa.me/${settings.whatsappNumber.replace(/\D/g, '')}`,
 });
 

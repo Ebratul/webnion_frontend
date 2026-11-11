@@ -33,8 +33,10 @@ export const generateMetadata = async ({ params }: { params: Promise<{ locale: s
       siteName: brand.siteName,
       locale: locale === 'bn' ? 'bn_BD' : 'en_US',
       type: 'website',
+      ...(brand.shareImage ? { images: [{ url: brand.shareImage, width: 1200, height: 630 }] } : {}),
     },
     ...(brand.favicon ? { icons: { icon: brand.favicon, apple: brand.favicon } } : {}),
+    ...(brand.shareImage ? { twitter: { card: 'summary_large_image', images: [brand.shareImage] } } : {}),
   };
 };
 
@@ -44,7 +46,7 @@ export default async function RootLayout({ children, params }: { children: React
   const brand = await getBrand();
 
   return (
-    <html lang={locale} className={`site-zoom ${fontClasses}`} suppressHydrationWarning>
+    <html lang={locale} data-default-theme={brand.defaultTheme} className={`site-zoom ${fontClasses}`} suppressHydrationWarning>
       <body>
         <BrandStyle primaryColor={brand.primaryColor} />
         <ThemeScript />

@@ -3,8 +3,10 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { SECTION_IDS, sectionHref, type BrandSettings, type Contact } from '@/lib/site';
-import { FacebookIcon, InstagramIcon } from '../ui/BrandIcons';
+import type { BrandSettings, Contact } from '@/lib/site';
+import { SOCIAL_LABELS, type ResolvedLink } from '@/lib/navigation';
+import type { SiteNavigation } from '@/lib/siteSettings';
+import { SocialIcon } from '../ui/SocialIcon';
 import { Logo } from './Logo';
 
 interface FooterProps {
@@ -14,6 +16,7 @@ interface FooterProps {
   label: string;
   contact: Contact;
   brand: BrandSettings;
+  navigation: SiteNavigation;
 }
 
 // Bright in both themes. Under the pointer: pure white in dark mode, the full brand purple in light mode.
@@ -22,6 +25,10 @@ const linkHover = 'hover:text-primary dark:hover:text-white';
 const linkClass = `inline-flex min-h-6 min-w-6 items-center text-sm ${textClass} transition-colors duration-200 ${linkHover}`;
 const navLinkClass = `footer-link ${linkClass} py-0.5`;
 const headingClass = 'text-sm font-semibold text-fg';
+
+const FooterLink = ({ link }: { link: ResolvedLink }) => (
+  <Link href={link.href} {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} className={navLinkClass}>{link.label}</Link>
+);
 
 const ContactItem = ({ Icon, label, children }: { Icon: LucideIcon; label: string; children: ReactNode }) => (
   <li className="flex gap-3.5">
@@ -35,11 +42,7 @@ const ContactItem = ({ Icon, label, children }: { Icon: LucideIcon; label: strin
   </li>
 );
 
-export const Footer = ({ locale, t, nav, label, contact, brand }: FooterProps) => {
-  const socials = [
-    { href: contact.facebook, name: 'Facebook', Icon: FacebookIcon },
-    { href: contact.instagram, name: 'Instagram', Icon: InstagramIcon },
-  ];
+export const Footer = ({ locale, t, nav, label, contact, brand, navigation }: FooterProps) => {
 
   return (
     <footer className="site-footer border-t border-line bg-[#faf2e6] dark:bg-surface">
@@ -49,16 +52,16 @@ export const Footer = ({ locale, t, nav, label, contact, brand }: FooterProps) =
             <Logo locale={locale} brand={brand} />
             <p className={`mt-5 max-w-xs text-sm ${textClass}`}>{t.about}</p>
             <ul className="mt-6 flex gap-2.5">
-              {socials.map(({ href, name, Icon }) => (
-                <li key={name}>
+              {navigation.socials.map(({ network, url }) => (
+                <li key={`${network}-${url}`}>
                   <a
-                    href={href}
+                    href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={name}
+                    aria-label={SOCIAL_LABELS[network]}
                     className="grid size-10 place-items-center rounded-full border border-line text-fg transition-colors duration-200 hover:border-primary hover:bg-primary hover:text-white"
                   >
-                    <Icon className="size-4" />
+                    <SocialIcon network={network} />
                   </a>
                 </li>
               ))}
@@ -68,21 +71,14 @@ export const Footer = ({ locale, t, nav, label, contact, brand }: FooterProps) =
           <nav aria-label={label}>
             <h2 className={headingClass}>{t.quickLinks}</h2>
             <ul className="mt-5 grid grid-cols-2 gap-x-5 gap-y-2.5">
-              <li><Link href={`/${locale}/project`} className={navLinkClass}>{nav.portfolio}</Link></li>
-              <li><Link href={`/${locale}/case-studies`} className={navLinkClass}>{nav.caseStudies}</Link></li>
-              <li><Link href={`/${locale}/products`} className={navLinkClass}>{nav.products}</Link></li>
-              <li><Link href={`/${locale}/team`} className={navLinkClass}>{nav.team}</Link></li>
-              <li><Link href={sectionHref(locale, SECTION_IDS.pricing)} className={navLinkClass}>{nav.pricing}</Link></li>
-              <li><Link href={`/${locale}/contact`} className={navLinkClass}>{nav.contact}</Link></li>
+              {navigation.footerQuick.map((link) => <li key={`${link.href}-${link.label}`}><FooterLink link={link} /></li>)}
             </ul>
           </nav>
 
           <div>
             <h2 className={headingClass}>{t.services}</h2>
             <ul className="mt-5 space-y-2.5">
-              {t.serviceLinks.map((service) => (
-                <li key={service.slug}><Link href={`/${locale}/services/${service.slug}`} className={navLinkClass}>{service.label}</Link></li>
-              ))}
+              {navigation.footerServices.map((link) => <li key={`${link.href}-${link.label}`}><FooterLink link={link} /></li>)}
             </ul>
           </div>
         </div>
@@ -91,16 +87,15 @@ export const Footer = ({ locale, t, nav, label, contact, brand }: FooterProps) =
           <h2 className="sr-only">{t.contact}</h2>
           <address className="not-italic">
             <ul className="grid gap-x-5 gap-y-8 md:grid-cols-2 xl:grid-cols-4">
-              <ContactItem Icon={MapPin} label={t.bangladesh}>
-                <p>{t.bangladeshAddress}</p>
-              </ContactItem>
-              <ContactItem Icon={MapPin} label={t.italy}>
-                <p translate="no">{t.italyAddress}</p>
-              </ContactItem>
+              {navigation.offices.map((office) => (
+                <ContactItem key={office.name} Icon={MapPin} label={office.name}>
+                  <p>{office.address}</p>
+                </ContactItem>
+              ))}
               <ContactItem Icon={Phone} label={t.callUs}>
                 <span className="flex flex-col items-start">
                   <a href={`tel:${contact.phoneBd}`} dir="ltr" className={linkClass}>{contact.phoneBdLabel}</a>
-                  <a href={`tel:${contact.phoneIt}`} dir="ltr" className={linkClass}>{contact.phoneItLabel}</a>
+                  {contact.phoneIt && <a href={`tel:${contact.phoneIt}`} dir="ltr" className={linkClass}>{contact.phoneItLabel}</a>}
                 </span>
               </ContactItem>
               <ContactItem Icon={Mail} label={t.email}>
@@ -115,7 +110,7 @@ export const Footer = ({ locale, t, nav, label, contact, brand }: FooterProps) =
         </div>
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-line py-6 pr-16 text-xs text-fg/80 xl:pr-0 dark:text-white/80">
-          <p>© {new Intl.NumberFormat(locale === 'bn' ? 'bn-BD' : 'en-US', { useGrouping: false }).format(2026)} {t.rights}</p>
+          <p>© {new Intl.NumberFormat(locale === 'bn' ? 'bn-BD' : 'en-US', { useGrouping: false }).format(new Date().getFullYear())} {t.rights}</p>
           <a href={contact.privacy} target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-6 items-center transition-colors duration-200 ${linkHover}`}>{t.privacy}</a>
           <p>{t.madeIn}</p>
         </div>

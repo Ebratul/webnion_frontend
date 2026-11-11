@@ -12,11 +12,14 @@ const applyTheme = (theme: Theme) => {
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLORS[theme]);
 };
 
+const defaultTheme = (): Theme => (document.documentElement.dataset.defaultTheme === 'light' ? 'light' : 'dark');
+
 const readSavedTheme = (): Theme => {
   try {
-    return localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
+    const saved = localStorage.getItem('theme');
+    return saved === 'light' || saved === 'dark' ? saved : defaultTheme();
   } catch {
-    return 'dark';
+    return defaultTheme();
   }
 };
 

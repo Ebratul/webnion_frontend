@@ -1,7 +1,7 @@
 // Names for the Website Text screen, in the order the sections appear on the site
 export const TEXT_GROUPS: { key: string; label: string; hint: string }[] = [
   { key: 'meta', label: 'Search Engine Title', hint: 'What Google shows for the site.' },
-  { key: 'nav', label: 'Menu', hint: 'The links and button in the top bar.' },
+  { key: 'nav', label: 'Menu', hint: 'The meeting button, the language button and the Home label. Menu links are under Menu & Footer.' },
   { key: 'hero', label: 'Hero', hint: 'The first screen of the homepage.' },
   { key: 'trust', label: 'Client Logos', hint: 'The label above the logos.' },
   { key: 'problems', label: 'Problems And Chat', hint: 'The dark card and its demo chat answers.' },
@@ -16,7 +16,7 @@ export const TEXT_GROUPS: { key: string; label: string; hint: string }[] = [
   { key: 'technologies', label: 'Technologies Section', hint: 'Heading. The cards are under Technologies.' },
   { key: 'faq', label: 'FAQ Section', hint: 'Heading and the call card.' },
   { key: 'inquiry', label: 'Inquiry Form', hint: 'Closing section and every label in the form.' },
-  { key: 'footer', label: 'Footer', hint: 'About text, addresses and bottom line.' },
+  { key: 'footer', label: 'Footer', hint: 'About text, headings and the bottom line. Links, social links and offices are under Menu & Footer.' },
   { key: 'servicePage', label: 'Services Page', hint: 'The page listing all services.' },
   { key: 'serviceDetail', label: 'Service Details', hint: 'Labels on each service page.' },
   { key: 'closing', label: 'Services Page Closing Card', hint: 'The card at the end of the services page.' },
@@ -32,6 +32,10 @@ export const TEXT_GROUPS: { key: string; label: string; hint: string }[] = [
 ];
 
 const words = (key: string) => key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, (letter) => letter.toUpperCase());
+
+// Text that is edited on another screen, so it is left out here: menu links and offices under Menu & Footer, budget
+// choices under Contact & Links
+export const TEXT_EDITED_ELSEWHERE = /^(nav\.(services|portfolio|products|pricing|caseStudies|contact|team)|footer\.(serviceLinks\..*|bangladesh|bangladeshAddress|italy|italyAddress)|contactPage\.form\.budgets\..*)$/;
 
 // hero.titleLines.0 becomes "Title Lines 1"
 export const textLabel = (path: string) => {

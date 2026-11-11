@@ -17,7 +17,7 @@ import { Testimonials } from '@/components/sections/Testimonials';
 import { isLocale } from '@/i18n/config';
 import { getHomeData } from '@/lib/api';
 import { SITE_URL } from '@/lib/site';
-import { getBrand, getContact, getHiddenSections, getSiteDictionary } from '@/lib/siteSettings';
+import { getBrand, getContact, getHiddenSections, getNavigationSettings, getSiteDictionary } from '@/lib/siteSettings';
 
 export const dynamicParams = false;
 export const revalidate = 60;
@@ -28,7 +28,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   const t = await getSiteDictionary(locale);
   const data = await getHomeData(locale);
-  const [contact, brand, hidden] = await Promise.all([getContact(), getBrand(), getHiddenSections()]);
+  const [contact, brand, hidden, navigation] = await Promise.all([getContact(), getBrand(), getHiddenSections(), getNavigationSettings()]);
   const show = (key: string) => !hidden.has(key);
 
   const organization = {
@@ -38,7 +38,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     url: SITE_URL,
     email: contact.email,
     telephone: contact.phoneBd,
-    sameAs: [contact.facebook, contact.instagram],
+    sameAs: navigation.socials.map((social) => social.url),
   };
 
   return (

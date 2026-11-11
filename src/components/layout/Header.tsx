@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { SECTION_IDS, sectionHref, type BrandSettings } from '@/lib/site';
+import type { BrandSettings } from '@/lib/site';
+import type { ResolvedLink } from '@/lib/navigation';
 import { PrimaryLink } from '../ui/Button';
 import { LanguageSwitch } from './LanguageSwitch';
 import { Logo } from './Logo';
@@ -17,9 +18,11 @@ interface HeaderProps {
   nav: Dictionary['nav'];
   a11y: Dictionary['a11y'];
   brand: BrandSettings;
+  links: ResolvedLink[];
+  button: ResolvedLink;
 }
 
-export const Header = ({ locale, nav, a11y, brand }: HeaderProps) => {
+export const Header = ({ locale, nav, a11y, brand, links, button }: HeaderProps) => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -42,15 +45,6 @@ export const Header = ({ locale, nav, a11y, brand }: HeaderProps) => {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [open]);
 
-  const links = [
-    { href: `/${locale}/service`, label: nav.services },
-    { href: `/${locale}/project`, label: nav.portfolio },
-    { href: `/${locale}/products`, label: nav.products },
-    { href: sectionHref(locale, SECTION_IDS.pricing), label: nav.pricing },
-    { href: `/${locale}/case-studies`, label: nav.caseStudies },
-    { href: `/${locale}/contact`, label: nav.contact },
-    { href: `/${locale}/team`, label: nav.team },
-  ];
 
   return (
     <>
@@ -67,8 +61,8 @@ export const Header = ({ locale, nav, a11y, brand }: HeaderProps) => {
         <nav aria-label={a11y.primaryNav} className="hidden xl:block">
           <ul className="flex items-center gap-3.5">
             {links.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} aria-current={pathname === link.href ? 'page' : undefined} className="text-sm font-medium text-fg/90 transition-colors duration-200 hover:text-accent aria-[current=page]:text-accent">
+              <li key={`${link.href}-${link.label}`}>
+                <Link href={link.href} {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-current={pathname === link.href ? 'page' : undefined} className="text-sm font-medium text-fg/90 transition-colors duration-200 hover:text-accent aria-[current=page]:text-accent">
                   {link.label}
                 </Link>
               </li>
@@ -80,7 +74,7 @@ export const Header = ({ locale, nav, a11y, brand }: HeaderProps) => {
           <LanguageSwitch locale={locale} text={nav.switchLanguage} label={nav.switchLanguageLabel} />
           <ThemeToggle label={a11y.toggleTheme} />
           <div className="hidden xl:block">
-            <PrimaryLink size="xs" href={`/${locale}/contact`}>{nav.cta}</PrimaryLink>
+            <PrimaryLink size="xs" href={button.href}>{nav.cta}</PrimaryLink>
           </div>
           <button
             type="button"
@@ -99,8 +93,8 @@ export const Header = ({ locale, nav, a11y, brand }: HeaderProps) => {
         <nav id="mobile-menu" aria-label={a11y.primaryNav} className="max-h-[calc(100svh/var(--page-zoom)-4.5rem)] overflow-y-auto overscroll-contain border-t border-line bg-bg xl:hidden">
           <ul className="container-page flex flex-col py-3">
             {links.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} onClick={() => setOpen(false)} className="block py-3 text-base font-medium text-fg">
+              <li key={`${link.href}-${link.label}`}>
+                <Link href={link.href} {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} onClick={() => setOpen(false)} className="block py-3 text-base font-medium text-fg">
                   {link.label}
                 </Link>
               </li>

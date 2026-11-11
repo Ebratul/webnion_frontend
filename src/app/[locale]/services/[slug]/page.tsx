@@ -8,7 +8,7 @@ import { PageShell } from '@/components/layout/PageShell';
 import { ContentBlocks } from '@/components/ui/ContentBlocks';
 import { isLocale } from '@/i18n/config';
 import { getHomeData, getService } from '@/lib/api';
-import { getContact, getSiteDictionary } from '@/lib/siteSettings';
+import { getContact, getSiteDictionary, getSiteImages } from '@/lib/siteSettings';
 
 export const revalidate = 60;
 
@@ -42,7 +42,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   if (!service) notFound();
 
   const dictionary = await getSiteDictionary(locale);
-  const contact = await getContact();
+  const [contact, siteImages] = await Promise.all([getContact(), getSiteImages()]);
   const t = dictionary.serviceDetail;
 
   // Images in the content sit side by side after the text, instead of one under another inside it
@@ -130,7 +130,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           )}
 
           <div className="band-dark relative overflow-hidden rounded-2xl">
-            <Image src="/images/services/contact-card.webp" alt="" width={600} height={505} sizes="320px" className="w-full" />
+            <Image src={siteImages.serviceContactCard} alt="" width={600} height={505} sizes="320px" className="w-full" />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/85 to-transparent p-5 pt-16">
               <p translate="no" className="text-lg font-semibold">Webnion</p>
               <p className="text-sm">{t.tagline}</p>

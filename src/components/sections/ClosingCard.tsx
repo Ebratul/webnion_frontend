@@ -2,7 +2,7 @@ import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
 import { SECTION_IDS } from '@/lib/site';
-import { getContact } from '@/lib/siteSettings';
+import { getContact, getSiteImages } from '@/lib/siteSettings';
 import type { PricingPlan, Service } from '@/lib/types';
 import { LineReveal } from '../ui/LineReveal';
 import { LineText } from '../ui/LineText';
@@ -22,7 +22,7 @@ const buttonClass = 'inline-flex min-h-11 items-center justify-center rounded-fu
 
 // A light card on a dark band in both themes, as the preview image is made for a light background
 export const ClosingCard = async ({ locale, t, inquiry, closeLabel, services, plans }: ClosingCardProps) => {
-  const contact = await getContact();
+  const [contact, images] = await Promise.all([getContact(), getSiteImages()]);
 
   return (
   <section id={SECTION_IDS.contact} aria-labelledby="closing-title" className="band-dark px-4 pt-10">
@@ -43,7 +43,7 @@ export const ClosingCard = async ({ locale, t, inquiry, closeLabel, services, pl
             </a>
           </div>
         </LineReveal>
-        <Image src="/images/fan/preview.webp" alt="" width={1600} height={400} sizes="(min-width: 1024px) 1024px, 100vw" className="reveal mx-auto mt-8 w-full max-w-4xl" />
+        <Image src={images.servicesClosingPreview} alt="" width={1600} height={400} sizes="(min-width: 1024px) 1024px, 100vw" className="reveal mx-auto mt-8 w-full max-w-4xl" />
       </div>
     </div>
     <InquiryDialog locale={locale} t={inquiry} closeLabel={closeLabel} options={inquiryOptions(services, plans)} />

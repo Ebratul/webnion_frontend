@@ -59,10 +59,14 @@ export const TextEditor = ({ defaults, saved, initialGroup }: TextEditorProps) =
     setDone(false);
 
     // Only what differs from the built-in text is stored. An emptied box goes back to it.
-    const collect = (code: Language) => Object.fromEntries(paths.flatMap((path) => {
-      const value = values[code][path]?.trim();
-      return value && value !== String(defaults[code][path]) ? [[path, value]] : [];
-    }));
+    // Saved text this screen does not show (it is edited on another screen) is kept as it is
+    const collect = (code: Language) => ({
+      ...Object.fromEntries(Object.entries(saved[code]).filter(([path]) => !(path in defaults[code]))),
+      ...Object.fromEntries(paths.flatMap((path) => {
+        const value = values[code][path]?.trim();
+        return value && value !== String(defaults[code][path]) ? [[path, value]] : [];
+      })),
+    });
 
     try {
       const response = await fetch('/api/admin/site-settings', {

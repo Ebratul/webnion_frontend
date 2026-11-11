@@ -20,6 +20,7 @@ import {
   MessageSquareQuote,
   Package,
   Palette,
+  PanelsTopLeft,
   SlidersHorizontal,
   Type,
   UserCog,
@@ -57,6 +58,7 @@ const ICONS: Record<string, LucideIcon> = {
 const EXTRA_LINKS: { group: Resource['group']; href: string; label: string; Icon: LucideIcon; adminOnly?: boolean }[] = [
   { group: 'Website', href: '/admin/homepage', label: 'Homepage', Icon: House },
   { group: 'Website', href: '/admin/brand', label: 'Brand', Icon: Palette },
+  { group: 'Website', href: '/admin/navigation', label: 'Menu & Footer', Icon: PanelsTopLeft },
   { group: 'Website', href: '/admin/website-text', label: 'Website Text', Icon: Type },
   { group: 'Website', href: '/admin/settings', label: 'Contact & Links', Icon: SlidersHorizontal },
   { group: 'Settings', href: '/admin/activity', label: 'Activity Log', Icon: History, adminOnly: true },
