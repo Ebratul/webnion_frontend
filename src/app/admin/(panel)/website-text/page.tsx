@@ -8,13 +8,13 @@ import { flattenText } from '@/lib/siteText';
 
 export const metadata: Metadata = { title: 'Website Text' };
 
-export default async function WebsiteTextPage() {
-  const settings = await adminFetch<SiteSettings>('/site-settings');
+export default async function WebsiteTextPage({ searchParams }: { searchParams: Promise<{ group?: string }> }) {
+  const [settings, { group }] = await Promise.all([adminFetch<SiteSettings>('/site-settings'), searchParams]);
 
   return (
     <>
       <PageHeader title="Website Text" description="Every heading, sentence and label on the website, in English and Bangla. Open a section, or search for the words you want to change." />
-      <TextEditor defaults={{ en: flattenText(getDictionary('en')), bn: flattenText(getDictionary('bn')) }} saved={settings.text} />
+      <TextEditor defaults={{ en: flattenText(getDictionary('en')), bn: flattenText(getDictionary('bn')) }} saved={settings.text} initialGroup={group} />
     </>
   );
 }

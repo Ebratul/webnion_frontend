@@ -62,6 +62,8 @@ Tokens live in `src/app/globals.css` as CSS variables and are exposed to Tailwin
 | `tint` | purple 16% | purple 8% | Chips and selected states |
 
 - Never use `primary` as text on dark surfaces: use `accent`, which keeps its contrast in both themes.
+- **The brand colour can change.** An admin picks one colour under Brand; `lib/brandColors.ts` derives `--primary-hover`, `--accent-dark` and `--accent-light` (stepped until they reach 4.5 contrast) and `BrandStyle` writes them on `:root`. Never write the purple as a literal: use `var(--primary)`, `var(--accent)`, `var(--accent-dark)` on always-dark cards, and `color-mix(in srgb, var(--primary) N%, transparent)` for tints and glows.
+- Logos and the site name come from Brand too (`getBrand`), so components take them as props instead of hard-coding `/images/brand/…`.
 - Green `#25D366` is for WhatsApp only. Amber is for review stars only.
 - `.band-dark` keeps a section dark in both themes by pinning the dark tokens (Featured Projects, project mosaic, Technologies).
 

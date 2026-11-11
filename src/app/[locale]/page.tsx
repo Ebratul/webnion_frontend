@@ -17,7 +17,7 @@ import { Testimonials } from '@/components/sections/Testimonials';
 import { isLocale } from '@/i18n/config';
 import { getHomeData } from '@/lib/api';
 import { SITE_URL } from '@/lib/site';
-import { getContact, getSiteDictionary } from '@/lib/siteSettings';
+import { getBrand, getContact, getHiddenSections, getSiteDictionary } from '@/lib/siteSettings';
 
 export const dynamicParams = false;
 export const revalidate = 60;
@@ -28,12 +28,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   const t = await getSiteDictionary(locale);
   const data = await getHomeData(locale);
-  const contact = await getContact();
+  const [contact, brand, hidden] = await Promise.all([getContact(), getBrand(), getHiddenSections()]);
+  const show = (key: string) => !hidden.has(key);
 
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Webnion',
+    name: brand.siteName,
     url: SITE_URL,
     email: contact.email,
     telephone: contact.phoneBd,
@@ -45,18 +46,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization).replace(/</g, '\\u003c') }} />
       <PageShell locale={locale}>
         <Hero t={t.hero} background={data.heroBackground} />
-        <ClientTrust locale={locale} t={t.trust} projects={data.projects} clients={data.clients} />
-        <Problems t={t.problems} />
-        <Services locale={locale} t={t.services} services={data.services} />
-        <Outcomes t={t.outcomes} />
-        <FeaturedProjects locale={locale} t={t.projects} a11y={t.a11y} projects={data.projects} />
-        <OutcomeCards locale={locale} t={t.outcomeCards} cards={data.outcomeCards} />
-        <Testimonials locale={locale} t={t.testimonials} a11y={t.a11y} testimonials={data.testimonials} />
-        <DeliveryStories t={t.delivery} stories={data.deliveryStories} />
-        <Process t={t.process} />
-        <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} />
-        <Technologies t={t.technologies} items={data.technologies} />
-        <Faqs t={t.faq} faqs={data.faqs} founder={data.team[0]} />
+        {show('trust') && <ClientTrust locale={locale} t={t.trust} projects={data.projects} clients={data.clients} />}
+        {show('problems') && <Problems t={t.problems} />}
+        {show('services') && <Services locale={locale} t={t.services} services={data.services} />}
+        {show('outcomes') && <Outcomes t={t.outcomes} />}
+        {show('portfolio') && <FeaturedProjects locale={locale} t={t.projects} a11y={t.a11y} projects={data.projects} />}
+        {show('outcomeCards') && <OutcomeCards locale={locale} t={t.outcomeCards} cards={data.outcomeCards} />}
+        {show('testimonials') && <Testimonials locale={locale} t={t.testimonials} a11y={t.a11y} testimonials={data.testimonials} />}
+        {show('delivery') && <DeliveryStories t={t.delivery} stories={data.deliveryStories} />}
+        {show('process') && <Process t={t.process} />}
+        {show('pricing') && <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} />}
+        {show('technologies') && <Technologies t={t.technologies} items={data.technologies} />}
+        {show('faq') && <Faqs t={t.faq} faqs={data.faqs} founder={data.team[0]} />}
         <FinalInquiry locale={locale} t={t.inquiry} closeLabel={t.a11y.close} services={data.services} plans={data.pricingPlans} />
       </PageShell>
     </>

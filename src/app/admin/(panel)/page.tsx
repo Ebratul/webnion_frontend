@@ -1,4 +1,4 @@
-import { ArrowUpRight, BadgeDollarSign, FileText, FolderKanban, History, Inbox, Layers, MessageSquareQuote, Package, Plus, SlidersHorizontal, Type, type LucideIcon } from 'lucide-react';
+import { ArrowUpRight, FileText, House, Palette, FolderKanban, History, Inbox, Layers, MessageSquareQuote, Package, Plus, SlidersHorizontal, Type, type LucideIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ActivityRow, formatWhen, type ActivityEntry } from '@/components/admin/ActivityRow';
@@ -17,9 +17,10 @@ interface Inquiry {
 }
 
 const SHORTCUTS: { href: string; label: string; text: string; Icon: LucideIcon }[] = [
-  { href: '/admin/website-text', label: 'Website Text', text: 'Change any heading or sentence, in both languages.', Icon: Type },
-  { href: '/admin/settings', label: 'Contact & Links', text: 'Phone numbers, email, social links and section photos.', Icon: SlidersHorizontal },
-  { href: '/admin/pricing-plans', label: 'Pricing', text: 'Prices, what each plan offers, and which plans show.', Icon: BadgeDollarSign },
+  { href: '/admin/homepage', label: 'Homepage', text: 'Every section in order: show, hide or edit it.', Icon: House },
+  { href: '/admin/brand', label: 'Brand', text: 'Name, logo, colour and browser tab icon.', Icon: Palette },
+  { href: '/admin/website-text', label: 'Website Text', text: 'Any heading or sentence, in both languages.', Icon: Type },
+  { href: '/admin/settings', label: 'Contact & Links', text: 'Phones, email, social links and photos.', Icon: SlidersHorizontal },
 ];
 
 const greetingHour = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Dhaka', hour: 'numeric', hour12: false });
@@ -90,7 +91,7 @@ export default async function AdminDashboardPage() {
         ))}
       </ul>
 
-      <ul className="mt-5 grid gap-5 md:grid-cols-3">
+      <ul className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         {SHORTCUTS.map(({ href, label, text, Icon }) => (
           <li key={href}>
             <Link href={href} className={`flex h-full items-start gap-4 p-5 ${hoverCardClass}`}>

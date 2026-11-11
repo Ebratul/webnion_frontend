@@ -42,7 +42,7 @@ const Price = ({ plan, locale }: { plan: PricingPlan; locale: Locale }) => {
 const Plan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale }) => (
   <li
     className={`flex flex-col rounded-3xl border p-7 lg:p-8 ${
-      plan.isFeatured ? 'border-primary bg-[#faf6ff] shadow-[0_24px_56px_-24px_rgb(130_36_227/0.45)] ring-1 ring-primary' : 'border-[#e8e8e8] bg-white shadow-[0_14px_40px_-28px_rgb(0_0_0/0.25)]'
+      plan.isFeatured ? 'border-primary bg-[color-mix(in_srgb,var(--primary)_4%,white)] shadow-[0_24px_56px_-24px_color-mix(in_srgb,var(--primary)_45%,transparent)] ring-1 ring-primary' : 'border-[#e8e8e8] bg-white shadow-[0_14px_40px_-28px_rgb(0_0_0/0.25)]'
     }`}
   >
     <div className="flex min-h-8 items-center justify-between gap-3">

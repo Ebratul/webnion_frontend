@@ -18,6 +18,17 @@ export const DEFAULT_IMAGES = {
   outcomeTeam: '/images/outcomes/team-at-work.webp',
 };
 
+// Name, logos and colour, set under Brand in the admin panel. The logo for dark backgrounds is the white one.
+export const DEFAULT_BRAND = {
+  siteName: 'Webnion',
+  primaryColor: '#8224e3',
+  logoOnDark: '/images/brand/logo-white.png',
+  logoOnLight: '/images/brand/logo-dark.png',
+  favicon: null as string | null,
+};
+
+export type BrandSettings = typeof DEFAULT_BRAND;
+
 export type ContactSettings = typeof DEFAULT_CONTACT;
 export type ImageSettings = typeof DEFAULT_IMAGES;
 

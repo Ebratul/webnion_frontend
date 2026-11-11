@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
 import type { Locale } from '@/i18n/config';
-import { getContact, getSiteDictionary } from '@/lib/siteSettings';
+import { getBrand, getContact, getSiteDictionary } from '@/lib/siteSettings';
 import { ReplayOnNavigate } from '../ui/ReplayOnNavigate';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { WhatsAppButton } from './WhatsAppButton';
 
 export const PageShell = async ({ locale, children }: { locale: Locale; children: ReactNode }) => {
-  const [t, contact] = await Promise.all([getSiteDictionary(locale), getContact()]);
+  const [t, contact, brand] = await Promise.all([getSiteDictionary(locale), getContact(), getBrand()]);
 
   return (
     <>
@@ -18,9 +18,9 @@ export const PageShell = async ({ locale, children }: { locale: Locale; children
       >
         {t.a11y.skipToContent}
       </a>
-      <Header locale={locale} nav={t.nav} a11y={t.a11y} />
+      <Header locale={locale} nav={t.nav} a11y={t.a11y} brand={brand} />
       <main id="main">{children}</main>
-      <Footer locale={locale} t={t.footer} nav={t.nav} label={t.a11y.footerNav} contact={contact} />
+      <Footer locale={locale} t={t.footer} nav={t.nav} label={t.a11y.footerNav} contact={contact} brand={brand} />
       <WhatsAppButton label={t.a11y.whatsapp} href={contact.whatsapp} />
     </>
   );

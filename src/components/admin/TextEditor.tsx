@@ -2,7 +2,7 @@
 
 import { ChevronDown, RotateCcw, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { ADMIN_LOGIN_PATH } from '@/lib/admin/constants';
 import { TEXT_GROUPS, textLabel } from '@/lib/admin/textGroups';
 import type { FlatText, TextOverrides } from '@/lib/siteText';
@@ -18,21 +18,27 @@ const LANGUAGES: { code: Language; label: string }[] = [
 interface TextEditorProps {
   defaults: Record<Language, FlatText>;
   saved: Record<Language, TextOverrides>;
+  initialGroup?: string;
 }
 
 const startingValues = (defaults: FlatText, saved: TextOverrides) => Object.fromEntries(Object.entries(defaults).map(([path, value]) => [path, saved[path] ?? String(value)]));
 
 // Rows only render when their group is open or matches a search: the whole site is several hundred fields
-export const TextEditor = ({ defaults, saved }: TextEditorProps) => {
+export const TextEditor = ({ defaults, saved, initialGroup }: TextEditorProps) => {
   const router = useRouter();
   const [values, setValues] = useState<Record<Language, Record<string, string>>>(() => ({ en: startingValues(defaults.en, saved.en), bn: startingValues(defaults.bn, saved.bn) }));
-  const [open, setOpen] = useState<string | null>('hero');
+  const [open, setOpen] = useState<string | null>(initialGroup && TEXT_GROUPS.some((group) => group.key === initialGroup) ? initialGroup : 'hero');
   const [query, setQuery] = useState('');
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const paths = useMemo(() => Object.keys(defaults.en), [defaults.en]);
+
+  // Opened from the Homepage screen: bring that section into view
+  useEffect(() => {
+    if (initialGroup) document.getElementById(`text-group-${initialGroup}`)?.scrollIntoView({ block: 'start' });
+  }, [initialGroup]);
   const isChanged = (code: Language, path: string) => values[code][path] !== String(defaults[code][path]);
   const groupPaths = (key: string) => paths.filter((path) => path.split('.')[0] === key);
 
@@ -128,7 +134,7 @@ export const TextEditor = ({ defaults, saved }: TextEditorProps) => {
           const expanded = needle ? true : open === group.key;
 
           return (
-            <section key={group.key} className={`overflow-hidden transition-colors duration-200 hover:border-accent/40 ${cardClass}`}>
+            <section key={group.key} id={`text-group-${group.key}`} className={`scroll-mt-6 overflow-hidden transition-colors duration-200 hover:border-accent/40 ${cardClass}`}>
               <h2>
                 <button type="button" aria-expanded={expanded} disabled={Boolean(needle)} onClick={() => setOpen(expanded ? null : group.key)} className="flex min-h-[4.5rem] w-full items-center gap-4 px-5 py-4 text-left sm:px-7">
                   <span className="min-w-0 flex-1">

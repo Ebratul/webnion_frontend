@@ -18,7 +18,7 @@ const delay = (ms: number) => ({ '--delay': `${ms}ms` }) as CSSProperties;
 
 // Same width as the rest of the site, so the cards line up with the header
 const wrap = 'container-page';
-const violetCard = 'bg-[radial-gradient(circle_at_85%_15%,rgb(255_255_255/0.14),transparent_30%),linear-gradient(145deg,#8224e3,#5c17a8)] text-white';
+const violetCard = 'bg-[radial-gradient(circle_at_85%_15%,rgb(255_255_255/0.14),transparent_30%),linear-gradient(145deg,var(--primary),color-mix(in_srgb,var(--primary-hover)_80%,black))] text-white';
 const lightCard = 'border border-line bg-white dark:bg-surface';
 const softShadow = 'shadow-[0_28px_85px_rgb(20_13_38/0.12)]';
 
@@ -72,7 +72,7 @@ export default async function ContactPage({ params }: PageProps) {
         <section
           id="top"
           aria-label={t.crumb}
-          className="band-dark bg-[#0c0915]! bg-[radial-gradient(circle_at_15%_20%,rgb(130_36_227/0.24),transparent_32%),radial-gradient(circle_at_86%_80%,rgb(130_36_227/0.14),transparent_30%)]! px-5 pb-[185px] pt-16 text-center xl:pt-[79px]"
+          className="band-dark bg-[#0c0915]! bg-[radial-gradient(circle_at_15%_20%,color-mix(in_srgb,var(--primary)_24%,transparent),transparent_32%),radial-gradient(circle_at_86%_80%,color-mix(in_srgb,var(--primary)_14%,transparent),transparent_30%)]! px-5 pb-[185px] pt-16 text-center xl:pt-[79px]"
         >
           <p style={delay(100)} className="hero-fade inline-block rounded-full bg-white/[0.08] px-3.5 py-2 text-xs font-medium leading-[22px] text-[#ddd6fe]">{t.badge}</p>
           <h1 className="mt-[27px] text-[clamp(2rem,7.5vw,4.25rem)] font-medium leading-[1.02] text-white [&:lang(bn)]:leading-[1.3] [&:lang(en)]:tracking-[-0.04em]">

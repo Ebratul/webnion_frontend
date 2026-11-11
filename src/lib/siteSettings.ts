@@ -3,16 +3,18 @@ import { cache } from 'react';
 import type { Locale } from '@/i18n/config';
 import { getDictionary } from '@/i18n';
 import { REVALIDATE_SECONDS } from './api';
-import { buildContact, DEFAULT_CONTACT, DEFAULT_IMAGES } from './site';
+import { buildContact, DEFAULT_BRAND, DEFAULT_CONTACT, DEFAULT_IMAGES } from './site';
 import { applyTextOverrides, type TextOverrides } from './siteText';
 
 export interface SiteSettings {
   contact: Partial<typeof DEFAULT_CONTACT> | null;
   images: Partial<typeof DEFAULT_IMAGES> | null;
+  brand: Partial<typeof DEFAULT_BRAND> | null;
+  homepage: { hidden: string[] } | null;
   text: Record<Locale, TextOverrides>;
 }
 
-const EMPTY: SiteSettings = { contact: null, images: null, text: { en: {}, bn: {} } };
+const EMPTY: SiteSettings = { contact: null, images: null, brand: null, homepage: null, text: { en: {}, bn: {} } };
 
 // Once per render, however many components ask
 const getSettings = cache(async (): Promise<SiteSettings> => {
@@ -33,3 +35,10 @@ export const getSiteDictionary = cache(async (locale: Locale) => applyTextOverri
 export const getContact = cache(async () => buildContact({ ...DEFAULT_CONTACT, ...(await getSettings()).contact }));
 
 export const getSiteImages = cache(async () => ({ ...DEFAULT_IMAGES, ...(await getSettings()).images }));
+
+export const getBrand = cache(async () => ({ ...DEFAULT_BRAND, ...(await getSettings()).brand }));
+
+// The admin panel must open even when the API cannot be reached, so it falls back to the original brand
+export const getBrandOrDefault = async () => getBrand().catch(() => DEFAULT_BRAND);
+
+export const getHiddenSections = cache(async () => new Set((await getSettings()).homepage?.hidden ?? []));

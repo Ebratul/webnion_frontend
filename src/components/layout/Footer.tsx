@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { SECTION_IDS, sectionHref, type Contact } from '@/lib/site';
+import { SECTION_IDS, sectionHref, type BrandSettings, type Contact } from '@/lib/site';
 import { FacebookIcon, InstagramIcon } from '../ui/BrandIcons';
 import { Logo } from './Logo';
 
@@ -13,6 +13,7 @@ interface FooterProps {
   nav: Dictionary['nav'];
   label: string;
   contact: Contact;
+  brand: BrandSettings;
 }
 
 // Bright in both themes. Under the pointer: pure white in dark mode, the full brand purple in light mode.
@@ -34,7 +35,7 @@ const ContactItem = ({ Icon, label, children }: { Icon: LucideIcon; label: strin
   </li>
 );
 
-export const Footer = ({ locale, t, nav, label, contact }: FooterProps) => {
+export const Footer = ({ locale, t, nav, label, contact, brand }: FooterProps) => {
   const socials = [
     { href: contact.facebook, name: 'Facebook', Icon: FacebookIcon },
     { href: contact.instagram, name: 'Instagram', Icon: InstagramIcon },
@@ -45,7 +46,7 @@ export const Footer = ({ locale, t, nav, label, contact }: FooterProps) => {
       <div className="container-page">
         <div className="grid gap-10 pt-14 pb-10 md:grid-cols-2 lg:grid-cols-[1.35fr_1.15fr_1fr] lg:gap-x-12">
           <div className="md:col-span-2 lg:col-span-1">
-            <Logo locale={locale} />
+            <Logo locale={locale} brand={brand} />
             <p className={`mt-5 max-w-xs text-sm ${textClass}`}>{t.about}</p>
             <ul className="mt-6 flex gap-2.5">
               {socials.map(({ href, name, Icon }) => (
@@ -110,7 +111,7 @@ export const Footer = ({ locale, t, nav, label, contact }: FooterProps) => {
         </div>
 
         <div aria-hidden translate="no" className="footer-mark-box">
-          <span className="footer-mark">Webnion</span>
+          <span className="footer-mark" style={{ fontSize: `${Math.min(23.4, (23.4 * 7) / Math.max(brand.siteName.length, 1)).toFixed(2)}cqw` }}>{brand.siteName}</span>
         </div>
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-line py-6 pr-16 text-xs text-fg/80 xl:pr-0 dark:text-white/80">

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { SECTION_IDS, sectionHref } from '@/lib/site';
+import { SECTION_IDS, sectionHref, type BrandSettings } from '@/lib/site';
 import { PrimaryLink } from '../ui/Button';
 import { LanguageSwitch } from './LanguageSwitch';
 import { Logo } from './Logo';
@@ -16,9 +16,10 @@ interface HeaderProps {
   locale: Locale;
   nav: Dictionary['nav'];
   a11y: Dictionary['a11y'];
+  brand: BrandSettings;
 }
 
-export const Header = ({ locale, nav, a11y }: HeaderProps) => {
+export const Header = ({ locale, nav, a11y, brand }: HeaderProps) => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -61,7 +62,7 @@ export const Header = ({ locale, nav, a11y }: HeaderProps) => {
       }`}
     >
       <div className="container-page flex h-[4.5rem] items-center justify-between gap-2 sm:gap-4 xl:h-20">
-        <Logo locale={locale} />
+        <Logo locale={locale} brand={brand} />
 
         <nav aria-label={a11y.primaryNav} className="hidden xl:block">
           <ul className="flex items-center gap-3.5">

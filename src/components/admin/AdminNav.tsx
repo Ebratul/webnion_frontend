@@ -10,6 +10,7 @@ import {
   FileText,
   FolderKanban,
   History,
+  House,
   Image as ImageIcon,
   Inbox,
   Layers,
@@ -18,6 +19,7 @@ import {
   LogOut,
   MessageSquareQuote,
   Package,
+  Palette,
   SlidersHorizontal,
   Type,
   UserCog,
@@ -53,6 +55,8 @@ const ICONS: Record<string, LucideIcon> = {
 
 // Screens that are not lists of records
 const EXTRA_LINKS: { group: Resource['group']; href: string; label: string; Icon: LucideIcon; adminOnly?: boolean }[] = [
+  { group: 'Website', href: '/admin/homepage', label: 'Homepage', Icon: House },
+  { group: 'Website', href: '/admin/brand', label: 'Brand', Icon: Palette },
   { group: 'Website', href: '/admin/website-text', label: 'Website Text', Icon: Type },
   { group: 'Website', href: '/admin/settings', label: 'Contact & Links', Icon: SlidersHorizontal },
   { group: 'Settings', href: '/admin/activity', label: 'Activity Log', Icon: History, adminOnly: true },
@@ -65,7 +69,7 @@ const linkClass = (active: boolean) =>
 
 const iconClass = (active: boolean) => `size-4 shrink-0 transition-colors duration-200 ${active ? 'text-accent' : 'group-hover/link:text-accent'}`;
 
-export const AdminNav = ({ user, newInquiries }: { user: AdminUser; newInquiries: number }) => {
+export const AdminNav = ({ user, newInquiries, brand }: { user: AdminUser; newInquiries: number; brand: { siteName: string; logoOnDark: string } }) => {
   const pathname = usePathname();
   const router = useRouter();
   const isAdmin = user.role === 'ADMIN';
@@ -80,21 +84,21 @@ export const AdminNav = ({ user, newInquiries }: { user: AdminUser; newInquiries
   const sections = GROUPS.map((group) => ({
     group,
     items: [
+      ...EXTRA_LINKS.filter((link) => link.group === group && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
       ...RESOURCES.filter((resource) => resource.group === group && (!resource.adminOnly || isAdmin)).map((resource) => ({
         href: `/admin/${resource.key}`,
         label: resource.label,
         Icon: ICONS[resource.key] ?? FileText,
         badge: resource.key === 'inquiries' && newInquiries > 0 ? newInquiries : null,
       })),
-      ...EXTRA_LINKS.filter((link) => link.group === group && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
     ],
   })).filter((section) => section.items.length > 0);
 
   return (
     <aside className="relative z-30 border-b border-line bg-surface lg:fixed lg:inset-y-0 lg:left-0 lg:flex lg:w-[17rem] lg:flex-col lg:border-b-0 lg:border-r">
       <div className="flex items-center justify-between gap-3 px-5 py-4 lg:px-6 lg:py-7">
-        <Link href="/admin" aria-label="Webnion Admin" className="flex min-h-10 items-center gap-3">
-          <Image src="/images/brand/logo-white.png" alt="" width={229} height={42} priority className="h-5 w-auto" />
+        <Link href="/admin" aria-label={`${brand.siteName} Admin`} className="flex min-h-10 items-center gap-3">
+          <Image src={brand.logoOnDark} alt="" width={229} height={42} priority unoptimized className="h-5 w-auto max-w-[9rem] object-contain" />
           <span className="rounded-full bg-tint px-2 py-0.5 text-[0.6875rem] font-semibold uppercase tracking-wide text-accent">Admin</span>
         </Link>
         <div className="flex items-center gap-1 lg:hidden">

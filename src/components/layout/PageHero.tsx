@@ -11,7 +11,7 @@ interface PageHeroProps {
 
 export const PageHero = ({ title, homeHref, homeLabel, crumb, translateTitle = true }: PageHeroProps) => (
   <div className="band-dark relative overflow-hidden border-b border-line px-5 py-16 text-center sm:py-20 lg:py-24">
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(ellipse_60%_90%_at_50%_-10%,rgb(130_36_227/0.28),transparent_70%)]" />
+    <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-full bg-[radial-gradient(ellipse_60%_90%_at_50%_-10%,color-mix(in_srgb,var(--primary)_28%,transparent),transparent_70%)]" />
     <div className="relative">
       <h1 translate={translateTitle ? undefined : 'no'} className="mx-auto max-w-4xl text-3xl font-semibold sm:text-4xl lg:text-5xl">
         {title}

@@ -35,7 +35,7 @@ export const FinalInquiry = async ({ locale, t, closeLabel, services, plans }: F
         <div className="inquiry-panel band-dark relative isolate overflow-hidden rounded-[2rem] px-5 py-20 text-center sm:px-10 lg:py-28">
           <span aria-hidden className="inquiry-arc inquiry-arc-left" />
           <span aria-hidden className="inquiry-arc inquiry-arc-right" />
-          <span aria-hidden className="absolute left-1/2 top-0 h-0.5 w-20 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_24px_4px_rgb(130_36_227/0.7)]" />
+          <span aria-hidden className="absolute left-1/2 top-0 h-0.5 w-20 -translate-x-1/2 rounded-full bg-primary shadow-[0_0_24px_4px_color-mix(in_srgb,var(--primary)_70%,transparent)]" />
 
           <LineReveal>
             <h2 id="inquiry-title" className="mx-auto max-w-3xl text-3xl font-medium text-white sm:text-4xl lg:text-[2.75rem]">

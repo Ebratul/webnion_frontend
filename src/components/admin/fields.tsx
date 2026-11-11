@@ -61,17 +61,18 @@ interface ValueProps<T> {
 
 // Images can only be uploaded, not linked: the site's image component rejects hosts it does not know,
 // and a pasted link from elsewhere would break the page it appears on.
-export const ImageField = ({ value, onChange, id }: ValueProps<string> & { id: string }) => {
+// A logo is wide and must show whole, on the background it is made for. Other images fill a square.
+export const ImageField = ({ value, onChange, id, logoOn }: ValueProps<string> & { id: string; logoOn?: 'dark' | 'light' }) => {
   const input = useRef<HTMLInputElement>(null);
   const { progress, error, upload } = useUpload(onChange);
 
   return (
     <div>
-      <div className="flex items-center gap-4">
-        <div className="grid size-28 shrink-0 place-items-center overflow-hidden rounded-2xl border border-line bg-surface-2">
+      <div className="flex flex-wrap items-center gap-4">
+        <div className={`grid shrink-0 place-items-center overflow-hidden rounded-2xl border border-line ${logoOn ? `h-20 w-52 px-4 ${logoOn === 'dark' ? 'bg-[#0e0e13]' : 'bg-white'}` : 'size-28 bg-surface-2'}`}>
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={value} alt="" className="size-full object-cover" />
+            <img src={value} alt="" className={logoOn ? 'max-h-10 max-w-full object-contain' : 'size-full object-cover'} />
           ) : (
             <ImagePlus aria-hidden className="size-6 text-muted" />
           )}
