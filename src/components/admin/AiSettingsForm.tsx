@@ -17,6 +17,7 @@ interface SlotDraft {
   clearApiKey: boolean;
   baseUrl: string;
   hfProvider: string;
+  accountId: string;
   inputPerMillion: string;
   outputPerMillion: string;
   perPicture: string;
@@ -42,6 +43,7 @@ const toDraft = (slot: MaskedSlot): SlotDraft => ({
   clearApiKey: false,
   baseUrl: slot.baseUrl ?? '',
   hfProvider: slot.hfProvider ?? '',
+  accountId: slot.accountId ?? '',
   inputPerMillion: slot.pricing?.inputPerMillion?.toString() ?? '',
   outputPerMillion: slot.pricing?.outputPerMillion?.toString() ?? '',
   perPicture: slot.pricing?.perPicture?.toString() ?? '',
@@ -156,6 +158,7 @@ const SlotEditor = ({ slot, saved, draft, onChange, fakeAllowed }: { slot: (type
           ...(draft.apiKey.trim() ? { apiKey: draft.apiKey.trim() } : {}),
           ...(draft.baseUrl.trim() ? { baseUrl: draft.baseUrl.trim() } : {}),
           ...(draft.hfProvider.trim() ? { hfProvider: draft.hfProvider.trim() } : {}),
+          ...(draft.provider === 'cloudflare' && draft.accountId.trim() ? { accountId: draft.accountId.trim() } : {}),
           ...(slot.key === 'image' ? { makePicture } : {}),
         }),
       });
@@ -211,6 +214,11 @@ const SlotEditor = ({ slot, saved, draft, onChange, fakeAllowed }: { slot: (type
             hint={draft.provider === 'huggingface' ? 'Only for a Hugging Face Inference Endpoint. Leave empty to use hosted inference.' : 'The provider’s OpenAI-compatible address, for example https://api.deepseek.com/v1. Must be a public https address.'}
           >
             <input id={`${id}-base`} type="url" value={draft.baseUrl} onChange={(event) => set({ baseUrl: event.target.value })} placeholder="https://" spellCheck={false} className={`${inputClass} font-mono`} />
+          </Field>
+        )}
+        {draft.provider === 'cloudflare' && (
+          <Field id={`${id}-account`} label="Account ID" hint="In the Cloudflare dashboard, under Workers AI or on the account home page. The API token needs the Workers AI permission.">
+            <input id={`${id}-account`} value={draft.accountId} onChange={(event) => set({ accountId: event.target.value.trim().toLowerCase() })} placeholder="32 letters and numbers" spellCheck={false} autoComplete="off" className={`${inputClass} font-mono`} />
           </Field>
         )}
         {draft.provider === 'huggingface' && !draft.baseUrl && (
@@ -310,6 +318,7 @@ export const AiSettingsForm = ({ data, siteText }: { data: AiSettingsData; siteT
             model: draft.model.trim(),
             baseUrl: draft.baseUrl.trim(),
             hfProvider: draft.hfProvider.trim(),
+            accountId: draft.provider === 'cloudflare' ? draft.accountId.trim() : '',
             pricing: { inputPerMillion: price(draft.inputPerMillion), outputPerMillion: price(draft.outputPerMillion), perPicture: price(draft.perPicture) },
             ...(draft.apiKey.trim() ? { apiKey: draft.apiKey.trim() } : {}),
             ...(draft.clearApiKey ? { clearApiKey: true } : {}),
