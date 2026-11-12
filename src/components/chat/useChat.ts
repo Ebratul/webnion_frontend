@@ -37,17 +37,22 @@ export const useChat = ({ endpoint, locale, storageKey, messages: labels }: { en
   const [busy, setBusy] = useState(false);
   const abort = useRef<AbortController | null>(null);
 
+  // Saving waits until the stored conversation is read, or the first empty render would overwrite it
+  const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
     setMessages(readStored(storageKey));
+    setLoaded(true);
   }, [storageKey]);
 
   useEffect(() => {
+    if (!loaded) return;
     try {
       sessionStorage.setItem(storageKey, JSON.stringify(messages.slice(-MAX_STORED)));
     } catch {
       // Private browsing or a full store: the chat still works for this page
     }
-  }, [messages, storageKey]);
+  }, [loaded, messages, storageKey]);
 
   useEffect(() => () => abort.current?.abort(), []);
 

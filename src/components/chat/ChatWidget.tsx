@@ -70,6 +70,12 @@ export const ChatWidget = ({ locale, t, config, endpoint, storageKey, aboveWhats
   };
 
   const bottom = admin ? 'bottom-24' : aboveWhatsApp ? 'bottom-[calc(max(1.25rem,env(safe-area-inset-bottom))+4.25rem)]' : 'bottom-5';
+  // The panel sits above the buttons, and its height leaves the same room so its top never goes off a short screen
+  const panelPlace = admin
+    ? 'bottom-[10.5rem] max-h-[min(36rem,calc(100svh/var(--page-zoom)-11.5rem))]'
+    : aboveWhatsApp
+      ? 'bottom-[calc(max(1.25rem,env(safe-area-inset-bottom))+8.75rem)] max-h-[min(36rem,calc(100svh/var(--page-zoom)-max(1.25rem,env(safe-area-inset-bottom))-9.75rem))]'
+      : 'bottom-24 max-h-[min(36rem,calc(100svh/var(--page-zoom)-7rem))]';
   const last = messages.at(-1);
 
   return (
@@ -91,7 +97,7 @@ export const ChatWidget = ({ locale, t, config, endpoint, storageKey, aboveWhats
           role="dialog"
           aria-labelledby={titleId}
           lang={locale}
-          className={`fixed inset-x-3 z-40 flex max-h-[min(36rem,calc(100svh-7rem))] flex-col overflow-hidden rounded-3xl border border-line bg-bg text-fg shadow-soft sm:inset-x-auto sm:right-5 sm:w-[23rem] ${admin ? 'bottom-[10.5rem]' : aboveWhatsApp ? 'bottom-[calc(max(1.25rem,env(safe-area-inset-bottom))+8.75rem)]' : 'bottom-24'}`}
+          className={`fixed inset-x-3 z-40 flex flex-col overflow-hidden rounded-3xl border border-line bg-bg text-fg shadow-soft sm:inset-x-auto sm:right-5 sm:w-[23rem] ${panelPlace}`}
         >
           <div className="flex items-center gap-3 border-b border-line bg-surface px-4 py-3">
             <span aria-hidden className="grid size-9 place-items-center rounded-full bg-tint text-accent">
