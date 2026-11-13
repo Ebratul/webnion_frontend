@@ -6,6 +6,7 @@ import { useState, type FormEvent } from 'react';
 import { ADMIN_LOGIN_PATH } from '@/lib/admin/constants';
 import type { LocalizedValue } from '@/lib/admin/resources';
 import { SOCIAL_LABELS, SOCIAL_NETWORKS, type NavigationSettings, type NavLink, type SocialNetwork } from '@/lib/navigation';
+import { SITE_URL } from '@/lib/site';
 import { SocialIcon } from '../ui/SocialIcon';
 import { cardClass, cardPadding, inputClass, labelClass, quietButton, SaveBar } from './ui';
 
@@ -71,6 +72,26 @@ const LinkList = ({ id, links, onChange, addLabel }: { id: string; links: NavLin
 
 const linkHint = 'Links: a page such as /contact or /project, a homepage section such as #pricing, or a full address starting with https://';
 
+// A full address of this site, or a path with the language in it, becomes a plain path like /blog. The site then adds the
+// visitor's language, so Bangla readers stay in Bangla and the link still works if the domain changes.
+const ownSite = (href: string) => {
+  const value = href.trim();
+  let path = value;
+  if (/^https?:\/\//i.test(value)) {
+    try {
+      const url = new URL(value);
+      const own = [window.location.host, new URL(SITE_URL).host].includes(url.host);
+      if (!own) return value;
+      path = `${url.pathname}${url.search}${url.hash}`;
+    } catch {
+      return value;
+    }
+  }
+  if (!path.startsWith('/')) return value;
+  const withoutLanguage = path.replace(/^\/(en|bn)(?=\/|#|\?|$)/, '');
+  return withoutLanguage === '' ? '/' : withoutLanguage;
+};
+
 const cleanLabel = (label: LocalizedValue) => ({ en: label.en.trim() || label.bn.trim(), bn: label.bn.trim() || label.en.trim() });
 
 export const NavigationForm = ({ initial, services }: { initial: NavigationSettings; services: { slug: string; title: LocalizedValue }[] }) => {
@@ -92,10 +113,10 @@ export const NavigationForm = ({ initial, services }: { initial: NavigationSetti
     setError(null);
     setProblems([]);
     // Empty rows are dropped, and a missing Bangla label uses the English one
-    const links = (list: NavLink[]) => list.filter((link) => (link.label.en.trim() || link.label.bn.trim()) && link.href.trim()).map((link) => ({ label: cleanLabel(link.label), href: link.href.trim() }));
+    const links = (list: NavLink[]) => list.filter((link) => (link.label.en.trim() || link.label.bn.trim()) && link.href.trim()).map((link) => ({ label: cleanLabel(link.label), href: ownSite(link.href) }));
     const payload: NavigationSettings = {
       header: links(nav.header),
-      headerButton: { href: nav.headerButton.href.trim() || '/contact' },
+      headerButton: { href: ownSite(nav.headerButton.href) || '/contact' },
       footerQuick: links(nav.footerQuick),
       footerServices: links(nav.footerServices),
       socials: nav.socials.filter((social) => social.url.trim()).map((social) => ({ network: social.network, url: social.url.trim() })),
