@@ -56,11 +56,8 @@ export const defaultNavigation = (en: Dictionary, bn: Dictionary, contact: Conta
     headerButton: { href: '/contact' },
     footerQuick: [
       { label: nav('portfolio'), href: '/project' },
-      { label: nav('caseStudies'), href: '/case-studies' },
       { label: nav('products'), href: '/products' },
-      { label: nav('team'), href: '/team' },
       { label: nav('pricing'), href: '/pricing' },
-      { label: nav('contact'), href: '/contact' },
     ],
     footerCompany: defaultCompanyLinks(en, bn, contact),
     footerServices: en.footer.serviceLinks.map((service, index) => ({ label: both(service.label, bn.footer.serviceLinks[index]?.label ?? service.label), href: `/services/${service.slug}` })),

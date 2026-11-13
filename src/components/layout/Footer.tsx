@@ -47,7 +47,7 @@ export const Footer = ({ locale, t, nav, label, contact, brand, navigation }: Fo
   return (
     <footer className="site-footer border-t border-line bg-[#faf2e6] dark:bg-surface">
       <div className="container-page">
-        <div className="grid gap-10 pt-14 pb-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1.2fr_0.85fr_1.05fr] lg:gap-x-10 xl:gap-x-12">
+        <div className="grid gap-10 pt-14 pb-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_0.85fr_1.1fr] lg:gap-x-10 xl:gap-x-12">
           <div className="sm:col-span-2 lg:col-span-1">
             <Logo locale={locale} brand={brand} />
             <p className={`mt-5 max-w-xs text-sm ${textClass}`}>{t.about}</p>
@@ -70,7 +70,7 @@ export const Footer = ({ locale, t, nav, label, contact, brand, navigation }: Fo
 
           <nav aria-label={label}>
             <h2 className={headingClass}>{t.quickLinks}</h2>
-            <ul className="mt-5 grid grid-cols-2 gap-x-5 gap-y-2.5">
+            <ul className="mt-5 space-y-2.5">
               {navigation.footerQuick.map((link) => <li key={`${link.href}-${link.label}`}><FooterLink link={link} /></li>)}
             </ul>
           </nav>
