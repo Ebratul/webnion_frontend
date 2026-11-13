@@ -22,14 +22,14 @@ export const PricingExtras = ({ locale, t, included, steps, extras }: PricingExt
   <section aria-labelledby="after-booking-title" className="band-dark pricing-night section-y relative isolate overflow-hidden">
     <div className="container-page">
       {included.length > 0 && (
-        <div className="reveal mx-auto flex max-w-5xl flex-col gap-3 rounded-2xl border border-dashed border-white/15 px-5 py-4 text-sm sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-6">
-          <p className="font-semibold">{t.includedLabel}:</p>
-          {/* A list down the side on phones, one wrapping row from tablets up */}
+        <div className="reveal mx-auto flex w-fit max-w-full flex-col gap-3 rounded-2xl border border-dashed border-white/15 bg-white/[0.02] px-5 py-4 text-[0.8125rem] sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-4 sm:gap-y-2 sm:rounded-full sm:px-6 sm:py-3.5">
+          <p className="font-semibold text-white">{t.includedLabel}:</p>
+          {/* A list down the side on phones, one line on wide screens; long items wrap rather than overflow */}
           <ul className="flex flex-col gap-2.5 sm:contents">
             {included.map((item) => (
-              <li key={item} className="inline-flex items-center gap-2 text-white/80">
-                <span aria-hidden className="grid size-5 place-items-center rounded-full bg-primary text-white">
-                  <Check className="size-3" strokeWidth={3} />
+              <li key={item} className="inline-flex items-center gap-1.5 whitespace-nowrap text-white/75">
+                <span aria-hidden className="grid size-4 shrink-0 place-items-center rounded-full bg-primary text-white">
+                  <Check className="size-2.5" strokeWidth={3.5} />
                 </span>
                 {item}
               </li>

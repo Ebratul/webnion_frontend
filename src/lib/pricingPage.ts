@@ -13,9 +13,8 @@ export interface PricingPageSettings {
 
 export const DEFAULT_PRICING_PAGE: PricingPageSettings = {
   included: [
-    { en: 'Free consultation call', bn: 'ফ্রি কনসালটেশন কল' },
-    { en: 'Clear plan, scope and cost before work starts', bn: 'কাজ শুরুর আগে স্পষ্ট পরিকল্পনা, পরিধি ও খরচ' },
-    { en: 'Mobile-friendly, responsive design', bn: 'মোবাইল-ফ্রেন্ডলি, রেসপনসিভ ডিজাইন' },
+    { en: 'Clear scope and cost upfront', bn: 'শুরুর আগেই স্পষ্ট খরচ ও পরিধি' },
+    { en: 'Mobile-friendly design', bn: 'মোবাইল-ফ্রেন্ডলি ডিজাইন' },
     { en: 'SEO-ready structure', bn: 'SEO-উপযোগী কাঠামো' },
     { en: 'Post-launch support', bn: 'লঞ্চের পর সাপোর্ট' },
   ],
