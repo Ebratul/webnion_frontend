@@ -4,7 +4,7 @@ export const TEXT_GROUPS: { key: string; label: string; hint: string }[] = [
   { key: 'nav', label: 'Menu', hint: 'The meeting button, the language button and the Home label. Menu links are under Menu & Footer.' },
   { key: 'hero', label: 'Hero', hint: 'The first screen of the homepage.' },
   { key: 'trust', label: 'Client Logos', hint: 'The label above the logos.' },
-  { key: 'problems', label: 'Problems And Chat', hint: 'The dark card and its demo chat answers.' },
+  { key: 'problems', label: 'Problems', hint: 'The dark card: heading, text, button and the picture description. The picture is under Contact & Links.' },
   { key: 'services', label: 'Services Section', hint: 'Heading and buttons on the homepage.' },
   { key: 'outcomes', label: 'Expert Insights', hint: 'Heading, four points and photo descriptions.' },
   { key: 'projects', label: 'Portfolio Section', hint: 'Heading and link on the homepage.' },

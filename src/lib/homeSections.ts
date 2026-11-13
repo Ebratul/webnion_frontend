@@ -12,7 +12,7 @@ export interface HomeSection {
 export const HOME_SECTIONS: HomeSection[] = [
   { key: 'hero', label: 'Hero', description: 'The first screen: heading, text, button and an optional background image.', textGroup: 'hero', manage: { href: '/admin/hero-backgrounds', label: 'Background Image' }, canHide: false },
   { key: 'trust', label: 'Projects And Client Logos', description: 'The moving project images and the row of client logos.', textGroup: 'trust', manage: { href: '/admin/clients', label: 'Client Logos' }, canHide: true },
-  { key: 'problems', label: 'Problems And Chat', description: 'The dark card with the demo chat.', textGroup: 'problems', canHide: true },
+  { key: 'problems', label: 'Problems', description: 'The dark card with the heading, the button and a picture.', textGroup: 'problems', manage: { href: '/admin/settings', label: 'Picture' }, canHide: true },
   { key: 'services', label: 'Services', description: 'Service cards and their buttons.', textGroup: 'services', manage: { href: '/admin/services', label: 'Services' }, canHide: true },
   { key: 'outcomes', label: 'Expert Insights', description: 'Heading, four points and three photos.', textGroup: 'outcomes', manage: { href: '/admin/settings', label: 'Photos' }, canHide: true },
   { key: 'portfolio', label: 'Portfolio', description: 'The moving project cards. Projects marked Featured appear here.', textGroup: 'projects', manage: { href: '/admin/projects', label: 'Projects' }, canHide: true },

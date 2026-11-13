@@ -18,6 +18,7 @@ export const DEFAULT_IMAGES = {
   outcomeTeam: '/images/outcomes/team-at-work.webp',
   serviceContactCard: '/images/services/contact-card.webp',
   servicesClosingPreview: '/images/fan/preview.webp',
+  problems: '/images/services/optimization.webp',
 };
 
 // Name, logos and colour, set under Brand in the admin panel. The logo for dark backgrounds is the white one.

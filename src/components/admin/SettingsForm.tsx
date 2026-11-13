@@ -31,6 +31,7 @@ const CONTACT_SECTIONS: { title: string; description: string; fields: { name: ke
 ];
 
 const IMAGE_FIELDS: { name: keyof ImageSettings; label: string; hint: string }[] = [
+  { name: 'problems', label: 'Homepage: picture beside “Is Your Website Holding Your Business Back?”', hint: 'Landscape, at least 1200 × 800 px. It is cropped to 3:2. Describe it under Website Text → Problems → Image Alt.' },
   { name: 'outcomeFounder', label: 'Founder photo', hint: 'Portrait, at least 560 × 650 px.' },
   { name: 'outcomeHandover', label: 'Client handover photo', hint: 'Portrait, at least 560 × 650 px.' },
   { name: 'outcomeTeam', label: 'Team at work photo', hint: 'Tall, at least 1040 × 1200 px.' },

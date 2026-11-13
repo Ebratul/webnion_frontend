@@ -351,6 +351,7 @@ export const AiSettingsForm = ({ data, siteText }: { data: AiSettingsData; siteT
             ...(langsmithKey.clear ? { clearApiKey: true } : {}),
           },
           limits: settings.limits,
+          studio: { pictureStyle: settings.studio.pictureStyle.trim() },
           assistant: { ...settings.assistant, suggestions: { en: lines(suggestions.en), bn: lines(suggestions.bn) } },
         }),
       });
@@ -447,6 +448,16 @@ export const AiSettingsForm = ({ data, siteText }: { data: AiSettingsData; siteT
             <SlotEditor key={slot.key} slot={slot} saved={initial.models[slot.key]} draft={slots[slot.key]} fakeAllowed={status.fakeAllowed} onChange={(draft) => { touch(); setSlots((current) => ({ ...current, [slot.key]: draft })); }} />
           ))}
         </div>
+      </Card>
+
+      <Card title="Blog pictures" description="The look of every picture AI Studio makes. Each article gets one art direction from this, so its cover and section pictures match each other and the article. Text, logos and real brands are always kept out.">
+        <Field
+          id={`${id}-picture-style`}
+          label="House style"
+          hint="Leave empty for premium editorial photography with soft natural light and subtle accents in your brand colour. Or describe your own, for example: clean 3D illustrations, soft pastel lighting, violet and warm orange accents."
+        >
+          <textarea id={`${id}-picture-style`} rows={3} maxLength={600} value={settings.studio.pictureStyle} onChange={(event) => update('studio', { pictureStyle: event.target.value })} className={inputClass} />
+        </Field>
       </Card>
 
       <Card

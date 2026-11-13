@@ -32,6 +32,7 @@ export interface AiSettingsData {
     langsmith: MaskedKeyed & { project: string };
     limits: { messagesPerVisitorPerDay: number; publicMessagesPerDay: number; blogsPerDay: number; picturesPerBlog: number; picturesPerDay: number; maxReplyTokens: number };
     assistant: { name: { en: string; bn: string }; greeting: { en: string; bn: string }; suggestions: { en: string[]; bn: string[] }; tone: string };
+    studio: { pictureStyle: string };
     index: { signature?: string; dimension?: number; documents?: number; passages?: number; lastSyncAt?: string; lastRebuildAt?: string; lastError?: string };
   };
   status: {
