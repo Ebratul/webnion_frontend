@@ -6,6 +6,7 @@ import { REVALIDATE_SECONDS } from './api';
 import { DEFAULT_TAKA_PRICES, type TakaPrices } from './format';
 import { buildContact, DEFAULT_BRAND, DEFAULT_CONTACT, DEFAULT_IMAGES } from './site';
 import { defaultNavigation, localizeLinks, type NavigationSettings } from './navigation';
+import { DEFAULT_PRICING_PAGE, localizePricingPage, type PricingPageSettings } from './pricingPage';
 import { applyTextOverrides, type TextOverrides } from './siteText';
 
 export interface SiteSettings {
@@ -15,6 +16,7 @@ export interface SiteSettings {
   homepage: { hidden: string[] } | null;
   navigation: NavigationSettings | null;
   options: SiteOptions | null;
+  pricingPage?: PricingPageSettings | null;
   text: Record<Locale, TextOverrides>;
 }
 
@@ -58,6 +60,9 @@ export const getBrand = cache(async () => ({ ...DEFAULT_BRAND, ...(await getSett
 
 // The admin panel must open even when the API cannot be reached, so it falls back to the original brand
 export const getBrandOrDefault = async () => getBrand().catch(() => DEFAULT_BRAND);
+
+// The Pricing page's lists in the current language: saved in the admin panel, or the built-in ones
+export const getPricingPage = cache(async (locale: Locale) => localizePricingPage((await getSettings()).pricingPage ?? DEFAULT_PRICING_PAGE, locale));
 
 export const getOptions = cache(async () => {
   const options = (await getSettings()).options;

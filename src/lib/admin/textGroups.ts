@@ -28,6 +28,7 @@ export const TEXT_GROUPS: { key: string; label: string; hint: string }[] = [
   { key: 'teamPage', label: 'Team Page', hint: 'The top of the team page.' },
   { key: 'team', label: 'Team Page Section', hint: 'The heading above the team cards.' },
   { key: 'contactPage', label: 'Contact Page', hint: 'Everything on the contact page, with its address.' },
+  { key: 'pricingPage', label: 'Pricing Page', hint: 'Headings and text on the Pricing page. Its lists are under Pricing Page in the Website menu.' },
   { key: 'blog', label: 'Blog', hint: 'The blog pages and the Blog section on the homepage. The menu link’s name is under Menu & Footer.' },
   { key: 'chat', label: 'Chat Assistant', hint: 'Buttons and messages in the chat window. Its greeting and suggestions are under AI Settings.' },
   { key: 'error', label: 'Error Pages', hint: 'Shown when a page is missing or fails.' },

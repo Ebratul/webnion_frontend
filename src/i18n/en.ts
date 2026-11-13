@@ -297,6 +297,22 @@ export const en = {
     cta: 'Book A Meeting',
     note: 'Project-based service. Final cost depends on features, pages, design quality, and business requirements.',
   },
+  pricingPage: {
+    metaTitle: 'Pricing',
+    crumb: 'Pricing',
+    titleLines: ['Simple, Transparent', 'Pricing'],
+    subtitle: 'Clear starting prices for websites, online stores and custom platforms. Your final quote is confirmed before any work starts.',
+    includedLabel: 'Every project includes',
+    stepsTitleLead: 'What Happens',
+    stepsTitleAccent: 'After You Book',
+    stepsSubtitle: 'No surprises. Here is exactly how we work, from the first call to launch.',
+    step: 'Step',
+    extrasEyebrow: 'Other Services',
+    extrasTitleLead: 'Apart From That,',
+    extrasTitleAccent: 'We Also Provide',
+    extrasText: 'Need something that is not in a plan? Tell us about it and we will put together a clear quote.',
+    extrasCta: 'Ask About A Service',
+  },
   team: {
     title: 'The People Behind Webnion',
     subtitle:
