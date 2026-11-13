@@ -1,7 +1,7 @@
 import { ArrowRight, Check } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { formatPriceParts } from '@/lib/format';
+import { formatPriceParts, localPrice, type TakaPrices } from '@/lib/format';
 import { SECTION_IDS } from '@/lib/site';
 import type { PricingPlan } from '@/lib/types';
 import { SectionHeading } from '../ui/SectionHeading';
@@ -11,6 +11,7 @@ interface PricingProps {
   locale: Locale;
   t: Dictionary['pricing'];
   plans: PricingPlan[];
+  taka: TakaPrices;
 }
 
 // Slides in beside the label on hover and on keyboard focus
@@ -21,8 +22,9 @@ const ButtonArrow = () => (
   />
 );
 
-const Price = ({ plan, locale }: { plan: PricingPlan; locale: Locale }) => {
-  const { symbol, amount, symbolFirst } = formatPriceParts(plan.price, plan.currency, locale);
+const Price = ({ plan, locale, taka }: { plan: PricingPlan; locale: Locale; taka: TakaPrices }) => {
+  const price = localPrice(plan.price, plan.currency, locale, taka);
+  const { symbol, amount, symbolFirst } = formatPriceParts(price.amount, price.currency, locale);
   const sign = <span className="self-start pt-1 text-xl font-medium text-[#555]">{symbol}</span>;
 
   return (
@@ -39,7 +41,7 @@ const Price = ({ plan, locale }: { plan: PricingPlan; locale: Locale }) => {
 
 // Laid out like the reference: name and badge, tagline, price, the button, what the plan offers, and an optional note
 // at the foot. Every card has the same rows, so they line up, and the highlighted plan stands out through colour alone.
-const Plan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale }) => (
+const Plan = ({ plan, t, locale, taka }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale; taka: TakaPrices }) => (
   <li
     className={`flex flex-col rounded-3xl border p-7 lg:p-8 ${
       plan.isFeatured ? 'border-primary bg-[color-mix(in_srgb,var(--primary)_4%,white)] shadow-[0_24px_56px_-24px_color-mix(in_srgb,var(--primary)_45%,transparent)] ring-1 ring-primary' : 'border-[#e8e8e8] bg-white shadow-[0_14px_40px_-28px_rgb(0_0_0/0.25)]'
@@ -51,7 +53,7 @@ const Plan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']
     </div>
     <p className="mt-2 text-sm leading-snug text-[#6f6f6f] lg:min-h-10">{plan.tagline}</p>
 
-    <Price plan={plan} locale={locale} />
+    <Price plan={plan} locale={locale} taka={taka} />
 
     <ServiceLink
       slug={plan.slug}
@@ -76,7 +78,7 @@ const Plan = ({ plan, t, locale }: { plan: PricingPlan; t: Dictionary['pricing']
   </li>
 );
 
-export const Pricing = ({ locale, t, plans }: PricingProps) => (
+export const Pricing = ({ locale, t, plans, taka }: PricingProps) => (
   <section id={SECTION_IDS.pricing} aria-labelledby="pricing-title" className="band-light section-y flush-light">
     <div className="container-page">
       <div className="[&_h2]:font-semibold [&_h2]:text-[#1a1a1a]">
@@ -85,7 +87,7 @@ export const Pricing = ({ locale, t, plans }: PricingProps) => (
 
       <ul className="reveal mx-auto mt-12 grid max-w-xl gap-5 lg:max-w-none lg:grid-cols-3">
         {plans.map((plan) => (
-          <Plan key={plan.id} plan={plan} t={t} locale={locale} />
+          <Plan key={plan.id} plan={plan} t={t} locale={locale} taka={taka} />
         ))}
       </ul>
 

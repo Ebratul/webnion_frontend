@@ -5,6 +5,7 @@ import { useState, type FormEvent } from 'react';
 import { ADMIN_LOGIN_PATH } from '@/lib/admin/constants';
 import type { LocalizedValue } from '@/lib/admin/resources';
 import { DEFAULT_IMAGES, type ContactSettings, type ImageSettings } from '@/lib/site';
+import { DEFAULT_TAKA_PRICES } from '@/lib/format';
 import type { SiteOptions } from '@/lib/siteSettings';
 import { FeaturesField, ImageField, inputClass, labelClass } from './fields';
 import { cardClass, cardPadding, SaveBar } from './ui';
@@ -51,6 +52,7 @@ export const SettingsForm = ({ contact: initialContact, images: initialImages, o
   const [contact, setContact] = useState(initialContact);
   const [images, setImages] = useState(initialImages);
   const [whatsappButton, setWhatsappButton] = useState(initialOptions.whatsappButton);
+  const [taka, setTaka] = useState({ ...DEFAULT_TAKA_PRICES, ...initialOptions.takaPrices, usdToBdt: String(initialOptions.takaPrices?.usdToBdt ?? DEFAULT_TAKA_PRICES.usdToBdt) });
   const [emailsText, setEmailsText] = useState(initialOptions.inquiryEmails.join('\n'));
   const [budgets, setBudgets] = useState<LocalizedValue[]>(initialOptions.budgets);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -82,6 +84,7 @@ export const SettingsForm = ({ contact: initialContact, images: initialImages, o
             whatsappButton,
             inquiryEmails: emailsText.split(/[\s,;]+/).map((email) => email.trim()).filter(Boolean),
             budgets: budgets.map((row) => ({ en: row.en.trim() || row.bn.trim(), bn: row.bn.trim() || row.en.trim() })).filter((row) => row.en),
+            takaPrices: { showTakaInBangla: taka.showTakaInBangla, usdToBdt: Number(taka.usdToBdt), roundTo: taka.roundTo },
           },
         }),
       });
@@ -94,7 +97,7 @@ export const SettingsForm = ({ contact: initialContact, images: initialImages, o
         const found: Record<string, string> = {};
         for (const issue of body.errors ?? []) {
           const parts = issue.path.split('.');
-          found[parts.includes('inquiryEmails') ? 'inquiryEmails' : parts.includes('budgets') ? 'budgets' : parts.at(-1)!] ??= issue.message;
+          found[parts.includes('inquiryEmails') ? 'inquiryEmails' : parts.includes('budgets') ? 'budgets' : parts.includes('takaPrices') ? 'takaPrices' : parts.at(-1)!] ??= issue.message;
         }
         setErrors(found);
         setError(body.message ?? 'Could not save. Please try again.');
@@ -148,6 +151,38 @@ export const SettingsForm = ({ contact: initialContact, images: initialImages, o
             <span className="mt-0.5 block text-xs text-muted">The WhatsApp links in the page sections stay either way.</span>
           </span>
         </label>
+      </section>
+
+      <section className={`${cardClass} ${cardPadding}`}>
+        <h2 className="text-base font-semibold">Prices In Taka</h2>
+        <p className="mt-1 text-sm text-muted">Prices are entered in dollars. On the Bangla site, the pricing plans and products can show them in Taka at your rate.</p>
+        <label className="mt-4 flex cursor-pointer items-start gap-3">
+          <input type="checkbox" checked={taka.showTakaInBangla} onChange={(event) => { touch(); setTaka((current) => ({ ...current, showTakaInBangla: event.target.checked })); }} className="mt-0.5 size-4 accent-primary" />
+          <span>
+            <span className="block text-sm font-medium">Show prices in Taka (৳) on the Bangla site</span>
+            <span className="mt-0.5 block text-xs text-muted">Off: the Bangla site shows dollars, like the English one.</span>
+          </span>
+        </label>
+        <div className="mt-6 grid max-w-xl gap-5 sm:grid-cols-2">
+          <div>
+            <label htmlFor="usdToBdt" className={`${labelClass} mb-1.5`}>1 US dollar = how many Taka</label>
+            <input id="usdToBdt" type="number" inputMode="decimal" min={1} max={1000} step="0.01" dir="ltr" value={taka.usdToBdt} disabled={!taka.showTakaInBangla} onChange={(event) => { touch(); setTaka((current) => ({ ...current, usdToBdt: event.target.value })); }} className={inputClass} />
+            <p className="mt-1.5 text-xs text-muted">Check today&apos;s rate and update it here when it changes.</p>
+          </div>
+          <div>
+            <label htmlFor="roundTo" className={`${labelClass} mb-1.5`}>Round prices to the nearest</label>
+            <select id="roundTo" value={taka.roundTo} disabled={!taka.showTakaInBangla} onChange={(event) => { touch(); setTaka((current) => ({ ...current, roundTo: Number(event.target.value) })); }} className={inputClass}>
+              {[1, 10, 50, 100, 500, 1000].map((step) => <option key={step} value={step}>৳{step.toLocaleString('en-US')}</option>)}
+            </select>
+            <p className="mt-1.5 text-xs text-muted">So a price reads ৳24,300 rather than ৳24,278.</p>
+          </div>
+        </div>
+        {taka.showTakaInBangla && Number(taka.usdToBdt) > 0 && (
+          <p className="mt-4 text-sm text-muted">
+            Example: $199 becomes <span className="font-medium text-fg">৳{(Math.round((199 * Number(taka.usdToBdt)) / taka.roundTo) * taka.roundTo).toLocaleString('en-IN')}</span> on the Bangla site.
+          </p>
+        )}
+        {errors.takaPrices && <p role="alert" className="mt-2 text-xs text-red-400">{errors.takaPrices}</p>}
       </section>
 
       <section className={`${cardClass} ${cardPadding}`}>

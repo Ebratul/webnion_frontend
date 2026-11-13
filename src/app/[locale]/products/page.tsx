@@ -8,10 +8,10 @@ import { PageShell } from '@/components/layout/PageShell';
 import { imageCardBodyClass, imageCardClass } from '@/components/ui/imageCard';
 import { isLocale } from '@/i18n/config';
 import { getProducts } from '@/lib/api';
-import { formatNumber, formatPrice } from '@/lib/format';
+import { formatNumber, formatPrice, localPrice } from '@/lib/format';
 import { SECTION_IDS, sectionHref } from '@/lib/site';
 import type { Product } from '@/lib/types';
-import { getContact, getSiteDictionary } from '@/lib/siteSettings';
+import { getContact, getOptions, getSiteDictionary } from '@/lib/siteSettings';
 
 type Filters = { q?: string; type?: string; category?: string; pricing?: string; sort?: string };
 
@@ -42,7 +42,7 @@ export default async function ProductsPage({ params, searchParams }: PageProps) 
 
   const filters = await searchParams;
   const t = (await getSiteDictionary(locale)).productsPage;
-  const { products, typeCounts, categoryCounts } = await getProducts(locale, filters);
+  const [{ products, typeCounts, categoryCounts }, options] = await Promise.all([getProducts(locale, filters), getOptions()]);
   const basePath = `/${locale}/products`;
 
   const count = (value: number | undefined) => formatNumber(value ?? 0, locale);
@@ -50,7 +50,8 @@ export default async function ProductsPage({ params, searchParams }: PageProps) 
   const priceLabel = (product: Product) => {
     if (product.pricing === 'FREE') return t.pricing.FREE;
     if (product.pricing === 'CONTACT' || product.price === null) return t.pricing.CONTACT;
-    return formatPrice(product.price, product.currency, locale);
+    const price = localPrice(product.price, product.currency, locale, options.takaPrices);
+    return formatPrice(price.amount, price.currency, locale);
   };
 
   return (

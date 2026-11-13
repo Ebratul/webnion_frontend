@@ -18,7 +18,7 @@ import { Testimonials } from '@/components/sections/Testimonials';
 import { isLocale } from '@/i18n/config';
 import { getHomeData } from '@/lib/api';
 import { SITE_URL } from '@/lib/site';
-import { getBrand, getContact, getHiddenSections, getNavigationSettings, getSiteDictionary } from '@/lib/siteSettings';
+import { getBrand, getContact, getHiddenSections, getNavigationSettings, getOptions, getSiteDictionary } from '@/lib/siteSettings';
 
 export const dynamicParams = false;
 export const revalidate = 60;
@@ -29,7 +29,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   const t = await getSiteDictionary(locale);
   const data = await getHomeData(locale);
-  const [contact, brand, hidden, navigation] = await Promise.all([getContact(), getBrand(), getHiddenSections(), getNavigationSettings()]);
+  const [contact, brand, hidden, navigation, options] = await Promise.all([getContact(), getBrand(), getHiddenSections(), getNavigationSettings(), getOptions()]);
   const show = (key: string) => !hidden.has(key);
 
   const organization = {
@@ -56,7 +56,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         {show('testimonials') && <Testimonials locale={locale} t={t.testimonials} a11y={t.a11y} testimonials={data.testimonials} />}
         {show('delivery') && <DeliveryStories t={t.delivery} stories={data.deliveryStories} />}
         {show('process') && <Process t={t.process} />}
-        {show('pricing') && <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} />}
+        {show('pricing') && <Pricing locale={locale} t={t.pricing} plans={data.pricingPlans} taka={options.takaPrices} />}
         {show('technologies') && <Technologies t={t.technologies} items={data.technologies} />}
         {show('blog') && <BlogSection locale={locale} t={t.blog} posts={data.blogPosts} />}
         {show('faq') && <Faqs t={t.faq} faqs={data.faqs} founder={data.team[0]} />}

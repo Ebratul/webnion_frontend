@@ -3,6 +3,7 @@ import { SettingsForm } from '@/components/admin/SettingsForm';
 import { PageHeader } from '@/components/admin/ui';
 import { getDictionary } from '@/i18n';
 import { adminFetch } from '@/lib/admin/session';
+import { DEFAULT_TAKA_PRICES } from '@/lib/format';
 import { DEFAULT_CONTACT, DEFAULT_IMAGES } from '@/lib/site';
 import type { SiteSettings } from '@/lib/siteSettings';
 
@@ -16,6 +17,7 @@ export default async function SettingsPage() {
     whatsappButton: settings.options?.whatsappButton ?? true,
     inquiryEmails: settings.options?.inquiryEmails ?? ['hello@webnion.com'],
     budgets: settings.options?.budgets ?? en.map((budget, index) => ({ en: budget, bn: bn[index] ?? budget })),
+    takaPrices: { ...DEFAULT_TAKA_PRICES, ...settings.options?.takaPrices },
   };
 
   return (

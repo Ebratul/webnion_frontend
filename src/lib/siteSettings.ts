@@ -3,6 +3,7 @@ import { cache } from 'react';
 import type { Locale } from '@/i18n/config';
 import { getDictionary } from '@/i18n';
 import { REVALIDATE_SECONDS } from './api';
+import { DEFAULT_TAKA_PRICES, type TakaPrices } from './format';
 import { buildContact, DEFAULT_BRAND, DEFAULT_CONTACT, DEFAULT_IMAGES } from './site';
 import { defaultNavigation, localizeLinks, type NavigationSettings } from './navigation';
 import { applyTextOverrides, type TextOverrides } from './siteText';
@@ -21,6 +22,7 @@ export interface SiteOptions {
   whatsappButton: boolean;
   inquiryEmails: string[];
   budgets: { en: string; bn: string }[];
+  takaPrices?: TakaPrices;
 }
 
 const EMPTY: SiteSettings = { contact: null, images: null, brand: null, homepage: null, navigation: null, options: null, text: { en: {}, bn: {} } };
@@ -57,7 +59,10 @@ export const getBrand = cache(async () => ({ ...DEFAULT_BRAND, ...(await getSett
 // The admin panel must open even when the API cannot be reached, so it falls back to the original brand
 export const getBrandOrDefault = async () => getBrand().catch(() => DEFAULT_BRAND);
 
-export const getOptions = cache(async () => ({ whatsappButton: true, ...(await getSettings()).options }));
+export const getOptions = cache(async () => {
+  const options = (await getSettings()).options;
+  return { whatsappButton: true, ...options, takaPrices: { ...DEFAULT_TAKA_PRICES, ...options?.takaPrices } };
+});
 
 // Saved menus, or the ones the site showed before, in the current language
 export const getNavigationSettings = cache(async (): Promise<NavigationSettings> => {

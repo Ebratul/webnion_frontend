@@ -2,16 +2,25 @@ import type { Locale } from '@/i18n/config';
 
 const intlLocale = (locale: Locale) => (locale === 'bn' ? 'bn-BD' : 'en-US');
 
-export const formatPrice = (amount: number, currency: string, locale: Locale) =>
-  new Intl.NumberFormat(intlLocale(locale), {
-    style: 'currency',
-    currency,
-    currencyDisplay: 'narrowSymbol',
-    maximumFractionDigits: 0,
-  }).format(amount);
+// How the Bangla site shows prices set in dollars. Set under Contact & Links in the admin panel.
+export interface TakaPrices {
+  showTakaInBangla: boolean;
+  usdToBdt: number;
+  roundTo: number;
+}
 
-// The symbol and the amount apart, in the order the language writes them ($19 in English, ১৯$ in Bangla), so the
-// symbol can be set smaller beside a large number.
+export const DEFAULT_TAKA_PRICES: TakaPrices = { showTakaInBangla: true, usdToBdt: 122, roundTo: 100 };
+
+// A dollar price becomes Taka on the Bangla site at the admin's rate, rounded so it reads like a real price (24,300, not
+// 24,278). Other currencies, and the English site, are left as they are.
+export const localPrice = (amount: number, currency: string, locale: Locale, taka?: TakaPrices) => {
+  if (locale === 'bn' && taka?.showTakaInBangla && currency.toUpperCase() === 'USD' && taka.usdToBdt > 0) {
+    const step = Math.max(1, taka.roundTo);
+    return { amount: Math.round((amount * taka.usdToBdt) / step) * step, currency: 'BDT' };
+  }
+  return { amount, currency };
+};
+
 export const formatPriceParts = (amount: number, currency: string, locale: Locale) => {
   const parts = new Intl.NumberFormat(intlLocale(locale), {
     style: 'currency',
@@ -24,8 +33,14 @@ export const formatPriceParts = (amount: number, currency: string, locale: Local
   return {
     symbol: parts[symbolAt]?.value ?? '',
     amount: parts.filter((part) => part.type !== 'currency' && part.type !== 'literal').map((part) => part.value).join(''),
-    symbolFirst: symbolAt < numberAt,
+    // Taka is written ৳ first in Bangladesh, although the Bangla number format puts it last
+    symbolFirst: currency === 'BDT' || symbolAt < numberAt,
   };
+};
+
+export const formatPrice = (amount: number, currency: string, locale: Locale) => {
+  const { symbol, amount: number, symbolFirst } = formatPriceParts(amount, currency, locale);
+  return symbolFirst ? `${symbol}${number}` : `${number}${symbol}`;
 };
 
 export const formatScore = (score: number, locale: Locale) =>
