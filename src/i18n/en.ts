@@ -371,6 +371,7 @@ export const en = {
   footer: {
     about: 'Webnion is a web design agency creating fast, modern, and scalable websites that help businesses grow and succeed online.',
     quickLinks: 'Quick Links',
+    company: 'Company',
     services: 'Services',
     contact: 'Contact Us',
     privacy: 'Privacy Policy',

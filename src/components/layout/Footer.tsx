@@ -47,8 +47,8 @@ export const Footer = ({ locale, t, nav, label, contact, brand, navigation }: Fo
   return (
     <footer className="site-footer border-t border-line bg-[#faf2e6] dark:bg-surface">
       <div className="container-page">
-        <div className="grid gap-10 pt-14 pb-10 md:grid-cols-2 lg:grid-cols-[1.35fr_1.15fr_1fr] lg:gap-x-12">
-          <div className="md:col-span-2 lg:col-span-1">
+        <div className="grid gap-10 pt-14 pb-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1.2fr_0.85fr_1.05fr] lg:gap-x-10 xl:gap-x-12">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Logo locale={locale} brand={brand} />
             <p className={`mt-5 max-w-xs text-sm ${textClass}`}>{t.about}</p>
             <ul className="mt-6 flex gap-2.5">
@@ -74,6 +74,15 @@ export const Footer = ({ locale, t, nav, label, contact, brand, navigation }: Fo
               {navigation.footerQuick.map((link) => <li key={`${link.href}-${link.label}`}><FooterLink link={link} /></li>)}
             </ul>
           </nav>
+
+          {navigation.footerCompany.length > 0 && (
+            <nav aria-label={t.company}>
+              <h2 className={headingClass}>{t.company}</h2>
+              <ul className="mt-5 space-y-2.5">
+                {navigation.footerCompany.map((link) => <li key={`${link.href}-${link.label}`}><FooterLink link={link} /></li>)}
+              </ul>
+            </nav>
+          )}
 
           <div>
             <h2 className={headingClass}>{t.services}</h2>

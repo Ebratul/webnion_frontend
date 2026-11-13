@@ -65,7 +65,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
           <p className="mb-8 flex flex-wrap items-center gap-3 text-sm">
             <span className="text-muted">{t.showingCategory}:</span>
             <span className="font-medium">{category}</span>
-            <Link href={basePath} className="font-semibold text-accent underline-offset-4 hover:underline">{t.allCategories}</Link>
+            <Link href={basePath} scroll={false} className="font-semibold text-accent underline-offset-4 hover:underline">{t.allCategories}</Link>
           </p>
         )}
 
@@ -101,6 +101,7 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
                     <div className={imageCardBodyClass}>
                       <Link
                         href={`${basePath}?category=${encodeURIComponent(study.category)}`}
+                        scroll={false}
                         className="mb-2 flex min-h-7 max-w-full items-center self-start text-xs font-medium text-accent underline-offset-4 hover:underline"
                       >
                         {study.category}

@@ -118,6 +118,7 @@ export const NavigationForm = ({ initial, services }: { initial: NavigationSetti
       header: links(nav.header),
       headerButton: { href: ownSite(nav.headerButton.href) || '/contact' },
       footerQuick: links(nav.footerQuick),
+      footerCompany: links(nav.footerCompany ?? []),
       footerServices: links(nav.footerServices),
       socials: nav.socials.filter((social) => social.url.trim()).map((social) => ({ network: social.network, url: social.url.trim() })),
       offices: nav.offices.filter((office) => office.name.en.trim() || office.name.bn.trim()).map((office) => ({ name: cleanLabel(office.name), address: cleanLabel(office.address) })),
@@ -131,7 +132,7 @@ export const NavigationForm = ({ initial, services }: { initial: NavigationSetti
       }
       const body: { message?: string; errors?: { path: string; message: string }[] } = await response.json();
       if (!response.ok) {
-        const names: Record<string, string> = { header: 'Header menu', headerButton: 'Header button', footerQuick: 'Quick Links', footerServices: 'Services column', socials: 'Social links', offices: 'Offices' };
+        const names: Record<string, string> = { header: 'Header menu', headerButton: 'Header button', footerQuick: 'Quick Links', footerCompany: 'Company column', footerServices: 'Services column', socials: 'Social links', offices: 'Offices' };
         setProblems((body.errors ?? []).map((issue) => {
           const [, group, row] = issue.path.split('.');
           return `${names[group ?? ''] ?? group}${row && /^\d+$/.test(row) ? `, row ${Number(row) + 1}` : ''}: ${issue.message}`;
@@ -170,7 +171,11 @@ export const NavigationForm = ({ initial, services }: { initial: NavigationSetti
         <LinkList id="quick" links={nav.footerQuick} onChange={(value) => set('footerQuick', value)} addLabel="Add Link" />
       </Section>
 
-      <Section title="Footer: Services" description="The second link column. Fill it from your Services list, or set the links by hand.">
+      <Section title="Footer: Company" description="The column beside Quick Links: your brands and company pages. A brand with its own website takes its full address, starting with https://. Leave the list empty to hide the column.">
+        <LinkList id="company" links={nav.footerCompany ?? []} onChange={(value) => set('footerCompany', value)} addLabel="Add Link" />
+      </Section>
+
+      <Section title="Footer: Services" description="The last link column. Fill it from your Services list, or set the links by hand.">
         <div className="mb-5">
           <button type="button" onClick={() => set('footerServices', services.map((service) => ({ label: service.title, href: `/services/${service.slug}` })))} className={quietButton}>
             Use All {services.length} Services

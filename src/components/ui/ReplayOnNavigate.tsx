@@ -33,7 +33,8 @@ export const ReplayOnNavigate = () => {
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
       const link = (event.target as Element).closest<HTMLAnchorElement>('a[href]');
-      if (!link || link.pathname !== window.location.pathname) return;
+      // A filter or page link (?tag=, ?page=) changes the list, not the section, so it must not jump to the top
+      if (!link || link.pathname !== window.location.pathname || link.search !== window.location.search) return;
 
       // Home and the logo link to this page without a hash, which lands on the hero
       const section = document.getElementById(link.hash.slice(1) || 'top');

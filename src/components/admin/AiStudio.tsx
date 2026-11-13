@@ -1,9 +1,10 @@
 'use client';
 
-import { ArrowDown, ArrowUp, CheckCircle2, ExternalLink, ImageIcon, Languages, Loader2, Plus, Sparkles, Trash2, Wand2, XCircle } from 'lucide-react';
+import { ArrowDown, ArrowUp, CheckCircle2, ExternalLink, ImageIcon, Languages, Loader2, Plus, Sparkles, Trash2, Wand2, X, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useId, useState, type FormEvent, type ReactNode } from 'react';
+import { flushSync } from 'react-dom';
 import { ADMIN_LOGIN_PATH } from '@/lib/admin/constants';
 import { inputClass, labelClass } from './fields';
 import { cardClass, cardPadding, primaryButton, quietButton } from './ui';
@@ -44,6 +45,17 @@ const readEvents = async (response: Response, onEvent: (event: Record<string, un
     }
   }
 };
+
+// Fields that read like the finished outline: no box until they are pointed at or edited
+const bare =
+  'w-full resize-none rounded-lg border border-transparent bg-transparent px-2 py-1.5 [field-sizing:content] transition-[border-color,background-color] duration-200 placeholder:text-muted/60 hover:border-white/10 focus:border-accent focus:bg-surface-2 focus:outline-none';
+
+const iconButton = 'grid size-9 place-items-center rounded-lg text-muted transition-colors duration-200 hover:bg-white/[0.06] hover:text-white disabled:opacity-30';
+
+// Browsers without field-sizing get a row count from the text's length instead
+const grow = (text: string, perLine: number) => Math.max(1, Math.ceil(text.length / perLine));
+
+const WORDS: Record<string, number> = { short: 700, medium: 1200, long: 2000 };
 
 const Card = ({ title, step, children }: { title: string; step: number; children: ReactNode }) => (
   <section className={`${cardClass} ${cardPadding}`}>
@@ -188,6 +200,20 @@ export const AiStudio = ({ ready, maxPictures, isAdmin }: StudioProps) => {
   const setSection = (index: number, change: Partial<Outline['sections'][number]>) =>
     setOutline((current) => current && { ...current, sections: current.sections.map((section, position) => (position === index ? { ...section, ...change } : section)) });
 
+  const setPoint = (index: number, pointIndex: number, text: string) =>
+    setSection(index, { points: outline!.sections[index]!.points.map((point, position) => (position === pointIndex ? text : point)) });
+
+  const addPoint = (index: number, at: number) => {
+    const points = [...outline!.sections[index]!.points];
+    if (points.length >= 8) return;
+    points.splice(at, 0, '');
+    // Drawn at once, so the cursor moves before the next key is typed
+    flushSync(() => setSection(index, { points }));
+    document.getElementById(`${id}-p-${index}-${at}`)?.focus();
+  };
+
+  const removePoint = (index: number, pointIndex: number) => setSection(index, { points: outline!.sections[index]!.points.filter((_, position) => position !== pointIndex) });
+
   const move = (index: number, by: number) =>
     setOutline((current) => {
       if (!current) return current;
@@ -261,41 +287,83 @@ export const AiStudio = ({ ready, maxPictures, isAdmin }: StudioProps) => {
 
       {outline && (
         <Card title="Outline" step={2}>
-          <p className="mb-5 text-sm text-muted">Change anything before writing: the title, the order, headings or points.</p>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor={`${id}-title`} className={labelClass}>Title</label>
-              <input id={`${id}-title`} maxLength={200} value={outline.title} onChange={(event) => setOutline({ ...outline, title: event.target.value })} className={`${inputClass} mt-1.5 font-semibold`} />
-            </div>
-            <div>
-              <label htmlFor={`${id}-angle`} className={labelClass}>Angle</label>
-              <textarea id={`${id}-angle`} rows={2} maxLength={600} value={outline.angle} onChange={(event) => setOutline({ ...outline, angle: event.target.value })} className={`${inputClass} mt-1.5`} />
-            </div>
-            <ol className="space-y-3">
-              {outline.sections.map((section, index) => (
-                <li key={index} className="rounded-2xl border border-line bg-surface-2/40 p-4">
-                  <div className="flex items-start gap-2">
-                    <span className="mt-2.5 w-6 shrink-0 text-xs font-semibold tabular-nums text-muted">{index + 1}.</span>
-                    <div className="min-w-0 flex-1 space-y-2">
-                      <input aria-label={`Section ${index + 1} heading`} maxLength={200} value={section.heading} onChange={(event) => setSection(index, { heading: event.target.value })} className={`${inputClass} font-medium`} />
-                      <textarea aria-label={`Section ${index + 1} points, one per line`} rows={Math.max(2, section.points.length)} value={section.points.join('\n')} onChange={(event) => setSection(index, { points: event.target.value.split('\n').slice(0, 8) })} placeholder="Key points, one per line" className={`${inputClass} text-xs`} />
-                    </div>
-                    <div className="flex shrink-0 flex-col">
-                      <button type="button" disabled={index === 0} onClick={() => move(index, -1)} aria-label="Move up" className="grid size-9 place-items-center rounded-lg text-muted hover:bg-white/[0.06] hover:text-white disabled:opacity-30"><ArrowUp aria-hidden className="size-4" /></button>
-                      <button type="button" disabled={index === outline.sections.length - 1} onClick={() => move(index, 1)} aria-label="Move down" className="grid size-9 place-items-center rounded-lg text-muted hover:bg-white/[0.06] hover:text-white disabled:opacity-30"><ArrowDown aria-hidden className="size-4" /></button>
-                      <button type="button" disabled={outline.sections.length <= 2} onClick={() => setOutline({ ...outline, sections: outline.sections.filter((_, position) => position !== index) })} aria-label="Remove section" className="grid size-9 place-items-center rounded-lg text-muted hover:bg-white/[0.06] hover:text-red-300 disabled:opacity-30"><Trash2 aria-hidden className="size-4" /></button>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            {outline.sections.length < 10 && (
-              <button type="button" onClick={() => setOutline({ ...outline, sections: [...outline.sections, { heading: '', points: [] }] })} className={quietButton}>
-                <Plus aria-hidden className="size-4" />
-                Add a section
-              </button>
-            )}
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm text-muted">Review the plan, then change anything before writing: the title, the order, headings or points.</p>
+            <p className="rounded-full bg-tint px-3 py-1 text-xs font-medium text-accent">
+              {outline.sections.length} sections · {outline.sections.reduce((sum, section) => sum + section.points.filter((point) => point.trim()).length, 0)} key points · about {WORDS[brief.length] ?? 1200} words
+            </p>
           </div>
+
+          <div className="rounded-2xl border border-line bg-surface-2/30 p-5 sm:p-6">
+            <label htmlFor={`${id}-title`} className="text-[0.6875rem] font-semibold uppercase tracking-wider text-muted">Title</label>
+            <textarea id={`${id}-title`} rows={grow(outline.title, 70)} maxLength={200} value={outline.title} onChange={(event) => setOutline({ ...outline, title: event.target.value.replace(/\n/g, ' ') })} className={`${bare} mt-1 text-lg font-semibold leading-snug sm:text-xl`} />
+            <label htmlFor={`${id}-angle`} className="mt-4 block text-[0.6875rem] font-semibold uppercase tracking-wider text-muted">Angle</label>
+            <textarea id={`${id}-angle`} rows={grow(outline.angle, 110)} maxLength={600} value={outline.angle} onChange={(event) => setOutline({ ...outline, angle: event.target.value })} className={`${bare} mt-1 text-sm leading-relaxed text-white/75`} />
+          </div>
+
+          <ol className="mt-4 space-y-3">
+            {outline.sections.map((section, index) => (
+              <li key={index} className="group/section rounded-2xl border border-line bg-surface-2/30 p-4 transition-colors duration-200 focus-within:border-accent/50 hover:border-white/15 sm:p-5">
+                <div className="flex items-start gap-3">
+                  <span aria-hidden className="mt-1 grid size-8 shrink-0 place-items-center rounded-full bg-primary/15 text-sm font-semibold tabular-nums text-accent">{index + 1}</span>
+                  <textarea
+                    aria-label={`Section ${index + 1} heading`}
+                    rows={grow(section.heading, 80)}
+                    maxLength={200}
+                    value={section.heading}
+                    onChange={(event) => setSection(index, { heading: event.target.value.replace(/\n/g, ' ') })}
+                    placeholder="Section heading"
+                    className={`${bare} min-w-0 flex-1 text-base font-semibold leading-snug`}
+                  />
+                  <div className="flex shrink-0 gap-0.5 opacity-60 transition-opacity duration-200 group-focus-within/section:opacity-100 group-hover/section:opacity-100">
+                    <button type="button" disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Move section ${index + 1} up`} className={iconButton}><ArrowUp aria-hidden className="size-4" /></button>
+                    <button type="button" disabled={index === outline.sections.length - 1} onClick={() => move(index, 1)} aria-label={`Move section ${index + 1} down`} className={iconButton}><ArrowDown aria-hidden className="size-4" /></button>
+                    <button type="button" disabled={outline.sections.length <= 2} onClick={() => setOutline({ ...outline, sections: outline.sections.filter((_, position) => position !== index) })} aria-label={`Remove section ${index + 1}`} className={`${iconButton} hover:text-red-300`}><Trash2 aria-hidden className="size-4" /></button>
+                  </div>
+                </div>
+
+                <ul className="mt-2 space-y-0.5 pl-11">
+                  {section.points.map((point, pointIndex) => (
+                    <li key={pointIndex} className="group/point flex items-start gap-2">
+                      <span aria-hidden className="mt-[0.9rem] size-1.5 shrink-0 rounded-full bg-accent" />
+                      <textarea
+                        id={`${id}-p-${index}-${pointIndex}`}
+                        aria-label={`Section ${index + 1}, point ${pointIndex + 1}`}
+                        rows={grow(point, 95)}
+                        maxLength={400}
+                        value={point}
+                        onChange={(event) => setPoint(index, pointIndex, event.target.value.replace(/\n/g, ' '))}
+                        onKeyDown={(event) => {
+                          // Enter starts a new point below, like a document
+                          if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+                            event.preventDefault();
+                            addPoint(index, pointIndex + 1);
+                          }
+                        }}
+                        placeholder="Key point"
+                        className={`${bare} min-w-0 flex-1 text-sm leading-relaxed text-white/80`}
+                      />
+                      <button type="button" onClick={() => removePoint(index, pointIndex)} aria-label={`Remove point ${pointIndex + 1} of section ${index + 1}`} className={`${iconButton} size-8 opacity-0 group-focus-within/point:opacity-100 group-hover/point:opacity-100 focus-visible:opacity-100`}>
+                        <X aria-hidden className="size-3.5" />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                {section.points.length < 8 && (
+                  <button type="button" onClick={() => addPoint(index, section.points.length)} className="mt-1 ml-11 inline-flex min-h-8 items-center gap-1.5 rounded-lg px-2 text-xs font-medium text-accent transition-colors duration-200 hover:bg-white/[0.04]">
+                    <Plus aria-hidden className="size-3.5" />
+                    Add a point
+                  </button>
+                )}
+              </li>
+            ))}
+          </ol>
+          {outline.sections.length < 10 && (
+            <button type="button" onClick={() => setOutline({ ...outline, sections: [...outline.sections, { heading: '', points: [''] }] })} className={`${quietButton} mt-4`}>
+              <Plus aria-hidden className="size-4" />
+              Add a section
+            </button>
+          )}
 
           <div className="mt-6 flex flex-wrap items-end gap-4 border-t border-line pt-5">
             {ready.pictures && ready.image ? (

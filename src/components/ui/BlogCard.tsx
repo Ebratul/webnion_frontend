@@ -8,7 +8,8 @@ import type { BlogPostSummary } from '@/lib/types';
 import { imageCardBodyClass, imageCardClass } from './imageCard';
 
 // level follows the page: h2 on the blog list, h3 under a section heading
-export const BlogCard = ({ post, locale, t, priority = false, level = 3 }: { post: BlogPostSummary; locale: Locale; t: Dictionary['blog']; priority?: boolean; level?: 2 | 3 }) => {
+// keepScroll: on the blog list a topic link only filters the list, so the page stays where it is
+export const BlogCard = ({ post, locale, t, priority = false, level = 3, keepScroll = false }: { post: BlogPostSummary; locale: Locale; t: Dictionary['blog']; priority?: boolean; level?: 2 | 3; keepScroll?: boolean }) => {
   const Heading = level === 2 ? 'h2' : 'h3';
   const href = `/${locale}/blog/${post.slug}`;
   return (
@@ -24,7 +25,7 @@ export const BlogCard = ({ post, locale, t, priority = false, level = 3 }: { pos
         {post.tags.length > 0 && (
           <p className="mb-2 flex flex-wrap gap-1.5">
             {post.tags.slice(0, 2).map((tag) => (
-              <Link key={tag} href={`/${locale}/blog?tag=${encodeURIComponent(tag)}`} className="rounded-full border border-white/15 px-2.5 py-0.5 text-[0.6875rem] font-medium text-accent transition-colors duration-200 hover:border-accent">
+              <Link key={tag} href={`/${locale}/blog?tag=${encodeURIComponent(tag)}`} scroll={!keepScroll} className="rounded-full border border-white/15 px-2.5 py-0.5 text-[0.6875rem] font-medium text-accent transition-colors duration-200 hover:border-accent">
                 {tag}
               </Link>
             ))}

@@ -66,9 +66,9 @@ export default async function BlogPage({ params, searchParams }: PageProps) {
       <div className="container-page section-y">
         {tags.length > 0 && (
           <nav aria-label={t.tags} className="mb-10 flex flex-wrap justify-center gap-2">
-            <Link href={basePath} aria-current={!tag ? 'page' : undefined} className={chip(!tag)}>{t.allTags}</Link>
+            <Link href={basePath} scroll={false} aria-current={!tag ? 'page' : undefined} className={chip(!tag)}>{t.allTags}</Link>
             {tags.map((item) => (
-              <Link key={item} href={`${basePath}?tag=${encodeURIComponent(item)}`} aria-current={tag === item ? 'page' : undefined} className={chip(tag?.toLowerCase() === item.toLowerCase())}>
+              <Link key={item} href={`${basePath}?tag=${encodeURIComponent(item)}`} scroll={false} aria-current={tag === item ? 'page' : undefined} className={chip(tag?.toLowerCase() === item.toLowerCase())}>
                 {item}
               </Link>
             ))}
@@ -81,7 +81,7 @@ export default async function BlogPage({ params, searchParams }: PageProps) {
           <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post, index) => (
               <li key={post.id} className="reveal">
-                <BlogCard post={post} locale={locale} t={t} priority={index < 3} level={2} />
+                <BlogCard post={post} locale={locale} t={t} priority={index < 3} level={2} keepScroll />
               </li>
             ))}
           </ul>

@@ -23,12 +23,22 @@ export interface NavigationSettings {
   header: NavLink[];
   headerButton: { href: string };
   footerQuick: NavLink[];
+  // Company: the business's brands and pages. Settings saved before this column existed have none, so the default fills in.
+  footerCompany?: NavLink[];
   footerServices: NavLink[];
   socials: { network: SocialNetwork; url: string }[];
   offices: { name: LocalizedValue; address: LocalizedValue }[];
 }
 
 const both = (en: string, bn: string): LocalizedValue => ({ en, bn });
+
+// The Company column until it is edited: the brand, the blog, the team and the privacy policy
+export const defaultCompanyLinks = (en: Dictionary, bn: Dictionary, contact: ContactSettings): NavLink[] => [
+  { label: both('Webnion', 'Webnion'), href: '/' },
+  { label: both(en.blog.crumb, bn.blog.crumb), href: '/blog' },
+  { label: both(en.nav.team, bn.nav.team), href: '/team' },
+  { label: both(en.footer.privacy, bn.footer.privacy), href: contact.privacy },
+];
 
 // What the site showed before anything was saved, built from the current text so earlier edits carry over
 export const defaultNavigation = (en: Dictionary, bn: Dictionary, contact: ContactSettings): NavigationSettings => {
@@ -52,6 +62,7 @@ export const defaultNavigation = (en: Dictionary, bn: Dictionary, contact: Conta
       { label: nav('pricing'), href: '/pricing' },
       { label: nav('contact'), href: '/contact' },
     ],
+    footerCompany: defaultCompanyLinks(en, bn, contact),
     footerServices: en.footer.serviceLinks.map((service, index) => ({ label: both(service.label, bn.footer.serviceLinks[index]?.label ?? service.label), href: `/services/${service.slug}` })),
     socials: [
       { network: 'facebook', url: contact.facebook },
