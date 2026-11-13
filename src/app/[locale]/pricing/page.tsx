@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
 import { FinalInquiry } from '@/components/sections/FinalInquiry';
-import { Pricing } from '@/components/sections/Pricing';
+import { PricingPlans } from '@/components/sections/Pricing';
 import { PricingExtras } from '@/components/sections/PricingExtras';
 import { isLocale } from '@/i18n/config';
 import { getHomeData } from '@/lib/api';
@@ -37,8 +37,14 @@ export default async function PricingPage({ params }: PageProps) {
   return (
     <PageShell locale={locale}>
       <PageBanner titleLines={t.titleLines} subtitle={t.subtitle} homeHref={`/${locale}`} homeLabel={dictionary.nav.home} crumb={t.crumb} />
-      <Pricing locale={locale} t={dictionary.pricing} plans={data.pricingPlans} taka={options.takaPrices} />
-      <PricingExtras locale={locale} t={t} included={lists.included} steps={lists.steps} extras={lists.extras} />
+      <PricingExtras
+        locale={locale}
+        t={t}
+        included={lists.included}
+        steps={lists.steps}
+        extras={lists.extras}
+        plans={<PricingPlans locale={locale} t={dictionary.pricing} plans={data.pricingPlans} taka={options.takaPrices} onDark />}
+      />
       <FinalInquiry locale={locale} t={dictionary.inquiry} closeLabel={dictionary.a11y.close} services={data.services} plans={data.pricingPlans} />
     </PageShell>
   );

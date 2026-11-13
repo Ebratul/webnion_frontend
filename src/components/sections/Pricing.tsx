@@ -42,8 +42,9 @@ const Price = ({ plan, locale, taka }: { plan: PricingPlan; locale: Locale; taka
 // Laid out like the reference: name and badge, tagline, price, the button, what the plan offers, and an optional note
 // at the foot. Every card has the same rows, so they line up, and the highlighted plan stands out through colour alone.
 const Plan = ({ plan, t, locale, taka }: { plan: PricingPlan; t: Dictionary['pricing']; locale: Locale; taka: TakaPrices }) => (
+  // The cards are light wherever they sit, so they keep the light theme's accent and tint, also on the dark Pricing page
   <li
-    className={`flex flex-col rounded-3xl border p-7 lg:p-8 ${
+    className={`flex flex-col rounded-3xl border p-7 [--accent:var(--accent-light)] [--tint:color-mix(in_srgb,var(--primary)_8%,transparent)] lg:p-8 ${
       plan.isFeatured ? 'border-primary bg-[color-mix(in_srgb,var(--primary)_4%,white)] shadow-[0_24px_56px_-24px_color-mix(in_srgb,var(--primary)_45%,transparent)] ring-1 ring-primary' : 'border-[#e8e8e8] bg-white shadow-[0_14px_40px_-28px_rgb(0_0_0/0.25)]'
     }`}
   >
@@ -78,20 +79,28 @@ const Plan = ({ plan, t, locale, taka }: { plan: PricingPlan; t: Dictionary['pri
   </li>
 );
 
-export const Pricing = ({ locale, t, plans, taka }: PricingProps) => (
+// The heading, the plan cards and the note. The homepage puts them in a light band; the Pricing page puts them on its
+// dark band, where the light cards stand out.
+export const PricingPlans = ({ locale, t, plans, taka, onDark = false }: PricingProps & { onDark?: boolean }) => (
+  <>
+    <div className={onDark ? '[&_h2]:font-semibold' : '[&_h2]:font-semibold [&_h2]:text-[#1a1a1a]'}>
+      <SectionHeading id="pricing-title" title={t.title} />
+    </div>
+
+    <ul className={`reveal mx-auto grid max-w-xl gap-5 lg:max-w-none lg:grid-cols-3 ${onDark ? 'mt-10' : 'mt-12'}`}>
+      {plans.map((plan) => (
+        <Plan key={plan.id} plan={plan} t={t} locale={locale} taka={taka} />
+      ))}
+    </ul>
+
+    <p className={`reveal mx-auto max-w-2xl text-center text-xs leading-relaxed ${onDark ? 'mt-6 text-white/55' : 'mt-12 text-[#6f6f6f]'}`}>{t.note}</p>
+  </>
+);
+
+export const Pricing = (props: PricingProps) => (
   <section id={SECTION_IDS.pricing} aria-labelledby="pricing-title" className="band-light section-y flush-light">
     <div className="container-page">
-      <div className="[&_h2]:font-semibold [&_h2]:text-[#1a1a1a]">
-        <SectionHeading id="pricing-title" title={t.title} />
-      </div>
-
-      <ul className="reveal mx-auto mt-12 grid max-w-xl gap-5 lg:max-w-none lg:grid-cols-3">
-        {plans.map((plan) => (
-          <Plan key={plan.id} plan={plan} t={t} locale={locale} taka={taka} />
-        ))}
-      </ul>
-
-      <p className="reveal mx-auto mt-12 max-w-2xl text-center text-xs leading-relaxed text-[#6f6f6f]">{t.note}</p>
+      <PricingPlans {...props} />
     </div>
   </section>
 );
