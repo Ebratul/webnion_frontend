@@ -20,6 +20,9 @@ export interface Project {
   slug: string;
   name: string;
   category: string;
+  // The Portfolio page filter, in the page's language, and a key that is the same in both languages
+  type?: string | null;
+  typeKey?: string | null;
   image: string;
   isFeatured: boolean;
 }

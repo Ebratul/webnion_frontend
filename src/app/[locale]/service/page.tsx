@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
-import { ClosingCard } from '@/components/sections/ClosingCard';
 import { ServiceCard } from '@/components/ui/ServiceCard';
 import { isLocale } from '@/i18n/config';
 import { getHomeData } from '@/lib/api';
@@ -31,7 +30,7 @@ export default async function ServicePage({ params }: PageProps) {
 
   const dictionary = await getSiteDictionary(locale);
   const t = dictionary.servicePage;
-  const { services, pricingPlans } = await getHomeData(locale);
+  const { services } = await getHomeData(locale);
 
   return (
     <PageShell locale={locale}>
@@ -51,7 +50,6 @@ export default async function ServicePage({ params }: PageProps) {
         )}
       </div>
 
-      <ClosingCard locale={locale} t={dictionary.closing} inquiry={dictionary.inquiry} closeLabel={dictionary.a11y.close} services={services} plans={pricingPlans} />
     </PageShell>
   );
 }

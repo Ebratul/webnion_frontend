@@ -46,7 +46,7 @@ export default async function RootLayout({ children, params }: { children: React
   const brand = await getBrand();
 
   return (
-    <html lang={locale} data-default-theme={brand.defaultTheme} className={`site-zoom ${fontClasses}`} suppressHydrationWarning>
+    <html lang={locale} data-default-theme={brand.defaultTheme} data-scroll-behavior="smooth" className={`site-zoom ${fontClasses}`} suppressHydrationWarning>
       <body>
         <BrandStyle primaryColor={brand.primaryColor} />
         <ThemeScript />

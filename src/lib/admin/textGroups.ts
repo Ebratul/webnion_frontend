@@ -19,7 +19,6 @@ export const TEXT_GROUPS: { key: string; label: string; hint: string }[] = [
   { key: 'footer', label: 'Footer', hint: 'About text, headings and the bottom line. Links, social links and offices are under Menu & Footer.' },
   { key: 'servicePage', label: 'Services Page', hint: 'The page listing all services.' },
   { key: 'serviceDetail', label: 'Service Details', hint: 'Labels on each service page.' },
-  { key: 'closing', label: 'Services Page Closing Card', hint: 'The card at the end of the services page.' },
   { key: 'projectPage', label: 'Projects Page', hint: 'The page listing all projects.' },
   { key: 'projectDetail', label: 'Project Details', hint: 'Labels on each project page.' },
   { key: 'caseStudiesPage', label: 'Case Studies Page', hint: 'The page listing all case studies.' },

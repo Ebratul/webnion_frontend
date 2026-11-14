@@ -142,15 +142,27 @@ export const VideoField = ({ value, onChange, id }: ValueProps<string> & { id: s
   );
 };
 
-export const LocalizedField = ({ value, onChange, multiline, id }: ValueProps<LocalizedValue> & { multiline?: boolean; id: string }) => {
+export const LocalizedField = ({ value, onChange, multiline, id, suggestions }: ValueProps<LocalizedValue> & { multiline?: boolean; id: string; suggestions?: LocalizedValue[] }) => {
   const Control = multiline ? 'textarea' : 'input';
   const extra = multiline ? { rows: 4 } : {};
+  const lists = suggestions?.length && !multiline;
+  const onEnglish = (en: string) => {
+    // Picking a suggestion fills its Bangla too, unless the Bangla was typed by hand
+    const picked = suggestions?.find((item) => item.en.toLowerCase() === en.trim().toLowerCase());
+    const bnIsSuggested = !value.bn || suggestions?.some((item) => item.bn === value.bn);
+    onChange({ en, bn: picked && bnIsSuggested ? picked.bn : value.bn });
+  };
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <div>
         <label htmlFor={`${id}-en`} className="mb-1.5 block text-xs text-muted">English</label>
-        <Control id={`${id}-en`} value={value.en} onChange={(event) => onChange({ ...value, en: event.target.value })} className={inputClass} {...extra} />
+        <Control id={`${id}-en`} value={value.en} list={lists ? `${id}-en-list` : undefined} onChange={(event) => onEnglish(event.target.value)} className={inputClass} {...extra} />
+        {lists && (
+          <datalist id={`${id}-en-list`}>
+            {suggestions.map((item) => <option key={item.en} value={item.en} />)}
+          </datalist>
+        )}
       </div>
       <div>
         <label htmlFor={`${id}-bn`} className="mb-1.5 block text-xs text-muted">বাংলা</label>

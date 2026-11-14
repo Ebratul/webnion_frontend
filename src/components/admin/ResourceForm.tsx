@@ -116,7 +116,7 @@ export const ResourceForm = ({ resourceKey, row, nextSortOrder }: ResourceFormPr
     switch (field.type) {
       case 'localized':
       case 'localizedTextarea':
-        return <LocalizedField id={id} multiline={field.type === 'localizedTextarea'} value={value as LocalizedValue} onChange={(next) => setValue(field, next)} />;
+        return <LocalizedField id={id} multiline={field.type === 'localizedTextarea'} suggestions={field.suggestions} value={value as LocalizedValue} onChange={(next) => setValue(field, next)} />;
       case 'blocks':
         return <BlocksField value={value as Record<'en' | 'bn', Block[]>} onChange={(next) => setValue(field, next)} />;
       case 'features':

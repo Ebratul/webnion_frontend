@@ -18,7 +18,8 @@ src/app/[locale]        Root layout (fonts, <html lang>, theme script), page, er
 src/app/[locale]/services/[slug], project/[slug], case-studies/[slug]   Detail pages, fetched by slug from the API
 src/app/[locale]/contact  Contact page, with the longer project form
 src/app/[locale]/team     Team page, with a card for each member from the homepage data
-src/app/[locale]/service, project, products, case-studies   Listing pages. Filters and paging live in the address, so results can be shared
+src/app/[locale]/service, project, products, case-studies   Listing pages. Filters live in the address, so results can be shared.
+                        Portfolio and Blog show 12 cards and add 12 more on scroll (`InfiniteGrid`); Portfolio filters by `typeKey`
 src/app/admin           Admin panel with its own root layout. Screens are built from lib/admin/resources.ts
 src/app/api/admin       Login, logout and a proxy that adds the token from an httpOnly cookie to API calls
 src/proxy.ts            Redirects / to /en or /bn using the cookie, then Accept-Language. Gates /admin
@@ -40,6 +41,8 @@ src/lib                 API client, types, formatters and contact details
 - Links to homepage sections use `sectionHref`, so they also work from detail pages. Pages use `PageShell` for the header and footer.
 - `lib/api.ts` throws at runtime so Next.js keeps the last good page when the API is down; it returns empty data only
   during a build.
+- `<html data-scroll-behavior="smooth">` lets Next.js turn smooth scrolling off while it opens a page, so a menu link lands at
+  the top at once instead of gliding there. Keep it while `html` has `scroll-behavior: smooth`.
 - The theme is set on `<html data-theme>` by an inline script before paint. Changing locale remounts `<html>`, so
   `ThemeToggle` restores it in a layout effect.
 - Blog: `/[locale]/blog` (tag filter in the address) and `/[locale]/blog/[slug]` with BlogPosting JSON-LD, from

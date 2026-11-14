@@ -17,6 +17,7 @@ export const DEFAULT_IMAGES = {
   outcomeHandover: '/images/outcomes/client-handover.webp',
   outcomeTeam: '/images/outcomes/team-at-work.webp',
   serviceContactCard: '/images/services/contact-card.webp',
+  // No longer shown: kept because saved image settings still carry it
   servicesClosingPreview: '/images/fan/preview.webp',
   problems: '/images/services/optimization.webp',
 };

@@ -4,18 +4,16 @@ import { notFound } from 'next/navigation';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
 import { BlogCard } from '@/components/ui/BlogCard';
-import { Pagination } from '@/components/ui/Pagination';
+import { InfiniteGrid } from '@/components/ui/InfiniteGrid';
 import { isLocale } from '@/i18n/config';
 import { getBlogPosts } from '@/lib/api';
 import { getBrand, getSiteDictionary } from '@/lib/siteSettings';
 
 export const revalidate = 60;
 
-const PAGE_SIZE = 9;
-
 type PageProps = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ page?: string; tag?: string }>;
+  searchParams: Promise<{ tag?: string }>;
 };
 
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
@@ -35,7 +33,7 @@ export default async function BlogPage({ params, searchParams }: PageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const { page: pageParam, tag } = await searchParams;
+  const { tag } = await searchParams;
   const dictionary = await getSiteDictionary(locale);
   const t = dictionary.blog;
   const basePath = `/${locale}/blog`;
@@ -43,18 +41,7 @@ export default async function BlogPage({ params, searchParams }: PageProps) {
   const all = await getBlogPosts(locale);
   const tags = [...new Set(all.flatMap((post) => post.tags))].slice(0, 20);
   const matching = tag ? all.filter((post) => post.tags.some((item) => item.toLowerCase() === tag.toLowerCase())) : all;
-  const pageCount = Math.max(Math.ceil(matching.length / PAGE_SIZE), 1);
-  const requested = Number.parseInt(pageParam ?? '1', 10);
-  const page = Number.isNaN(requested) ? 1 : Math.min(Math.max(requested, 1), pageCount);
-  const posts = matching.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
-  const hrefFor = (target: number) => {
-    const query = new URLSearchParams();
-    if (tag) query.set('tag', tag);
-    if (target > 1) query.set('page', String(target));
-    const text = query.toString();
-    return text ? `${basePath}?${text}` : basePath;
-  };
+  const posts = matching;
 
   const chip = (active: boolean) =>
     `inline-flex min-h-9 items-center rounded-full border px-4 text-sm transition-colors duration-200 ${active ? 'border-primary bg-primary text-white' : 'border-line hover:border-primary hover:text-primary dark:hover:text-accent'}`;
@@ -78,16 +65,16 @@ export default async function BlogPage({ params, searchParams }: PageProps) {
         {posts.length === 0 ? (
           <p className="py-16 text-center text-muted">{t.empty}</p>
         ) : (
-          <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          // A new topic starts again from the first twelve
+          <InfiniteGrid key={tag?.toLowerCase() ?? 'all'} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3" moreLabel={t.showMore} statusLabel={t.showing}>
             {posts.map((post, index) => (
               <li key={post.id} className="reveal">
                 <BlogCard post={post} locale={locale} t={t} priority={index < 3} level={2} keepScroll />
               </li>
             ))}
-          </ul>
+          </InfiniteGrid>
         )}
 
-        <Pagination page={page} pageCount={pageCount} hrefFor={hrefFor} locale={locale} label={dictionary.caseStudiesPage.pageLabel} previous={dictionary.caseStudiesPage.previous} next={dictionary.caseStudiesPage.next} />
       </div>
     </PageShell>
   );

@@ -14,7 +14,6 @@ const SECTIONS: { key: keyof Dictionary; title: string; path: string }[] = [
   { key: 'pricing', title: 'Pricing notes', path: '#pricing' },
   { key: 'faq', title: 'Questions and answers', path: '' },
   { key: 'servicePage', title: 'Services page', path: '/service' },
-  { key: 'closing', title: 'Working with us', path: '/service' },
   { key: 'teamPage', title: 'Team', path: '/team' },
   { key: 'contactPage', title: 'Contact page', path: '/contact' },
   { key: 'footer', title: 'Company summary', path: '' },

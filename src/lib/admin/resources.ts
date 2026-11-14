@@ -24,7 +24,8 @@ export type Field = BaseField &
   (
     | { type: 'text' | 'textarea' | 'email' | 'number' | 'date' | 'checkbox' | 'image' | 'video' | 'blocks' | 'features' | 'readonly' }
     | { type: 'password' }
-    | { type: 'localized' | 'localizedTextarea' }
+    // suggestions: offered while typing; picking one also fills an empty Bangla box
+    | { type: 'localized' | 'localizedTextarea'; suggestions?: LocalizedValue[] }
     | { type: 'select'; options: { value: string; label: string }[] }
     | { type: 'slug'; from: string }
   );
@@ -84,7 +85,7 @@ export const RESOURCES: Resource[] = [
         fields: [
           { name: 'name', label: 'Project name', type: 'text', required: true },
           { name: 'slug', label: 'Page address', type: 'slug', from: 'name', required: true, hint: 'Used in the link: /project/this-text' },
-          { name: 'category', label: 'Category', type: 'localized', required: true, hint: 'For example: E-commerce Website' },
+          { name: 'category', label: 'Category', type: 'localized', required: true, hint: 'Shown on the card. For example: E-commerce Website' },
           { name: 'image', label: 'Project image', type: 'image', required: true, hint: 'Square works best, at least 800 × 800 px.' },
         ],
       },

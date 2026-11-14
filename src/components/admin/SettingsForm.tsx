@@ -37,7 +37,6 @@ const IMAGE_FIELDS: { name: keyof ImageSettings; label: string; hint: string }[]
   { name: 'outcomeHandover', label: 'Client handover photo', hint: 'Portrait, at least 560 × 650 px.' },
   { name: 'outcomeTeam', label: 'Team at work photo', hint: 'Tall, at least 1040 × 1200 px.' },
   { name: 'serviceContactCard', label: 'Service pages: contact card picture', hint: 'Shown beside the phone number on every service page. About 600 × 505 px.' },
-  { name: 'servicesClosingPreview', label: 'Services page: closing card picture', hint: 'The wide picture at the end of the services page. About 1600 × 400 px.' },
 ];
 
 interface SettingsFormProps {
