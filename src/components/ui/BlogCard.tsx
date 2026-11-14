@@ -1,15 +1,12 @@
 import { CalendarDays, Clock } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
 import { formatDate } from '@/lib/format';
 import type { BlogPostSummary } from '@/lib/types';
-import { imageCardClass } from './imageCard';
+import { CardCover } from './CardCover';
+import { coverCardBodyClass, imageCardClass } from './imageCard';
 
-const COVER_SIZES = '(min-width: 1024px) 420px, (min-width: 768px) 50vw, 100vw';
-// Fades only the last 2rem of the picture into the text, so faces and headlines in the cover stay whole
-const blogCardBodyClass = 'relative -mt-8 flex flex-1 flex-col bg-[linear-gradient(to_top,#0d0f18_calc(100%-2rem),transparent)] p-5 pt-8';
 
 // level follows the page: h2 on the blog list, h3 under a section heading
 // keepScroll: on the blog list a topic link only filters the list, so the page stays where it is
@@ -18,18 +15,8 @@ export const BlogCard = ({ post, locale, t, priority = false, level = 3, keepScr
   const href = `/${locale}/blog/${post.slug}`;
   return (
     <article className={`group ${imageCardClass}`}>
-      {/* Covers come square or wide, so the whole picture is shown and a blurred copy of it fills the rest of the frame */}
-      <Link href={href} tabIndex={-1} aria-hidden className="relative block aspect-[4/3] overflow-hidden">
-        {post.cover ? (
-          <>
-            <Image src={post.cover} alt="" fill sizes={COVER_SIZES} className="scale-125 object-cover opacity-60 blur-2xl saturate-150" />
-            <Image src={post.cover} alt="" fill priority={priority} sizes={COVER_SIZES} className="object-contain transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:group-hover:scale-100" />
-          </>
-        ) : (
-          <div className="size-full bg-[radial-gradient(80%_120%_at_20%_0%,color-mix(in_srgb,var(--primary)_55%,transparent),transparent),linear-gradient(135deg,#1a1d2b,#0d0f18)]" />
-        )}
-      </Link>
-      <div className={blogCardBodyClass}>
+      <CardCover src={post.cover} href={href} priority={priority} />
+      <div className={coverCardBodyClass}>
         {post.tags.length > 0 && (
           <p className="mb-2 flex flex-wrap gap-1.5">
             {post.tags.slice(0, 2).map((tag) => (

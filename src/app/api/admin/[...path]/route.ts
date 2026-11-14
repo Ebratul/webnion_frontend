@@ -63,7 +63,8 @@ const forward = async (request: NextRequest, { params }: RouteContext) => {
 
   if (upstream.status === 401) store.delete(ADMIN_COOKIE);
   // Chats, tests and searches change nothing on the public site. AI settings do: they turn the chat button on or off.
-  const changesSite = path[0] === 'ai' ? path[1] === 'settings' && path.length === 2 : path[0] !== 'uploads';
+  // Inquiries and the spam filter never show on the public site either.
+  const changesSite = path[0] === 'ai' ? path[1] === 'settings' && path.length === 2 : path[0] !== 'uploads' && path[0] !== 'inquiries';
   if (hasBody && upstream.ok && changesSite) refreshPublicPages();
 
   return new Response(upstream.body, {
@@ -75,4 +76,5 @@ const forward = async (request: NextRequest, { params }: RouteContext) => {
 export const GET = forward;
 export const POST = forward;
 export const PATCH = forward;
+export const PUT = forward;
 export const DELETE = forward;

@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
 import { BlogCard } from '@/components/ui/BlogCard';
-import { InfiniteGrid } from '@/components/ui/InfiniteGrid';
+import { ShowMoreGrid } from '@/components/ui/ShowMoreGrid';
 import { isLocale } from '@/i18n/config';
 import { getBlogPosts } from '@/lib/api';
 import { getBrand, getSiteDictionary } from '@/lib/siteSettings';
@@ -66,13 +66,13 @@ export default async function BlogPage({ params, searchParams }: PageProps) {
           <p className="py-16 text-center text-muted">{t.empty}</p>
         ) : (
           // A new topic starts again from the first twelve
-          <InfiniteGrid key={tag?.toLowerCase() ?? 'all'} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3" moreLabel={t.showMore} statusLabel={t.showing}>
+          <ShowMoreGrid key={tag?.toLowerCase() ?? 'all'} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3" moreLabel={t.showMore} statusLabel={t.showing} locale={locale}>
             {posts.map((post, index) => (
               <li key={post.id} className="reveal">
                 <BlogCard post={post} locale={locale} t={t} priority={index < 3} level={2} keepScroll />
               </li>
             ))}
-          </InfiniteGrid>
+          </ShowMoreGrid>
         )}
 
       </div>

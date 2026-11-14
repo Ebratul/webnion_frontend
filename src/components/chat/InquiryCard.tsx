@@ -5,6 +5,7 @@ import { useId, useState, type FormEvent } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
 import { toAsciiDigits } from '@/lib/format';
+import { inquiryRuleMessage, type InquiryErrorBody } from '@/lib/inquiryErrors';
 import type { InquiryProposal } from './useChat';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,7 +16,7 @@ const inputClass =
 
 // What the assistant gathered, shown back to the visitor. It is sent only when they press Send, through the same endpoint
 // as the inquiry form, so it is checked, rate limited and logged like any other inquiry.
-export const InquiryCard = ({ proposal, locale, t, onDone }: { proposal: InquiryProposal; locale: Locale; t: Dictionary['chat']; onDone: (state: 'sent' | 'dismissed') => void }) => {
+export const InquiryCard = ({ proposal, locale, t, rules, onDone }: { proposal: InquiryProposal; locale: Locale; t: Dictionary['chat']; rules?: Dictionary['inquiry']['errors']; onDone: (state: 'sent' | 'dismissed') => void }) => {
   const id = useId();
   const [values, setValues] = useState({ name: proposal.name, email: proposal.email, phone: proposal.phone, message: [proposal.service, proposal.message].filter(Boolean).join(' - ') });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
@@ -39,9 +40,9 @@ export const InquiryCard = ({ proposal, locale, t, onDone }: { proposal: Inquiry
         body: JSON.stringify({ name, email: values.email.trim(), phone, message, locale, source: 'chat' }),
       });
       if (!response.ok) {
-        const body: { message?: string } = await response.json().catch(() => ({}));
+        const body: InquiryErrorBody & { message?: string } = await response.json().catch(() => ({}));
         setStatus('idle');
-        setError(response.status === 400 ? t.inquiryInvalid : body.message || t.error);
+        setError((rules && inquiryRuleMessage(body, rules, locale)) ?? (response.status === 400 ? t.inquiryInvalid : body.message || t.error));
         return;
       }
       setStatus('sent');

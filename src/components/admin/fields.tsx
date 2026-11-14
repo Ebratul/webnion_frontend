@@ -361,3 +361,26 @@ export const BlocksField = ({ value, onChange }: ValueProps<Record<'en' | 'bn', 
     </div>
   );
 };
+
+// An on/off switch with its label and an optional hint
+export const Toggle = ({ label, hint, checked, onChange }: { label: string; hint?: string; checked: boolean; onChange: (value: boolean) => void }) => {
+  const id = useId();
+  return (
+    <div className="flex items-start justify-between gap-4 rounded-xl border border-line bg-surface-2/50 px-4 py-3">
+      <label htmlFor={id} className="min-w-0 cursor-pointer">
+        <span className="block text-sm font-medium">{label}</span>
+        {hint && <span className="mt-0.5 block text-xs text-muted">{hint}</span>}
+      </label>
+      <button
+        id={id}
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        onClick={() => onChange(!checked)}
+        className={`relative mt-0.5 inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200 ${checked ? 'bg-primary' : 'bg-white/15'}`}
+      >
+        <span className={`inline-block size-5 rounded-full bg-white shadow transition-transform duration-200 ${checked ? 'translate-x-5' : 'translate-x-0.5'}`} />
+      </button>
+    </div>
+  );
+};

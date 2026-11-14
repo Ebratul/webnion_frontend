@@ -13,6 +13,8 @@ import { useChat } from './useChat';
 interface ChatWidgetProps {
   locale: Locale;
   t: Dictionary['chat'];
+  // Wording for the inquiry spam rules, such as the five-minute wait. Only the public site sends inquiries.
+  inquiryErrors?: Dictionary['inquiry']['errors'];
   config: AiPublicConfig;
   endpoint: string;
   storageKey: string;
@@ -22,7 +24,7 @@ interface ChatWidgetProps {
   admin?: boolean;
 }
 
-export const ChatWidget = ({ locale, t, config, endpoint, storageKey, aboveWhatsApp = false, admin = false }: ChatWidgetProps) => {
+export const ChatWidget = ({ locale, t, inquiryErrors, config, endpoint, storageKey, aboveWhatsApp = false, admin = false }: ChatWidgetProps) => {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
   const titleId = useId();
@@ -143,7 +145,7 @@ export const ChatWidget = ({ locale, t, config, endpoint, storageKey, aboveWhats
                       ))}
                     </p>
                   )}
-                  {message.inquiry?.state === 'open' && <InquiryCard proposal={message.inquiry} locale={locale} t={t} onDone={(state) => setInquiryState(index, state)} />}
+                  {message.inquiry?.state === 'open' && <InquiryCard proposal={message.inquiry} locale={locale} t={t} rules={inquiryErrors} onDone={(state) => setInquiryState(index, state)} />}
                   {message.inquiry?.state === 'sent' && <p className="mt-2 text-xs text-muted">{t.inquirySent}</p>}
                 </div>
               ),

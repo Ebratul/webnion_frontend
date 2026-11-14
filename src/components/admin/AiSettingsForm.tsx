@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useId, useState, type FormEvent, type ReactNode } from 'react';
 import { MODEL_EXAMPLES, providerLabel, SLOTS, type AiSettingsData, type MaskedSlot, type ModelSlot, type SiteTextDocument } from '@/lib/admin/ai';
 import { ADMIN_LOGIN_PATH } from '@/lib/admin/constants';
-import { inputClass, labelClass } from './fields';
+import { inputClass, labelClass, Toggle } from './fields';
 import { cardClass, cardPadding, quietButton, SaveBar } from './ui';
 
 type Settings = AiSettingsData['settings'];
@@ -63,28 +63,6 @@ const Card = ({ title, description, children, aside }: { title: string; descript
     <div className="mt-6">{children}</div>
   </section>
 );
-
-const Toggle = ({ label, hint, checked, onChange }: { label: string; hint?: string; checked: boolean; onChange: (value: boolean) => void }) => {
-  const id = useId();
-  return (
-    <div className="flex items-start justify-between gap-4 rounded-xl border border-line bg-surface-2/50 px-4 py-3">
-      <label htmlFor={id} className="min-w-0 cursor-pointer">
-        <span className="block text-sm font-medium">{label}</span>
-        {hint && <span className="mt-0.5 block text-xs text-muted">{hint}</span>}
-      </label>
-      <button
-        id={id}
-        type="button"
-        role="switch"
-        aria-checked={checked}
-        onClick={() => onChange(!checked)}
-        className={`relative mt-0.5 inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200 ${checked ? 'bg-primary' : 'bg-white/15'}`}
-      >
-        <span className={`inline-block size-5 rounded-full bg-white shadow transition-transform duration-200 ${checked ? 'translate-x-5' : 'translate-x-0.5'}`} />
-      </button>
-    </div>
-  );
-};
 
 const Field = ({ label, hint, children, id }: { label: string; hint?: string; children: ReactNode; id: string }) => (
   <div>

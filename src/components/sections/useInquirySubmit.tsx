@@ -4,6 +4,7 @@ import { useRef, useState, type FormEvent } from 'react';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
 import { toAsciiDigits } from '@/lib/format';
+import { inquiryRuleMessage, type InquiryErrorBody } from '@/lib/inquiryErrors';
 
 export type InquiryField = 'name' | 'email' | 'phone' | 'message';
 type FieldErrors = Partial<Record<InquiryField, string>>;
@@ -65,12 +66,18 @@ export const useInquirySubmit = (locale: Locale, messages: Dictionary['inquiry']
       }
 
       setStatus('idle');
+      const body: InquiryErrorBody & { errors?: { path: string }[] } = await response.json().catch(() => ({}));
+      // A spam rule a real person can fix, such as sending twice within five minutes
+      const rule = inquiryRuleMessage(body, messages, locale);
+      if (rule) {
+        setFormError(rule);
+        return;
+      }
       if (response.status === 429) {
         setFormError(messages.rateLimited);
         return;
       }
 
-      const body: { errors?: { path: string }[] } = await response.json().catch(() => ({}));
       const fromServer: FieldErrors = {};
       for (const { path } of body.errors ?? []) {
         if ((FIELD_ORDER as string[]).includes(path)) fromServer[path as InquiryField] = messages[path as InquiryField];

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
-import { InfiniteGrid } from '@/components/ui/InfiniteGrid';
+import { ShowMoreGrid } from '@/components/ui/ShowMoreGrid';
 import { ProjectCard } from '@/components/ui/ProjectCard';
 import { isLocale } from '@/i18n/config';
 import { getHomeData } from '@/lib/api';
@@ -78,7 +78,7 @@ export default async function ProjectsPage({ params, searchParams }: PageProps) 
           <p className="py-16 text-center text-muted">{t.empty}</p>
         ) : (
           // A new filter starts again from the first twelve
-          <InfiniteGrid key={active ?? 'all'} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" moreLabel={t.showMore} statusLabel={t.showing}>
+          <ShowMoreGrid key={active ?? 'all'} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3" moreLabel={t.showMore} statusLabel={t.showing} locale={locale}>
             {projects.map((project, index) => (
               <li key={project.id} className="reveal">
                 <ProjectCard
@@ -91,7 +91,7 @@ export default async function ProjectsPage({ params, searchParams }: PageProps) 
                 />
               </li>
             ))}
-          </InfiniteGrid>
+          </ShowMoreGrid>
         )}
       </div>
     </PageShell>

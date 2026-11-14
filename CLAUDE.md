@@ -19,7 +19,8 @@ src/app/[locale]/services/[slug], project/[slug], case-studies/[slug]   Detail p
 src/app/[locale]/contact  Contact page, with the longer project form
 src/app/[locale]/team     Team page, with a card for each member from the homepage data
 src/app/[locale]/service, project, products, case-studies   Listing pages. Filters live in the address, so results can be shared.
-                        Portfolio and Blog show 12 cards and add 12 more on scroll (`InfiniteGrid`); Portfolio filters by `typeKey`
+                        Portfolio, Case Studies and Blog show 12 cards and a See More button that adds 12 (`ShowMoreGrid`). Cards
+                        it adds rise row by row (`data-enter` in globals.css). Their pictures use `CardCover`, which never crops
 src/app/admin           Admin panel with its own root layout. Screens are built from lib/admin/resources.ts
 src/app/api/admin       Login, logout and a proxy that adds the token from an httpOnly cookie to API calls
 src/proxy.ts            Redirects / to /en or /bn using the cookie, then Accept-Language. Gates /admin
@@ -51,6 +52,8 @@ src/lib                 API client, types, formatters and contact details
   `/ai/chat` directly and reads Server-Sent Events. Answers are rendered by `ChatMarkdown` as React elements, never HTML,
   with links kept only for site paths and https. An inquiry the assistant proposes is shown in `InquiryCard` and sent
   only when the visitor presses Send. The admin panel has its own chat through `/api/admin/ai/chat/admin`.
+- Inquiries: the contact form and chat show the API's spam-rule refusals (`code` such as `INQUIRY_COOLDOWN`) in the visitor's
+  language through `lib/inquiryErrors.ts`. Admins edit the rules under Leads → Spam Filter and can block a sender from an inquiry.
 - Blog posts are edited in `BlogPostForm` (writing column, publishing card, a sticky "Ready to publish" checklist, search preview),
   not the generic `ResourceForm`. It still uses the blog-posts entry in `lib/admin/resources.ts` for loading and saving.
 - Admin AI screens: AI Settings (`AiSettingsForm`, keys are typed but never shown back), AI Studio (`AiStudio`: outline,

@@ -25,7 +25,7 @@ export const PageShell = async ({ locale, children }: { locale: Locale; children
       <Footer locale={locale} t={t.footer} nav={t.nav} label={t.a11y.footerNav} contact={contact} brand={brand} navigation={navigation} />
       {options.whatsappButton && <WhatsAppButton label={t.a11y.whatsapp} href={contact.whatsapp} />}
       {assistant.available && (
-        <ChatWidget locale={locale} t={t.chat} config={assistant} endpoint={`${process.env.NEXT_PUBLIC_API_URL}/ai/chat`} storageKey={`webnion-chat-${locale}`} aboveWhatsApp={options.whatsappButton} />
+        <ChatWidget locale={locale} t={t.chat} inquiryErrors={t.inquiry.errors} config={assistant} endpoint={`${process.env.NEXT_PUBLIC_API_URL}/ai/chat`} storageKey={`webnion-chat-${locale}`} aboveWhatsApp={options.whatsappButton} />
       )}
     </>
   );

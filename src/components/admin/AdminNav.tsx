@@ -5,6 +5,7 @@ import {
   BarChart3,
   Bot,
   Newspaper,
+  ShieldBan,
   Sparkles,
   Building2,
   Camera,
@@ -61,7 +62,8 @@ const ICONS: Record<string, LucideIcon> = {
 };
 
 // Screens that are not lists of records
-const EXTRA_LINKS: { group: Resource['group']; href: string; label: string; Icon: LucideIcon; adminOnly?: boolean }[] = [
+// `last` puts a screen after the group's record lists, such as Spam Filter under Inquiries
+const EXTRA_LINKS: { group: Resource['group']; href: string; label: string; Icon: LucideIcon; adminOnly?: boolean; last?: boolean }[] = [
   { group: 'Website', href: '/admin/homepage', label: 'Homepage', Icon: House },
   { group: 'Website', href: '/admin/brand', label: 'Brand', Icon: Palette },
   { group: 'Website', href: '/admin/navigation', label: 'Menu & Footer', Icon: PanelsTopLeft },
@@ -69,6 +71,7 @@ const EXTRA_LINKS: { group: Resource['group']; href: string; label: string; Icon
   { group: 'Website', href: '/admin/website-text', label: 'Website Text', Icon: Type },
   { group: 'Website', href: '/admin/settings', label: 'Contact & Links', Icon: SlidersHorizontal },
   { group: 'Content', href: '/admin/ai-studio', label: 'AI Studio', Icon: Sparkles },
+  { group: 'Leads', href: '/admin/spam-filter', label: 'Spam Filter', Icon: ShieldBan, last: true },
   { group: 'Settings', href: '/admin/ai-settings', label: 'AI Settings', Icon: Bot, adminOnly: true },
   { group: 'Settings', href: '/admin/ai-usage', label: 'AI Usage', Icon: BarChart3, adminOnly: true },
   { group: 'Settings', href: '/admin/activity', label: 'Activity Log', Icon: History, adminOnly: true },
@@ -96,13 +99,14 @@ export const AdminNav = ({ user, newInquiries, brand }: { user: AdminUser; newIn
   const sections = GROUPS.map((group) => ({
     group,
     items: [
-      ...EXTRA_LINKS.filter((link) => link.group === group && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
+      ...EXTRA_LINKS.filter((link) => link.group === group && !link.last && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
       ...RESOURCES.filter((resource) => resource.group === group && (!resource.adminOnly || isAdmin)).map((resource) => ({
         href: `/admin/${resource.key}`,
         label: resource.label,
         Icon: ICONS[resource.key] ?? FileText,
         badge: resource.key === 'inquiries' && newInquiries > 0 ? newInquiries : null,
       })),
+      ...EXTRA_LINKS.filter((link) => link.group === group && link.last && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
     ],
   })).filter((section) => section.items.length > 0);
 

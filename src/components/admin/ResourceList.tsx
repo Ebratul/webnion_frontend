@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState, useTransition } from 'react';
 import { getResource } from '@/lib/admin/resources';
+import { BlockSenderButton } from './BlockSenderButton';
 import { inputClass } from './fields';
 import { cardClass, EmptyState, primaryButton } from './ui';
 
@@ -153,6 +154,7 @@ export const ResourceList = ({ resourceKey, rows }: { resourceKey: string; rows:
                     <Link href={`/admin/${resource.key}/${row.id}`} aria-label={`Edit ${resource.rowTitle(row)}`} className={rowAction}>
                       <Pencil aria-hidden className="size-4" />
                     </Link>
+                    {resource.key === 'inquiries' && typeof row.email === 'string' && <BlockSenderButton id={row.id} email={row.email} compact onError={setError} />}
                     {resource.canDelete && (
                       <button type="button" onClick={() => setConfirming(row.id)} aria-label={`Delete ${resource.rowTitle(row)}`} className={`${rowAction} hover:text-red-400`}>
                         <Trash2 aria-hidden className="size-4" />

@@ -5,18 +5,17 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { PageShell } from '@/components/layout/PageShell';
-import { Pagination } from '@/components/ui/Pagination';
-import { imageCardBodyClass, imageCardClass } from '@/components/ui/imageCard';
+import { CardCover } from '@/components/ui/CardCover';
+import { ShowMoreGrid } from '@/components/ui/ShowMoreGrid';
+import { coverCardBodyClass, imageCardClass } from '@/components/ui/imageCard';
 import { isLocale } from '@/i18n/config';
 import { getCaseStudies } from '@/lib/api';
 import { formatDayMonth } from '@/lib/format';
 import { getSiteDictionary } from '@/lib/siteSettings';
 
-const PAGE_SIZE = 6;
-
 type PageProps = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ page?: string; category?: string }>;
+  searchParams: Promise<{ category?: string }>;
 };
 
 export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
@@ -36,25 +35,13 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const { page: pageParam, category } = await searchParams;
+  const { category } = await searchParams;
   const dictionary = await getSiteDictionary(locale);
   const t = dictionary.caseStudiesPage;
   const basePath = `/${locale}/case-studies`;
 
   const all = await getCaseStudies(locale);
-  const matching = category ? all.filter((study) => study.category === category) : all;
-  const pageCount = Math.max(Math.ceil(matching.length / PAGE_SIZE), 1);
-  const requested = Number.parseInt(pageParam ?? '1', 10);
-  const page = Number.isNaN(requested) ? 1 : Math.min(Math.max(requested, 1), pageCount);
-  const studies = matching.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
-  const hrefFor = (target: number) => {
-    const query = new URLSearchParams();
-    if (category) query.set('category', category);
-    if (target > 1) query.set('page', String(target));
-    const text = query.toString();
-    return text ? `${basePath}?${text}` : basePath;
-  };
+  const studies = category ? all.filter((study) => study.category === category) : all;
 
   return (
     <PageShell locale={locale}>
@@ -72,33 +59,23 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
         {studies.length === 0 ? (
           <p className="py-16 text-center text-muted">{t.empty}</p>
         ) : (
-          <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          // A new category starts again from the first twelve
+          <ShowMoreGrid key={category ?? 'all'} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3" moreLabel={t.showMore} statusLabel={t.showing} locale={locale}>
             {studies.map((study, index) => {
               const href = `${basePath}/${study.slug}`;
               const date = study.publishedAt ? formatDayMonth(study.publishedAt, locale) : null;
               return (
                 <li key={study.id} className="reveal">
                   <article className={`group ${imageCardClass}`}>
-                    <div className="relative">
-                      <Link href={href} tabIndex={-1} aria-hidden className="block">
-                        <Image
-                          src={study.image}
-                          alt=""
-                          width={900}
-                          height={580}
-                          priority={index < 3}
-                          sizes="(min-width: 1024px) 420px, (min-width: 768px) 50vw, 100vw"
-                          className="aspect-[3/2] w-full object-cover"
-                        />
-                      </Link>
+                    <CardCover src={study.image} href={href} priority={index < 3} wide>
                       {date && (
                         <p className="absolute left-4 top-4 rounded-xl bg-black/70 px-3 py-1.5 text-center text-white backdrop-blur">
                           <span className="block text-lg font-semibold leading-none">{date.day}</span>
                           <span className="mt-1 block text-[0.6875rem] font-medium uppercase leading-none">{date.month}</span>
                         </p>
                       )}
-                    </div>
-                    <div className={imageCardBodyClass}>
+                    </CardCover>
+                    <div className={coverCardBodyClass}>
                       <Link
                         href={`${basePath}?category=${encodeURIComponent(study.category)}`}
                         scroll={false}
@@ -129,10 +106,8 @@ export default async function CaseStudiesPage({ params, searchParams }: PageProp
                 </li>
               );
             })}
-          </ul>
+          </ShowMoreGrid>
         )}
-
-        <Pagination page={page} pageCount={pageCount} hrefFor={hrefFor} locale={locale} label={t.pageLabel} previous={t.previous} next={t.next} />
       </div>
     </PageShell>
   );

@@ -600,7 +600,7 @@ export const RESOURCES: Resource[] = [
     group: 'Leads',
     sortable: false,
     canCreate: false,
-    canDelete: false,
+    canDelete: true,
     // The contact form only requires an email, so a name may be missing
     rowTitle: (row) => text(row.name) || text(row.email),
     rowSubtitle: (row) => [text(row.email), text(row.phone)].filter(Boolean).join(' · '),
