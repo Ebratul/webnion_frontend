@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { BlogPostForm } from '@/components/admin/BlogPostForm';
 import { ResourceForm } from '@/components/admin/ResourceForm';
 import { PageHeader } from '@/components/admin/ui';
 import { getResource } from '@/lib/admin/resources';
@@ -24,8 +25,12 @@ export default async function AdminNewPage({ params }: PageProps) {
 
   return (
     <>
-      <PageHeader title={`New ${resource.singular}`} back={{ href: `/admin/${resource.key}`, label: resource.label }} />
-      <ResourceForm resourceKey={resource.key} nextSortOrder={nextSortOrder} />
+      <PageHeader
+        title={`New ${resource.singular}`}
+        description={resource.key === 'blog-posts' ? 'Write the article, add a cover, check the search preview, then publish or keep it as a draft.' : undefined}
+        back={{ href: `/admin/${resource.key}`, label: resource.label }}
+      />
+      {resource.key === 'blog-posts' ? <BlogPostForm /> : <ResourceForm resourceKey={resource.key} nextSortOrder={nextSortOrder} />}
     </>
   );
 }

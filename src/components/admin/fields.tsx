@@ -34,7 +34,7 @@ const uploadFile = (file: File, onProgress: (percent: number) => void) =>
     request.send(body);
   });
 
-const useUpload = (onUploaded: (path: string) => void) => {
+export const useUpload = (onUploaded: (path: string) => void) => {
   const [progress, setProgress] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -232,7 +232,7 @@ const BlockBody = ({ block, onChange, id, lang }: { block: Block; onChange: (blo
         value={block.items.join('\n')}
         onChange={(event) => onChange({ type: 'list', items: event.target.value.split('\n') })}
         placeholder="One item per line"
-        className={inputClass}
+        className={`${inputClass} min-h-[4.5rem] resize-none leading-relaxed [field-sizing:content]`}
       />
     );
   }
@@ -258,7 +258,7 @@ const BlockBody = ({ block, onChange, id, lang }: { block: Block; onChange: (blo
       value={block.text}
       onChange={(event) => onChange({ type: 'paragraph', text: event.target.value })}
       placeholder="Write a paragraph"
-      className={inputClass}
+      className={`${inputClass} min-h-[4.5rem] resize-none leading-relaxed [field-sizing:content]`}
     />
   );
 };
@@ -296,33 +296,49 @@ export const BlocksField = ({ value, onChange }: ValueProps<Record<'en' | 'bn', 
         <p className="mb-4 text-xs text-muted">Optional. While this is empty, the Bangla site shows the English article.</p>
       )}
 
-      <div className="space-y-3">
-        {blocks.map((block, index) => (
-          <div key={index} className="flex items-start gap-2">
-            <div className="min-w-0 flex-1">
-              <BlockBody
-                id={`${baseId}-${lang}-${index}`}
-                lang={lang}
-                block={block}
-                onChange={(next) => setBlocks(blocks.map((item, itemIndex) => (itemIndex === index ? next : item)))}
-              />
+      {blocks.length === 0 && (
+        <p className="rounded-xl border border-dashed border-white/15 px-5 py-8 text-center text-sm text-muted">
+          {lang === 'en' ? 'Nothing written yet. Start with a heading or a paragraph below.' : 'No Bangla blocks yet.'}
+        </p>
+      )}
+
+      <div className="space-y-2">
+        {blocks.map((block, index) => {
+          const kind = BLOCK_TYPES.find((item) => item.type === block.type)!;
+          return (
+            <div key={index} className="group flex items-start gap-2.5 rounded-xl p-1.5 transition-colors duration-200 focus-within:bg-white/[0.02] hover:bg-white/[0.02] sm:-mx-1.5">
+              <span title={kind.label} className="mt-1 hidden size-9 shrink-0 place-items-center rounded-lg border border-line text-muted transition-colors duration-200 group-focus-within:border-accent/40 group-focus-within:text-accent sm:grid">
+                <kind.Icon aria-hidden className="size-4" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <BlockBody
+                  id={`${baseId}-${lang}-${index}`}
+                  lang={lang}
+                  block={block}
+                  onChange={(next) => setBlocks(blocks.map((item, itemIndex) => (itemIndex === index ? next : item)))}
+                />
+              </div>
+              <div className="flex shrink-0 items-center">
+                <button type="button" disabled={index === 0} onClick={() => swap(index, index - 1)} aria-label="Move up" className={iconButton}>
+                  <ArrowUp aria-hidden className="size-4" />
+                </button>
+                <button type="button" disabled={index === blocks.length - 1} onClick={() => swap(index, index + 1)} aria-label="Move down" className={iconButton}>
+                  <ArrowDown aria-hidden className="size-4" />
+                </button>
+                <button type="button" onClick={() => setBlocks(blocks.filter((_, itemIndex) => itemIndex !== index))} aria-label="Remove block" className={`${iconButton} hover:text-red-400`}>
+                  <Trash2 aria-hidden className="size-4" />
+                </button>
+              </div>
             </div>
-            <div className="flex shrink-0 items-center">
-              <button type="button" disabled={index === 0} onClick={() => swap(index, index - 1)} aria-label="Move up" className={iconButton}>
-                <ArrowUp aria-hidden className="size-4" />
-              </button>
-              <button type="button" disabled={index === blocks.length - 1} onClick={() => swap(index, index + 1)} aria-label="Move down" className={iconButton}>
-                <ArrowDown aria-hidden className="size-4" />
-              </button>
-              <button type="button" onClick={() => setBlocks(blocks.filter((_, itemIndex) => itemIndex !== index))} aria-label="Remove block" className={iconButton}>
-                <Trash2 aria-hidden className="size-4" />
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-dashed border-white/12 p-2.5">
+        <span className="px-2 text-xs font-medium text-muted">
+          <Plus aria-hidden className="mr-1 inline size-3.5 align-[-2px]" />
+          Add
+        </span>
         {BLOCK_TYPES.map(({ type, label, Icon }) => (
           <button key={type} type="button" onClick={() => setBlocks([...blocks, emptyBlock(type)])} className={quietButton}>
             <Icon aria-hidden className="size-3.5" />

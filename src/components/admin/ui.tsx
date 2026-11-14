@@ -53,10 +53,12 @@ interface SaveBarProps {
   saved: boolean;
   error: string | null;
   label: string;
+  // Shown on the left while there is no error or saved message, such as "Unsaved changes"
+  note?: ReactNode;
 }
 
 // Stays in view on long forms. Its edges follow the page content beside the sidebar.
-export const SaveBar = ({ saving, saved, error, label }: SaveBarProps) => (
+export const SaveBar = ({ saving, saved, error, label, note }: SaveBarProps) => (
   <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-bg/90 backdrop-blur-xl lg:left-[17rem]">
     <div className="mx-auto flex max-w-6xl items-center justify-end gap-4 px-5 py-3 sm:px-8 lg:px-10">
       {error && <p role="alert" className="mr-auto text-xs text-red-400">{error}</p>}
@@ -66,6 +68,7 @@ export const SaveBar = ({ saving, saved, error, label }: SaveBarProps) => (
           Saved. The website is updated.
         </p>
       )}
+      {!error && !saved && note && <div className="mr-auto min-w-0">{note}</div>}
       <button type="submit" disabled={saving} className={primaryButton}>
         {saving ? 'Saving…' : label}
       </button>

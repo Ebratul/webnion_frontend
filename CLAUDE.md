@@ -48,6 +48,8 @@ src/lib                 API client, types, formatters and contact details
   `/ai/chat` directly and reads Server-Sent Events. Answers are rendered by `ChatMarkdown` as React elements, never HTML,
   with links kept only for site paths and https. An inquiry the assistant proposes is shown in `InquiryCard` and sent
   only when the visitor presses Send. The admin panel has its own chat through `/api/admin/ai/chat/admin`.
+- Blog posts are edited in `BlogPostForm` (writing column, publishing card, a sticky "Ready to publish" checklist, search preview),
+  not the generic `ResourceForm`. It still uses the blog-posts entry in `lib/admin/resources.ts` for loading and saving.
 - Admin AI screens: AI Settings (`AiSettingsForm`, keys are typed but never shown back), AI Studio (`AiStudio`: outline,
   draft, pictures, Bangla), AI Usage, and the Blog resource. The admin proxy allows `ai` and `blog-posts` and has a
   five-minute limit for AI Studio. AI Settings sends the built-in site text (`lib/admin/siteTextDocuments.ts`) to the API
