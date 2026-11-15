@@ -19,8 +19,9 @@ src/app/[locale]/services/[slug], project/[slug], case-studies/[slug]   Detail p
 src/app/[locale]/contact  Contact page, with the longer project form
 src/app/[locale]/team     Team page, with a card for each member from the homepage data
 src/app/[locale]/service, project, products, case-studies   Listing pages. Filters live in the address, so results can be shared.
-                        Portfolio, Case Studies and Blog show 12 cards and a See More button that adds 12 (`ShowMoreGrid`). Cards
-                        it adds rise row by row (`data-enter` in globals.css). Their pictures use `CardCover`, which never crops
+                        Portfolio, Case Studies and Blog show 12 cards and a plain-text See More that adds 12 (`ShowMoreGrid`). Each
+                        row rises in as it scrolls into view (`.show-more-grid` in globals.css); cards added while on screen rise row by
+                        row on a timer (`data-enter`). Their pictures use `CardCover`, which never crops
 src/app/admin           Admin panel with its own root layout. Screens are built from lib/admin/resources.ts
 src/app/api/admin       Login, logout and a proxy that adds the token from an httpOnly cookie to API calls
 src/proxy.ts            Redirects / to /en or /bn using the cookie, then Accept-Language. Gates /admin

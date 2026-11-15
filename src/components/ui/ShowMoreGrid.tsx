@@ -54,17 +54,21 @@ export const ShowMoreGrid = ({ children, className, step = 12, moreLabel, status
 
   return (
     <>
-      <ul ref={list} className={className}>{items.slice(0, shown)}</ul>
+      <ul ref={list} className={`show-more-grid ${className}`}>{items.slice(0, shown)}</ul>
       {total > step && (
-        <div className="mt-12 flex flex-col items-center gap-3">
+        <div className="mt-14 flex flex-col items-center gap-2">
+          {/* Plain text rather than a button shape, with a line that draws in under it on hover */}
           {shown < total && (
             <button
               type="button"
               onClick={more}
-              className="group/more inline-flex min-h-12 items-center gap-2.5 rounded-full border border-line bg-surface/60 px-7 text-sm font-semibold backdrop-blur transition-[border-color,color,background-color,box-shadow] duration-300 hover:border-primary hover:bg-primary hover:text-white hover:shadow-[0_14px_32px_-14px_var(--primary)]"
+              className="group/more relative inline-flex min-h-11 items-center gap-2 px-2 text-[0.9375rem] font-semibold tracking-wide transition-colors duration-300 hover:text-accent focus-visible:text-accent"
             >
-              {moreLabel}
-              <ArrowDown aria-hidden className="size-4 transition-transform duration-300 group-hover/more:translate-y-0.5 motion-reduce:transition-none" />
+              <span className="relative">
+                {moreLabel}
+                <span aria-hidden className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-current transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/more:scale-x-100 group-focus-visible/more:scale-x-100" />
+              </span>
+              <ArrowDown aria-hidden className="see-more-arrow size-4" />
             </button>
           )}
           <p aria-live="polite" className="text-xs tabular-nums text-muted">

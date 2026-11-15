@@ -788,21 +788,55 @@
   }
 }
 
-/* Cards added by See More rise in row by row. ShowMoreGrid sets data-enter and --row on the ones already on screen. */
+/* Portfolio, Case Studies and Blog lists (ShowMoreGrid): each row rises and fades in as it scrolls into view. Cards in one
+   row share their top edge, so a whole row moves together. Opacity and transform only, so it stays on the compositor. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .show-more-grid > li {
+      animation: grid-rise linear backwards;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+  }
+}
+
+@keyframes grid-rise {
+  from {
+    opacity: 0;
+    transform: translateY(64px) scale(0.96);
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Cards added by See More that are already on screen rise in row by row on a timer instead. ShowMoreGrid sets data-enter
+   and --row. Comes after the scroll rule so it wins. */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal[data-enter],
-  [data-enter] {
-    animation: grid-enter 800ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
-    animation-delay: calc(var(--row, 0) * 140ms);
+  .show-more-grid > li[data-enter] {
+    animation: grid-enter 900ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: calc(var(--row, 0) * 160ms);
     animation-timeline: auto;
     animation-range: normal;
+  }
+
+  .see-more-arrow {
+    animation: see-more-nudge 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 }
 
 @keyframes grid-enter {
   from {
     opacity: 0;
-    transform: translateY(32px) scale(0.98);
+    transform: translateY(40px) scale(0.97);
+  }
+}
+
+@keyframes see-more-nudge {
+  0%,
+  100% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(3px);
   }
 }
 
