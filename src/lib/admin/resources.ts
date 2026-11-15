@@ -85,7 +85,7 @@ export const RESOURCES: Resource[] = [
         fields: [
           { name: 'name', label: 'Project name', type: 'text', required: true },
           { name: 'slug', label: 'Page address', type: 'slug', from: 'name', required: true, hint: 'Used in the link: /project/this-text' },
-          { name: 'category', label: 'Category', type: 'localized', required: true, hint: 'Shown on the card. For example: E-commerce Website' },
+          { name: 'category', label: 'Category', type: 'localized', required: true, hint: 'Shown on the card, and decides the Portfolio filter: words like e-commerce or shop go under E-commerce, school, academy or learning under School, landing under Landing Page, and anything else under Business. For example: E-commerce Website' },
           { name: 'image', label: 'Project image', type: 'image', required: true, hint: 'Square works best, at least 800 × 800 px.' },
         ],
       },

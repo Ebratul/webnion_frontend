@@ -21,7 +21,9 @@ src/app/[locale]/team     Team page, with a card for each member from the homepa
 src/app/[locale]/service, project, products, case-studies   Listing pages. Filters live in the address, so results can be shared.
                         Portfolio, Case Studies and Blog show 12 cards and a plain-text See More that adds 12 (`ShowMoreGrid`). Each
                         row rises in as it scrolls into view (`.show-more-grid` in globals.css); cards added while on screen rise row by
-                        row on a timer (`data-enter`). Their pictures use `CardCover`, which never crops
+                        row on a timer (`data-enter`). Their pictures use `CardCover`, which never crops.
+                        Portfolio filters by kind (E-commerce, Business, School, Landing Page), read from each project's
+                        Category words in `lib/projectTypes.ts`, so there is no separate field
 src/app/admin           Admin panel with its own root layout. Screens are built from lib/admin/resources.ts
 src/app/api/admin       Login, logout and a proxy that adds the token from an httpOnly cookie to API calls
 src/proxy.ts            Redirects / to /en or /bn using the cookie, then Accept-Language. Gates /admin
