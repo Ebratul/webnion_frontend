@@ -68,6 +68,9 @@ src/lib                 API client, types, formatters and contact details
   draft, pictures, Bangla), AI Usage, and the Blog resource. The admin proxy allows `ai` and `blog-posts` and has a
   five-minute limit for AI Studio. AI Settings sends the built-in site text (`lib/admin/siteTextDocuments.ts`) to the API
   so the assistant can answer from it.
+- Email & Storage (`/admin/email-storage`, admins only, `EmailStorageForm`): the SMTP server and Cloudinary, saved through
+  the API's `/integrations` after it checks them. Passwords are typed but never shown back. Contact & Links links here when
+  no email server is set up.
 - The inquiry form lives in a dialog (`InquiryDialog`). Links that preselect a service use `ServiceLink`, which opens it.
 
 ## Git

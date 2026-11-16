@@ -24,6 +24,7 @@ const ALLOWED_RESOURCES = new Set([
   'uploads',
   'blog-posts',
   'ai',
+  'integrations',
 ]);
 
 // AI Studio writes a long article in one streamed request
@@ -63,8 +64,8 @@ const forward = async (request: NextRequest, { params }: RouteContext) => {
 
   if (upstream.status === 401) store.delete(ADMIN_COOKIE);
   // Chats, tests and searches change nothing on the public site. AI settings do: they turn the chat button on or off.
-  // Inquiries and the spam filter never show on the public site either.
-  const changesSite = path[0] === 'ai' ? path[1] === 'settings' && path.length === 2 : path[0] !== 'uploads' && path[0] !== 'inquiries';
+  // Inquiries, the spam filter and Email & Storage never show on the public site either.
+  const changesSite = path[0] === 'ai' ? path[1] === 'settings' && path.length === 2 : path[0] !== 'uploads' && path[0] !== 'inquiries' && path[0] !== 'integrations';
   if (hasBody && upstream.ok && changesSite) refreshPublicPages();
 
   return new Response(upstream.body, {

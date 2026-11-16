@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { ADMIN_LOGIN_PATH } from '@/lib/admin/constants';
@@ -189,7 +190,8 @@ export const SettingsForm = ({ contact: initialContact, images: initialImages, o
         <p className="mt-1 text-sm text-muted">Who gets an email when someone sends an inquiry. Every inquiry is also kept under Inquiries.</p>
         {!mailConfigured && (
           <p role="status" className="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-amber-200">
-            No email service is connected to the website yet, so no emails are sent. Inquiries still arrive under Inquiries. Ask your developer to connect one, for example Resend or a Gmail app password.
+            No email server is set up yet, so no emails are sent. Inquiries still arrive under Inquiries. Set one up under{' '}
+            <Link href="/admin/email-storage" className="font-medium text-white underline underline-offset-2">Settings → Email &amp; Storage</Link>, for example with a Gmail app password.
           </p>
         )}
         <div className="mt-6 max-w-md">
