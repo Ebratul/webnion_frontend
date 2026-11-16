@@ -23,6 +23,7 @@ export const TEXT_GROUPS: { key: string; label: string; hint: string }[] = [
   { key: 'projectDetail', label: 'Project Details', hint: 'Labels on each project page.' },
   { key: 'caseStudiesPage', label: 'Case Studies Page', hint: 'The page listing all case studies.' },
   { key: 'caseStudyDetail', label: 'Case Study Details', hint: 'Labels on each case study.' },
+  { key: 'reviewsPage', label: 'Reviews Page', hint: 'Title, headings and labels on the Reviews page. The reviews themselves are under Customer Reviews.' },
   { key: 'productsPage', label: 'Products Page', hint: 'Headings, filters and labels.' },
   { key: 'teamPage', label: 'Team Page', hint: 'The top of the team page.' },
   { key: 'team', label: 'Team Page Section', hint: 'The heading above the team cards.' },
@@ -37,7 +38,7 @@ const words = (key: string) => key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/
 
 // Text that is edited on another screen, so it is left out here: menu links and offices under Menu & Footer, budget
 // choices under Contact & Links
-export const TEXT_EDITED_ELSEWHERE = /^(nav\.(services|portfolio|products|pricing|caseStudies|contact|team)|footer\.(serviceLinks\..*|bangladesh|bangladeshAddress|italy|italyAddress)|contactPage\.form\.budgets\..*)$/;
+export const TEXT_EDITED_ELSEWHERE = /^(nav\.(services|portfolio|products|pricing|caseStudies|reviews|contact|team)|footer\.(serviceLinks\..*|bangladesh|bangladeshAddress|italy|italyAddress)|contactPage\.form\.budgets\..*)$/;
 
 // hero.titleLines.0 becomes "Title Lines 1"
 export const textLabel = (path: string) => {
