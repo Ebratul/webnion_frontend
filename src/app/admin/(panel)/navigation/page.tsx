@@ -4,7 +4,7 @@ import { PageHeader } from '@/components/admin/ui';
 import { getDictionary } from '@/i18n';
 import type { LocalizedValue } from '@/lib/admin/resources';
 import { adminFetch } from '@/lib/admin/session';
-import { defaultCompanyLinks, defaultNavigation } from '@/lib/navigation';
+import { defaultCompanyLinks, defaultNavigation, withNewPages } from '@/lib/navigation';
 import { DEFAULT_CONTACT } from '@/lib/site';
 import type { SiteSettings } from '@/lib/siteSettings';
 import { applyTextOverrides } from '@/lib/siteText';
@@ -18,8 +18,8 @@ export default async function NavigationPage() {
   const bn = applyTextOverrides(getDictionary('bn'), settings.text.bn);
   const contact = { ...DEFAULT_CONTACT, ...settings.contact };
   const saved = settings.navigation;
-  // Menus saved before the Company column existed start it from its default links
-  const initial = saved ? { ...saved, footerCompany: saved.footerCompany ?? defaultCompanyLinks(en, bn, contact) } : defaultNavigation(en, bn, contact);
+  // Menus saved before the Company column existed start it from its default links, and new pages show as the site does
+  const initial = saved ? withNewPages({ ...saved, footerCompany: saved.footerCompany ?? defaultCompanyLinks(en, bn, contact) }, en, bn) : defaultNavigation(en, bn, contact);
 
   return (
     <>

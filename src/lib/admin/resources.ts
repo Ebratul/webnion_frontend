@@ -115,7 +115,7 @@ export const RESOURCES: Resource[] = [
     key: 'testimonials',
     label: 'Customer Reviews',
     singular: 'Review',
-    description: 'Video reviews and screenshots of client messages.',
+    description: 'Video reviews and screenshots of client messages, shown on the homepage and the Reviews page.',
     apiPath: '/testimonials',
     listPath: '/testimonials/all',
     group: 'Content',
@@ -137,7 +137,7 @@ export const RESOURCES: Resource[] = [
             required: true,
             options: [
               { value: 'VIDEO', label: 'Video review' },
-              { value: 'RESULT', label: 'Client message screenshot' },
+              { value: 'RESULT', label: 'Image review (screenshot of a client message)' },
             ],
           },
           {
@@ -154,8 +154,8 @@ export const RESOURCES: Resource[] = [
       {
         title: 'Customer',
         fields: [
-          { name: 'name', label: 'Customer name', type: 'text', required: true },
-          { name: 'role', label: 'Role or business', type: 'localized', required: true, hint: 'For example: Supermarket Owner' },
+          { name: 'name', label: 'Client name', type: 'text', required: true },
+          { name: 'role', label: 'Company or business', type: 'localized', required: true, hint: 'Shown under the name on every review. For example: Salt Food Mart, or Owner, Salt Food Mart' },
           { name: 'avatar', label: 'Photo or logo', type: 'image' },
         ],
       },

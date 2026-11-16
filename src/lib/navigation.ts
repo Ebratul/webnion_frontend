@@ -28,6 +28,8 @@ export interface NavigationSettings {
   footerServices: NavLink[];
   socials: { network: SocialNetwork; url: string }[];
   offices: { name: LocalizedValue; address: LocalizedValue }[];
+  // New pages the site has already put in this saved menu (see NEW_PAGES), so one the admin removed stays removed
+  offered?: string[];
 }
 
 const both = (en: string, bn: string): LocalizedValue => ({ en, bn });
@@ -50,6 +52,7 @@ export const defaultNavigation = (en: Dictionary, bn: Dictionary, contact: Conta
       { label: nav('products'), href: '/products' },
       { label: nav('pricing'), href: '/pricing' },
       { label: nav('caseStudies'), href: '/case-studies' },
+      { label: nav('reviews'), href: '/reviews' },
       { label: nav('contact'), href: '/contact' },
       { label: nav('team'), href: '/team' },
     ],
@@ -69,7 +72,35 @@ export const defaultNavigation = (en: Dictionary, bn: Dictionary, contact: Conta
       { name: both(en.footer.bangladesh, bn.footer.bangladesh), address: both(en.footer.bangladeshAddress, bn.footer.bangladeshAddress) },
       { name: both(en.footer.italy, bn.footer.italy), address: both(en.footer.italyAddress, bn.footer.italyAddress) },
     ],
+    offered: NEW_PAGES.map((page) => page.key),
   };
+};
+
+// Pages added after the owner first saved the menu. Each is put into a saved header menu once, after the link named in
+// `after` (or before Contact), and noted in `offered`, so removing it in Menu & Footer keeps it removed.
+const NEW_PAGES = [{ key: 'reviews', href: '/reviews', label: 'reviews', after: '/case-studies' }] as const satisfies {
+  key: string;
+  href: string;
+  label: keyof Dictionary['nav'];
+  after: string;
+}[];
+
+const HEADER_LIMIT = 12;
+
+export const withNewPages = (navigation: NavigationSettings, en: Dictionary, bn: Dictionary): NavigationSettings => {
+  const offered = navigation.offered ?? [];
+  const pending = NEW_PAGES.filter((page) => !offered.includes(page.key));
+  if (pending.length === 0) return navigation;
+
+  const header = [...navigation.header];
+  for (const page of pending) {
+    if (header.length >= HEADER_LIMIT || header.some((link) => link.href === page.href)) continue;
+    const after = header.findIndex((link) => link.href === page.after);
+    const contact = header.findIndex((link) => link.href === '/contact');
+    const at = after >= 0 ? after + 1 : contact >= 0 ? contact : header.length;
+    header.splice(at, 0, { label: both(en.nav[page.label], bn.nav[page.label]), href: page.href });
+  }
+  return { ...navigation, header, offered: [...offered, ...pending.map((page) => page.key)] };
 };
 
 export const isExternal = (href: string) => /^(https?:|mailto:|tel:)/.test(href);

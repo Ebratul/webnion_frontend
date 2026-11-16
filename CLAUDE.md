@@ -18,6 +18,8 @@ src/app/[locale]        Root layout (fonts, <html lang>, theme script), page, er
 src/app/[locale]/services/[slug], project/[slug], case-studies/[slug]   Detail pages, fetched by slug from the API
 src/app/[locale]/contact  Contact page, with the longer project form
 src/app/[locale]/team     Team page, with a card for each member from the homepage data
+src/app/[locale]/reviews  Reviews page: Customer Reviews from the homepage data, videos first (`VideoReviews`), then message
+                        screenshots (`ImageReviews`, a viewer with arrows, arrow keys and swipe), client name and company under each
 src/app/[locale]/service, project, products, case-studies   Listing pages. Filters live in the address, so results can be shared.
                         Portfolio, Case Studies and Blog show 12 cards and a plain-text See More that adds 12 (`ShowMoreGrid`). Each
                         row rises in as it scrolls into view (`.show-more-grid` in globals.css); cards added while on screen rise row by
@@ -39,7 +41,7 @@ src/lib                 API client, types, formatters and contact details
 - Components are server components unless they need state. Interactive pieces are small separate client files.
 - Admin screens are English only, so their copy lives in `lib/admin/resources.ts` and the admin components, not the dictionaries.
 - Admin images are upload-only: `next/image` rejects unknown hosts, so a pasted link would break the public page.
-- Static copy comes from dictionaries, merged with admin edits by `getSiteDictionary` in `lib/siteSettings.ts`. Server code uses that one; `getDictionary` is for client error pages and the admin text screen. Contact details come from `getContact`, the name, logos and colour from `getBrand`, hidden homepage sections from `getHiddenSections` (keys in `lib/homeSections.ts`). Menus, footer links, social links and offices come from `getNavigation` (`lib/navigation.ts`); store links without the language (`/contact`, `#pricing`) and resolve them with `resolveHref`. Site options (WhatsApp button, budgets) come from `getOptions`.
+- Static copy comes from dictionaries, merged with admin edits by `getSiteDictionary` in `lib/siteSettings.ts`. Server code uses that one; `getDictionary` is for client error pages and the admin text screen. Contact details come from `getContact`, the name, logos and colour from `getBrand`, hidden homepage sections from `getHiddenSections` (keys in `lib/homeSections.ts`). Menus, footer links, social links and offices come from `getNavigation` (`lib/navigation.ts`); store links without the language (`/contact`, `#pricing`) and resolve them with `resolveHref`. A page added later goes in `NEW_PAGES`: `withNewPages` puts its link into a saved header menu once and records it in `offered`, so an admin who removes it keeps it removed. Site options (WhatsApp button, budgets) come from `getOptions`.
 - List content comes from `GET /home` in `lib/api.ts`, with ISR every 60 seconds.
 - `zoom` on `.site-zoom` shows the public site at 110% from 768px up. Divide screen-based sizes by `--page-zoom`, and convert `offsetWidth` when comparing it with pointer positions.
 - Links to homepage sections use `sectionHref`, so they also work from detail pages. Pages use `PageShell` for the header and footer.

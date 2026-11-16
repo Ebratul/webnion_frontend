@@ -5,7 +5,7 @@ import { getDictionary } from '@/i18n';
 import { REVALIDATE_SECONDS } from './api';
 import { DEFAULT_TAKA_PRICES, type TakaPrices } from './format';
 import { buildContact, DEFAULT_BRAND, DEFAULT_CONTACT, DEFAULT_IMAGES } from './site';
-import { defaultCompanyLinks, defaultNavigation, localizeLinks, type NavigationSettings } from './navigation';
+import { defaultCompanyLinks, defaultNavigation, localizeLinks, withNewPages, type NavigationSettings } from './navigation';
 import { DEFAULT_PRICING_PAGE, localizePricingPage, type PricingPageSettings } from './pricingPage';
 import { applyTextOverrides, type TextOverrides } from './siteText';
 
@@ -72,12 +72,12 @@ export const getOptions = cache(async () => {
 // Saved menus, or the ones the site showed before, in the current language
 export const getNavigationSettings = cache(async (): Promise<NavigationSettings> => {
   const settings = await getSettings();
-  if (settings.navigation?.footerCompany) return settings.navigation;
   const [en, bn] = await Promise.all([getSiteDictionary('en'), getSiteDictionary('bn')]);
   const contact = { ...DEFAULT_CONTACT, ...settings.contact };
-  // Menus saved before the Company column existed get its default links
-  if (settings.navigation) return { ...settings.navigation, footerCompany: defaultCompanyLinks(en, bn, contact) };
-  return defaultNavigation(en, bn, contact);
+  const saved = settings.navigation;
+  if (!saved) return defaultNavigation(en, bn, contact);
+  // Menus saved before the Company column existed get its default links, and pages added since then get their link once
+  return withNewPages({ ...saved, footerCompany: saved.footerCompany ?? defaultCompanyLinks(en, bn, contact) }, en, bn);
 });
 
 export const getNavigation = cache(async (locale: Locale) => {

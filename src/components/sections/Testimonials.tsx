@@ -1,10 +1,10 @@
-import { Star } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n';
-import { formatScore } from '@/lib/format';
 import type { Testimonial } from '@/lib/types';
 import { SectionHeading } from '../ui/SectionHeading';
+import { RatingSummary } from './RatingSummary';
 import { TestimonialGrid } from './TestimonialGrid';
 
 interface TestimonialsProps {
@@ -14,43 +14,30 @@ interface TestimonialsProps {
   testimonials: Testimonial[];
 }
 
-export const Testimonials = ({ locale, t, a11y, testimonials }: TestimonialsProps) => {
-  const avatars = testimonials.filter((item) => item.avatar).slice(0, 5);
+export const Testimonials = ({ locale, t, a11y, testimonials }: TestimonialsProps) => (
+  <section aria-labelledby="testimonials-title" className="pt-[var(--section-space)]">
+    <div className="container-page">
+      <SectionHeading id="testimonials-title" title={t.title} subtitle={t.subtitle} />
+    </div>
 
-  return (
-    <section aria-labelledby="testimonials-title" className="pt-[var(--section-space)]">
+    <div className="section-y mt-12 bg-[#f7f7fe] dark:bg-surface">
       <div className="container-page">
-        <SectionHeading id="testimonials-title" title={t.title} subtitle={t.subtitle} />
-      </div>
-
-      <div className="section-y mt-12 bg-[#f7f7fe] dark:bg-surface">
-        <div className="container-page">
-        <div className="reveal flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-          <div aria-hidden className="flex items-center">
-            {avatars.map((item) => (
-              <Image key={item.id} src={item.avatar!} alt="" width={36} height={36} sizes="36px" className="-ml-2 size-9 rounded-full border-2 border-white bg-white dark:border-bg object-cover first:ml-0" />
-            ))}
-            <span className="-ml-2 grid size-9 place-items-center rounded-full border-2 border-white bg-primary dark:border-bg text-[0.625rem] font-semibold text-white">{t.happyCount}</span>
-          </div>
-          {t.ratings.map((rating) => (
-            <p key={rating.label} className="flex items-center gap-2 text-sm">
-              <span className="font-medium">{rating.label}</span>
-              <span aria-hidden className="flex text-amber-400">
-                {Array.from({ length: 5 }, (_, index) => (
-                  <Star key={index} className="size-3.5 fill-current" />
-                ))}
-              </span>
-              <span className="sr-only">{a11y.rated}</span>
-              <span className="font-semibold tabular-nums">{formatScore(rating.score, locale)}</span>
-            </p>
-          ))}
-        </div>
+        <RatingSummary locale={locale} t={t} a11y={a11y} testimonials={testimonials} />
 
         <div className="mt-10">
           <TestimonialGrid testimonials={testimonials} t={t} a11y={a11y} />
         </div>
+
+        <div className="mt-10 text-center">
+          <Link href={`/${locale}/reviews`} className="group/all inline-flex min-h-11 items-center gap-2 px-2 text-[0.9375rem] font-semibold transition-colors duration-300 hover:text-accent">
+            <span className="relative">
+              {t.seeAll}
+              <span aria-hidden className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-current transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/all:scale-x-100 group-focus-visible/all:scale-x-100" />
+            </span>
+            <ArrowRight aria-hidden className="size-4 transition-transform duration-300 group-hover/all:translate-x-1" />
+          </Link>
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);

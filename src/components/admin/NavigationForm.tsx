@@ -122,6 +122,8 @@ export const NavigationForm = ({ initial, services }: { initial: NavigationSetti
       footerServices: links(nav.footerServices),
       socials: nav.socials.filter((social) => social.url.trim()).map((social) => ({ network: social.network, url: social.url.trim() })),
       offices: nav.offices.filter((office) => office.name.en.trim() || office.name.bn.trim()).map((office) => ({ name: cleanLabel(office.name), address: cleanLabel(office.address) })),
+      // Kept as loaded, so a new page's link that was removed here is not added back
+      offered: nav.offered ?? [],
     };
     setSaving(true);
     try {

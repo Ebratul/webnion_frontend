@@ -33,12 +33,14 @@ export const ShowMoreGrid = ({ children, className, step = 12, moreLabel, status
     added.current = null;
     if (from === null || !element) return;
 
-    const columns = Math.max(getComputedStyle(element).gridTemplateColumns.split(' ').filter(Boolean).length, 1);
     const fresh = [...element.children].slice(from) as HTMLElement[];
     const screen = window.innerHeight;
-    fresh.forEach((card, index) => {
-      if (card.getBoundingClientRect().top >= screen) return;
-      card.style.setProperty('--row', String(Math.floor(index / columns)));
+    // Rows are read from where the cards sit, so grids and centred, wrapping rows both work
+    const tops = [...new Set(fresh.map((card) => Math.round(card.getBoundingClientRect().top)))].sort((a, b) => a - b);
+    fresh.forEach((card) => {
+      const top = Math.round(card.getBoundingClientRect().top);
+      if (top >= screen) return;
+      card.style.setProperty('--row', String(tops.indexOf(top)));
       card.dataset.enter = '';
       card.addEventListener('animationend', () => delete card.dataset.enter, { once: true });
     });
