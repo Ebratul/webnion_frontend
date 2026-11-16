@@ -39,6 +39,9 @@ src/lib                 API client, types, formatters and contact details
 ## Conventions
 
 - Components are server components unless they need state. Interactive pieces are small separate client files.
+- Admin search (`AdminSearch`, Ctrl K / ⌘ K or "/"): screens and Website Text sections from `lib/admin/screens.ts` and
+  `textGroups.ts`, "New …" actions, every record and the site's own words, fetched once a minute from `/api/admin/search`.
+  A new admin screen goes in `ADMIN_SCREENS` with search keywords, so the sidebar and the search both show it.
 - Admin screens are English only, so their copy lives in `lib/admin/resources.ts` and the admin components, not the dictionaries.
 - Admin images are upload-only: `next/image` rejects unknown hosts, so a pasted link would break the public page.
 - Static copy comes from dictionaries, merged with admin edits by `getSiteDictionary` in `lib/siteSettings.ts`. Server code uses that one; `getDictionary` is for client error pages and the admin text screen. Contact details come from `getContact`, the name, logos and colour from `getBrand`, hidden homepage sections from `getHiddenSections` (keys in `lib/homeSections.ts`). Menus, footer links, social links and offices come from `getNavigation` (`lib/navigation.ts`); store links without the language (`/contact`, `#pricing`) and resolve them with `resolveHref`. A page added later goes in `NEW_PAGES`: `withNewPages` puts its link into a saved header menu once and records it in `offered`, so an admin who removes it keeps it removed. Site options (WhatsApp button, budgets) come from `getOptions`.

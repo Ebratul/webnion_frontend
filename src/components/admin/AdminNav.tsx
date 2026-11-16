@@ -1,81 +1,16 @@
 'use client';
 
-import {
-  BadgeDollarSign,
-  BarChart3,
-  Bot,
-  Newspaper,
-  ShieldBan,
-  Sparkles,
-  Building2,
-  Camera,
-  CircleHelp,
-  Cpu,
-  ExternalLink,
-  FileText,
-  FolderKanban,
-  History,
-  House,
-  Image as ImageIcon,
-  Inbox,
-  Layers,
-  LayoutDashboard,
-  LayoutPanelTop,
-  LogOut,
-  MessageSquareQuote,
-  Package,
-  Palette,
-  PanelsTopLeft,
-  SlidersHorizontal,
-  Tags,
-  Type,
-  UserCog,
-  Users,
-  type LucideIcon,
-} from 'lucide-react';
+import { ExternalLink, FileText, LayoutDashboard, LogOut } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { RESOURCES, type Resource } from '@/lib/admin/resources';
+import { ADMIN_SCREENS, RESOURCE_ICONS } from '@/lib/admin/screens';
+import { AdminSearch, AdminSearchButton } from './AdminSearch';
 import { ADMIN_LOGIN_PATH } from '@/lib/admin/constants';
 import type { AdminUser } from '@/lib/admin/session';
 
 const GROUPS: Resource['group'][] = ['Content', 'Website', 'Leads', 'Settings'];
-
-const ICONS: Record<string, LucideIcon> = {
-  projects: FolderKanban,
-  testimonials: MessageSquareQuote,
-  'case-studies': FileText,
-  products: Package,
-  services: Layers,
-  'hero-backgrounds': ImageIcon,
-  'pricing-plans': BadgeDollarSign,
-  faqs: CircleHelp,
-  team: Users,
-  clients: Building2,
-  'outcome-cards': LayoutPanelTop,
-  'delivery-stories': Camera,
-  technologies: Cpu,
-  inquiries: Inbox,
-  'blog-posts': Newspaper,
-  users: UserCog,
-};
-
-// Screens that are not lists of records
-// `last` puts a screen after the group's record lists, such as Spam Filter under Inquiries
-const EXTRA_LINKS: { group: Resource['group']; href: string; label: string; Icon: LucideIcon; adminOnly?: boolean; last?: boolean }[] = [
-  { group: 'Website', href: '/admin/homepage', label: 'Homepage', Icon: House },
-  { group: 'Website', href: '/admin/brand', label: 'Brand', Icon: Palette },
-  { group: 'Website', href: '/admin/navigation', label: 'Menu & Footer', Icon: PanelsTopLeft },
-  { group: 'Website', href: '/admin/pricing-page', label: 'Pricing Page', Icon: Tags },
-  { group: 'Website', href: '/admin/website-text', label: 'Website Text', Icon: Type },
-  { group: 'Website', href: '/admin/settings', label: 'Contact & Links', Icon: SlidersHorizontal },
-  { group: 'Content', href: '/admin/ai-studio', label: 'AI Studio', Icon: Sparkles },
-  { group: 'Leads', href: '/admin/spam-filter', label: 'Spam Filter', Icon: ShieldBan, last: true },
-  { group: 'Settings', href: '/admin/ai-settings', label: 'AI Settings', Icon: Bot, adminOnly: true },
-  { group: 'Settings', href: '/admin/ai-usage', label: 'AI Usage', Icon: BarChart3, adminOnly: true },
-  { group: 'Settings', href: '/admin/activity', label: 'Activity Log', Icon: History, adminOnly: true },
-];
 
 const linkClass = (active: boolean) =>
   `group/link relative flex min-h-10 items-center gap-3 whitespace-nowrap rounded-xl px-3 text-sm transition-colors duration-200 ${
@@ -99,14 +34,14 @@ export const AdminNav = ({ user, newInquiries, brand }: { user: AdminUser; newIn
   const sections = GROUPS.map((group) => ({
     group,
     items: [
-      ...EXTRA_LINKS.filter((link) => link.group === group && !link.last && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
+      ...ADMIN_SCREENS.filter((link) => link.group === group && !link.last && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
       ...RESOURCES.filter((resource) => resource.group === group && (!resource.adminOnly || isAdmin)).map((resource) => ({
         href: `/admin/${resource.key}`,
         label: resource.label,
-        Icon: ICONS[resource.key] ?? FileText,
+        Icon: RESOURCE_ICONS[resource.key] ?? FileText,
         badge: resource.key === 'inquiries' && newInquiries > 0 ? newInquiries : null,
       })),
-      ...EXTRA_LINKS.filter((link) => link.group === group && link.last && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
+      ...ADMIN_SCREENS.filter((link) => link.group === group && link.last && (!link.adminOnly || isAdmin)).map((link) => ({ ...link, badge: null })),
     ],
   })).filter((section) => section.items.length > 0);
 
@@ -118,6 +53,7 @@ export const AdminNav = ({ user, newInquiries, brand }: { user: AdminUser; newIn
           <span className="rounded-full bg-tint px-2 py-0.5 text-[0.6875rem] font-semibold uppercase tracking-wide text-accent">Admin</span>
         </Link>
         <div className="flex items-center gap-1 lg:hidden">
+          <AdminSearchButton compact />
           <a href="/en" target="_blank" rel="noopener noreferrer" aria-label="View Website" className="grid size-10 place-items-center rounded-xl text-muted transition-colors duration-200 hover:bg-white/[0.05] hover:text-white">
             <ExternalLink aria-hidden className="size-4" />
           </a>
@@ -126,6 +62,11 @@ export const AdminNav = ({ user, newInquiries, brand }: { user: AdminUser; newIn
           </button>
         </div>
       </div>
+
+      <div className="hidden px-4 pb-4 lg:block">
+        <AdminSearchButton />
+      </div>
+      <AdminSearch isAdmin={isAdmin} />
 
       <nav aria-label="Admin" className="no-scrollbar flex gap-1 overflow-x-auto px-3 pb-3 lg:block lg:flex-1 lg:space-y-6 lg:overflow-y-auto lg:px-4 lg:pb-6">
         <Link href="/admin" aria-current={pathname === '/admin' ? 'page' : undefined} className={linkClass(pathname === '/admin')}>

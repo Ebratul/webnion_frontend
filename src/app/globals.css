@@ -855,6 +855,24 @@
   }
 }
 
+/* Admin search: the box drops in softly when it opens */
+@media (prefers-reduced-motion: no-preference) {
+  .admin-search[open] {
+    animation: admin-search-in 220ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  .admin-search[open]::backdrop {
+    animation: review-backdrop-in 200ms ease-out backwards;
+  }
+}
+
+@keyframes admin-search-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
 @keyframes review-ring {
   0% {
     opacity: 0.9;

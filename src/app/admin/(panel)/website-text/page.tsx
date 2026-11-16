@@ -11,13 +11,13 @@ const editableText = (flat: ReturnType<typeof flattenText>) => Object.fromEntrie
 
 export const metadata: Metadata = { title: 'Website Text' };
 
-export default async function WebsiteTextPage({ searchParams }: { searchParams: Promise<{ group?: string }> }) {
-  const [settings, { group }] = await Promise.all([adminFetch<SiteSettings>('/site-settings'), searchParams]);
+export default async function WebsiteTextPage({ searchParams }: { searchParams: Promise<{ group?: string; q?: string }> }) {
+  const [settings, { group, q }] = await Promise.all([adminFetch<SiteSettings>('/site-settings'), searchParams]);
 
   return (
     <>
       <PageHeader title="Website Text" description="Every heading, sentence and label on the website, in English and Bangla. Open a section, or search for the words you want to change." />
-      <TextEditor defaults={{ en: editableText(flattenText(getDictionary('en'))), bn: editableText(flattenText(getDictionary('bn'))) }} saved={settings.text} initialGroup={group} />
+      <TextEditor defaults={{ en: editableText(flattenText(getDictionary('en'))), bn: editableText(flattenText(getDictionary('bn'))) }} saved={settings.text} initialGroup={group} initialQuery={q} key={q ?? ''} />
     </>
   );
 }

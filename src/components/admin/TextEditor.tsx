@@ -19,16 +19,18 @@ interface TextEditorProps {
   defaults: Record<Language, FlatText>;
   saved: Record<Language, TextOverrides>;
   initialGroup?: string;
+  // Opened from the admin search: start with these words already searched
+  initialQuery?: string;
 }
 
 const startingValues = (defaults: FlatText, saved: TextOverrides) => Object.fromEntries(Object.entries(defaults).map(([path, value]) => [path, saved[path] ?? String(value)]));
 
 // Rows only render when their group is open or matches a search: the whole site is several hundred fields
-export const TextEditor = ({ defaults, saved, initialGroup }: TextEditorProps) => {
+export const TextEditor = ({ defaults, saved, initialGroup, initialQuery }: TextEditorProps) => {
   const router = useRouter();
   const [values, setValues] = useState<Record<Language, Record<string, string>>>(() => ({ en: startingValues(defaults.en, saved.en), bn: startingValues(defaults.bn, saved.bn) }));
   const [open, setOpen] = useState<string | null>(initialGroup && TEXT_GROUPS.some((group) => group.key === initialGroup) ? initialGroup : 'hero');
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialQuery?.slice(0, 200) ?? '');
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
